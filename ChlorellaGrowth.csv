@@ -1,0 +1,14 @@
+# light = light level
+# rmax = Chlorella maximum growth rate
+light,rmax
+20,1.73
+20,1.65
+20,2.02
+20,1.89
+21,2.61
+24,1.36
+44,2.37
+60,2.08
+90,2.69
+94,2.32
+101,3.67
