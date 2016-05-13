@@ -9,7 +9,7 @@ MAKEIDX = makeindex
 CP = cp
 RM = rm -f
 
-FILES = R_Tutorial.html R_Tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaGrowth.csv seedpred.dat
+FILES = R_Tutorial.html R_Tutorial.pdf R_Tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaGrowth.csv seedpred.dat
 
 default: $(FILES)
 
