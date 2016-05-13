@@ -506,7 +506,7 @@ f(1); y
 y <- 11
 f <- function (x) {
   g <- function (x) {
-     x+y
+    x+y
   }
   g(x)
 }
@@ -528,12 +528,12 @@ f(1); y
 ## ------------------------------------------------------------------------
 rm(y)
 f <- function (x) {
-   g <- function (x) {
-     y <<- 2*x
-     y+1
-   }
-   g(x)+1
- }
+  g <- function (x) {
+    y <<- 2*x
+    y+1
+  }
+  g(x)+1
+}
 f(11); y
 f(-2); y
 
@@ -577,66 +577,66 @@ cat("global env: "); print(sys.frame(sys.nframe()))
 f()
 
 ## ------------------------------------------------------------------------
-  x <- list("teenage","mutant","ninja","turtle",
-            "hamster","plumber","pickle","baby")
-  lapply(x,nchar)
+x <- list("teenage","mutant","ninja","turtle",
+          "hamster","plumber","pickle","baby")
+lapply(x,nchar)
 
-  y <- c("teenage","mutant","ninja","turtle",
-         "hamster","plumber","pickle","baby")
-  lapply(y,nchar)
-
-## ------------------------------------------------------------------------
-  x <- list("pizza","monster","jigsaw","puddle",
-            "hamster","plumber","pickle","baby")
-  sapply(x,nchar)
-
-  y <- c("pizza","monster","jigsaw","puddle",
-         "hamster","plumber","pickle","baby")
-  sapply(y,nchar)
+y <- c("teenage","mutant","ninja","turtle",
+       "hamster","plumber","pickle","baby")
+lapply(y,nchar)
 
 ## ------------------------------------------------------------------------
-  x <- c("pizza","monster","jigsaw","puddle")
-  y <- c("cowboy","barbie","slumber","party")
-  mapply(paste,x,y,sep="/")
+x <- list("pizza","monster","jigsaw","puddle",
+          "hamster","plumber","pickle","baby")
+sapply(x,nchar)
+
+y <- c("pizza","monster","jigsaw","puddle",
+       "hamster","plumber","pickle","baby")
+sapply(y,nchar)
 
 ## ------------------------------------------------------------------------
-  mapply(paste,x,y[2:3])
-  mapply(paste,x[c(1,3)],y)
+x <- c("pizza","monster","jigsaw","puddle")
+y <- c("cowboy","barbie","slumber","party")
+mapply(paste,x,y,sep="/")
 
 ## ------------------------------------------------------------------------
-  A <- array(data=seq_len(15),dim=c(3,5)); A
+mapply(paste,x,y[2:3])
+mapply(paste,x[c(1,3)],y)
 
 ## ------------------------------------------------------------------------
-  apply(A,1,sum)
+A <- array(data=seq_len(15),dim=c(3,5)); A
 
 ## ------------------------------------------------------------------------
-  apply(A,2,sum)
+apply(A,1,sum)
 
 ## ------------------------------------------------------------------------
-  A <- array(data=seq_len(30),dim=c(3,5,2)); A
+apply(A,2,sum)
 
 ## ------------------------------------------------------------------------
-  apply(A,c(1,3),sum)
+A <- array(data=seq_len(30),dim=c(3,5,2)); A
 
 ## ------------------------------------------------------------------------
-  apply(A,3,sum)
+apply(A,c(1,3),sum)
 
 ## ------------------------------------------------------------------------
-  apply(A,c(2,3),function (x) sd(x)/sqrt(length(x)))
+apply(A,3,sum)
 
 ## ------------------------------------------------------------------------
-  apply(A,c(1,2),function (x, y) sum(x>y),y=8)
-  apply(A,c(1,2),function (x, y) sum(x>y),y=-1)
+apply(A,c(2,3),function (x) sd(x)/sqrt(length(x)))
 
 ## ------------------------------------------------------------------------
-  x <- seq(1,30,by=1)
-  b <- rep(letters[1:10],times=3)
-  data.frame(x,b)
-  tapply(x,b,sum)
+apply(A,c(1,2),function (x, y) sum(x>y),y=8)
+apply(A,c(1,2),function (x, y) sum(x>y),y=-1)
 
-  b <- rep(letters[1:10],each=3)
-  data.frame(x,b)
-  tapply(x,b,sum)
+## ------------------------------------------------------------------------
+x <- seq(1,30,by=1)
+b <- rep(letters[1:10],times=3)
+data.frame(x,b)
+tapply(x,b,sum)
+
+b <- rep(letters[1:10],each=3)
+data.frame(x,b)
+tapply(x,b,sum)
 
 ## ------------------------------------------------------------------------
 datafile <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/seedpred.dat"
@@ -647,17 +647,17 @@ with(x, tapply(tcum,list(dist,station),max,na.rm=TRUE))
 
 ## ------------------------------------------------------------------------
 alph <- function (x) {
-    stopifnot(x >= 1 && x <= 26)
-    LETTERS[as.integer(x)]
+  stopifnot(x >= 1 && x <= 26)
+  LETTERS[as.integer(x)]
 }
 
 ## ----echo=F,results='hide'-----------------------------------------------
-  set.seed(1950064303L)
+set.seed(1950064303L)
 
 ## ------------------------------------------------------------------------
-  x <- sample(1:26,50,replace=TRUE)
-  y <- vapply(x,alph,character(1))
-  paste(y,collapse="")
+x <- sample(1:26,50,replace=TRUE)
+y <- vapply(x,alph,character(1))
+paste(y,collapse="")
 
 ## ------------------------------------------------------------------------
 x <- runif(n=1e6,min=0,max=2*pi)
@@ -687,10 +687,10 @@ f <- function (x) {
   (((x+1)*x+1)*x+1)*x+1
 }
 system.time({
-    res1 <- numeric(length(x))
-    for (k in seq_along(x)) {
-        res1[k] <- f(x[k])
-    }
+  res1 <- numeric(length(x))
+  for (k in seq_along(x)) {
+    res1[k] <- f(x[k])
+  }
 })
 system.time(res2 <- sapply(x,f))
 

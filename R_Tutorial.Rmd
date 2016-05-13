@@ -61,7 +61,7 @@ Need to include pseudo-RNG functions, etc.
 These notes contain many sample calculations. 
 It is important to do these yourself---**type them in at your keyboard and see what happens on your screen**---to get the feel of working in **R**. 
 **Exercises** in the middle of a section should be done immediately when you get to them, and make sure you have them right before moving on. 
- 
+
 Many other similar introductions are scattered around the web;
 a partial list is in the "contributed documentation" section on the R web site (http://cran.r-project.org/other-docs.html). 
 This particular version is limited (it has similar coverage to the *Introduction to **R** * that comes with **R** ) and targets biologists who are neither (yet) programmers nor statisticians.
@@ -82,7 +82,7 @@ Originally a research project in statistical computing [@Ihaka1996], it is now m
 There are a number of graphical front-ends for **R**.
 At present, the best of these appears to be [**RStudio**](http://www.rstudio.com).
 Before learning about these, however, you should learn a little about **R** itself.
- 
+
 ## Getting started with **R** 
 
 ### Installing **R** on your computer
@@ -233,10 +233,10 @@ rather, it is equivalent to
 C <- A + 2*(sqrt(A)/A) + 5*sqrt(A)
 ``` 
 The default order of operations is:
-	(1) parentheses,
-	(2) exponentiation,
-	(3) multiplication and division,
-	(4) addition and subtraction.
+(1) parentheses,
+(2) exponentiation,
+(3) multiplication and division,
+(4) addition and subtraction.
 Thus:
 
 `> b <- 12-4/2^3`  ***gives***  `12 - 4/8 = 12 - 0.5 = 11.5`  
@@ -281,7 +281,7 @@ Check your answers against those given by the built-in function for the normal d
 - Typing `help.start()` opens a web browser with help information.
 - `example(cmd)` will run any examples that are included in the help page for command `cmd`.
 - `demo(topic)` runs demonstration code on topic `topic`:
-  type `demo()` by itself to list all available demos
+type `demo()` by itself to list all available demos
 
 By default, **R** 's help system only provides information about functions that are in the base system and packages that you have loaded with `library` (see below).
 
@@ -289,7 +289,7 @@ By default, **R** 's help system only provides information about functions that 
 then use `?topic` to see the information, perhaps using
 `library(pkg)` to load the appropriate package first.
 - `help.search` uses fuzzy matching---for example, `help.search("log")` finds more than 800 entries (on my particular system) including lots of functions with "plot", which includes the letters "lot", which are *almost* like "log".
-  If you can't stand it, you can turn this behavior off with the incantation `help.search("log",agrep=FALSE)` (81 results which still include matches for "logistic", "myelogenous", "phylogeny", \dots).
+If you can't stand it, you can turn this behavior off with the incantation `help.search("log",agrep=FALSE)` (81 results which still include matches for "logistic", "myelogenous", "phylogeny", \dots).
 - `help(package="pkg")` will list all the help pages for a loaded package.
 - `example(fun)` will run the examples (if any) given in the help for a particular function `fun`: e.g., `example(log)`
 - `RSiteSearch("topic")` does a full-text search of all the **R** documentation and the mailing list archives for information on `topic` (you need an active internet connection).
@@ -321,8 +321,8 @@ Finally, here's a commentary on the help system in **R** from Graham Lawrence:
 
 
 ##### Exercise
-  Do an Apropos on `sin` to see what it does. 
-  Now enter the command
+Do an Apropos on `sin` to see what it does. 
+Now enter the command
 ```{r eval=FALSE}
 ??sin
 ```
@@ -519,12 +519,12 @@ The most basic data-type in **R** is the vector.
 A vector is just a 1-dimensional array of values.
 Several different kinds of vectors are available:
 
-  - numerical vectors,
-  - logical vectors,
-  - character-string vectors,
-  - factors,
-  - ordered factors, and
-  - lists.
+- numerical vectors,
+- logical vectors,
+- character-string vectors,
+- factors,
+- ordered factors, and
+- lists.
 
 Lists are treated a bit differently in **R** than the other kinds, so we'll postpone talking about them until later.
 
@@ -561,7 +561,7 @@ x+y
 ``` 
 
 #### Exercise
-  What do the `%%` and `%/%` operators do?
+What do the `%%` and `%/%` operators do?
 
 
 In **R** the default is to apply functions and operations to vectors
@@ -582,7 +582,7 @@ y-x
 ``` 
 
 #### Exercise
-  What happens when the length of the longer vector is not a multiple of that of the shorter?
+What happens when the length of the longer vector is not a multiple of that of the shorter?
 
 
 ### Functions for creating vectors
@@ -597,13 +597,13 @@ There is also a shortcut for creating vectors with `by=1`:
 ```
 
 #### Exercise
-  Use `seq` to create the vector `v=(1 5 9 13)`, and to create a vector going from 1 to 5 in increments of 0.2 . 
+Use `seq` to create the vector `v=(1 5 9 13)`, and to create a vector going from 1 to 5 in increments of 0.2 . 
 
 
 #### Exercise
-  What happens when `to` is less than `from` in `seq`?
-  What result does `3:1` give?
-  This is one of the first "gotchas" **R** newbies run into.
+What happens when `to` is less than `from` in `seq`?
+What result does `3:1` give?
+This is one of the first "gotchas" **R** newbies run into.
 
 
 A constant vector such as `(1 1 1 1)` can be created with `rep` function, whose basic syntax is `rep(values,lengths)`.  
@@ -663,8 +663,8 @@ v <- z[2:5]; v
 This has extracted the 2nd through 5th elements in the vector. 
 
 #### Exercise
-  If you enter `v <- z[seq(1,5,2)]`, what will happen? 
-  Make sure you understand why.
+If you enter `v <- z[seq(1,5,2)]`, what will happen? 
+Make sure you understand why.
 
 Extracted parts of a vector don't have to be regularly spaced. For example
 ```{r }
@@ -693,7 +693,7 @@ w
 ``` 
 
 #### Exercise
-  Write a *one-line* command to extract a vector consisting of the second, first, and third elements of `z` *in that order*. 
+Write a *one-line* command to extract a vector consisting of the second, first, and third elements of `z` *in that order*. 
 
 #### Exercise
 What happens when I set the value of an element that doesn't exist?
@@ -840,7 +840,7 @@ Light[Light<50 | rmax <= 2.0]
 rmax[Light<50 | rmax <= 2.0]
 ```
 Note that we have to be sure to use the elementwise versions of AND and OR (`&` and `|`).
- 
+
 #### Exercise
 `runif(n)` is a function that generates a vector of `n` random, uniformly distributed numbers between 0 and 1.
 Create a vector of 20 numbers, then find the subset of those numbers that is less than the mean.
@@ -902,9 +902,9 @@ for example `sum(X)` above is `r sum(X)`.
 
 
 #### Exercise
-  Use `rnorm` and `matrix` to create a $5{\times}7$ matrix of Gaussian random numbers with mean 1 and standard deviation 2. 
+Use `rnorm` and `matrix` to create a $5{\times}7$ matrix of Gaussian random numbers with mean 1 and standard deviation 2. 
 
- 
+
 Another useful function for creating matrices is `diag`.
 `diag(v,n)` creates an $n{\times}n$ matrix with data vector $v$ on its diagonal. 
 So for example `diag(1,5)` creates the $5{\times}5$ *identity matrix*, which has 1s on the diagonal and 0 everywhere else.
@@ -953,12 +953,13 @@ treats them as rows.
 Now we have two matrices that can be combined. 
 
 #### Exercise
-  Verify that `rbind(C,D)` works, `cbind(C,C)` works, but `cbind(C,D)` doesn't. 
-  Why not? 
+Verify that `rbind(C,D)` works, `cbind(C,C)` works, but `cbind(C,D)` doesn't. 
+Why not? 
 
 
 
 ### Matrix indexing
+
 Matrix indexing is like vector indexing except that you have to specify both the row and column, or range of rows and columns. 
 For example `z~<-~A[2,3]` sets `z` equal to 6, which is the (2\textsuperscript{nd} row, 3\textsuperscript{rd} column) entry of the matrix **A** that you recently created, and 
 ```{r }
@@ -1012,8 +1013,8 @@ dim(y); dim(z)
 ``` 
 
 #### Exercise
-  What happens when we set the dimension attribute on a vector?
-  For example:
+What happens when we set the dimension attribute on a vector?
+For example:
 ```{r eval=F}
 x <- seq(1,27)
 dim(x) <- c(3,9)
@@ -1056,17 +1057,17 @@ x[1:5] < x[18:22]
 ``` 
 
 #### Exercise
-  Look up the documentation on the `sample` function used above.
+Look up the documentation on the `sample` function used above.
 
 
 #### Exercise
-  Can I make a matrix or an array out of a factor variable?
+Can I make a matrix or an array out of a factor variable?
 
 
 #### Exercise
-  What is the internal representation of factors in **R** ?
-  Try converting factors to integers using `as.integer`.
-  Try converting an integer vector to a factor using `factor`.
+What is the internal representation of factors in **R** ?
+Try converting factors to integers using `as.integer`.
+Try converting an integer vector to a factor using `factor`.
 
 ## Other structures: Lists and data frames
 
@@ -1143,44 +1144,44 @@ For complete documentation, execute e.g., `?dbinom` in an **R** session.
 Distribution | **R** name | Parameters | Range
 -------------|------------|------------|---------
 Discrete distributions|||
-    Binomial | `binom` | size, prob | $0,1,\dots,\mathrm{size}$
-    Bernoulli | `binom` (`size=1`) | prob | $0,1$
-    Poisson | `pois` | lambda | $0,1,\dots,\infty$
-    Negative binomial | `nbinom` | size, (prob or mu) | $0,1,\dots,\infty$
-    Geometric | `geom` | rate | $0,1,\dots,\infty$
-    Hypergeometric | `hyper` | m, n, k | $0,1,\dots,m$
-    Multinomial | `multinom` | size, $\mathrm{prob}\in[0,1]^m$ | $\{(x_1,\dots,x_m): \sum\!x_i=\mathrm{size}\}$
+Binomial | `binom` | size, prob | $0,1,\dots,\mathrm{size}$
+Bernoulli | `binom` (`size=1`) | prob | $0,1$
+Poisson | `pois` | lambda | $0,1,\dots,\infty$
+Negative binomial | `nbinom` | size, (prob or mu) | $0,1,\dots,\infty$
+Geometric | `geom` | rate | $0,1,\dots,\infty$
+Hypergeometric | `hyper` | m, n, k | $0,1,\dots,m$
+Multinomial | `multinom` | size, $\mathrm{prob}\in[0,1]^m$ | $\{(x_1,\dots,x_m): \sum\!x_i=\mathrm{size}\}$
 Continuous distributions|||
-    Uniform | `unif` | min, max | $[\mathrm{min},\mathrm{max}]$
-    Normal | `norm` | mean, sd | $(-\infty,\infty)$
-    Gamma | `gamma` | shape, (scale or rate) | $[0,\infty)$
-    Exponential | `exp` | mu | $[0,\infty)$
-    Beta | `beta` | shape1, shape2 | $[0,1]$
-    Lognormal | `lnorm` | meanlog, sdlog | $[0,\infty)$
-    Cauchy | `cauchy` | location, scale | $(\infty,\infty)$
-    $\chi^2$ | `chisq` | df | $[0,\infty)$
-    Student's T | `t` | df | $[0,\infty)$
-    Weibull | `weibull` | shape, scale | $[0,\infty)$
+Uniform | `unif` | min, max | $[\mathrm{min},\mathrm{max}]$
+Normal | `norm` | mean, sd | $(-\infty,\infty)$
+Gamma | `gamma` | shape, (scale or rate) | $[0,\infty)$
+Exponential | `exp` | mu | $[0,\infty)$
+Beta | `beta` | shape1, shape2 | $[0,1]$
+Lognormal | `lnorm` | meanlog, sdlog | $[0,\infty)$
+Cauchy | `cauchy` | location, scale | $(\infty,\infty)$
+$\chi^2$ | `chisq` | df | $[0,\infty)$
+Student's T | `t` | df | $[0,\infty)$
+Weibull | `weibull` | shape, scale | $[0,\infty)$
 
 #### Exercise
-  Write codes to plot the c.d.f.&nbsp;of the binomial distribution (`pbinom`).
-  Verify the relationship between the p.d.f.&nbsp;(`dbinom`) and the c.d.f.
-
-
-#### Exercise
-  Plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the Poisson distribution for several values of the parameter $\lambda$.
+Write codes to plot the c.d.f.&nbsp;of the binomial distribution (`pbinom`).
+Verify the relationship between the p.d.f.&nbsp;(`dbinom`) and the c.d.f.
 
 
 #### Exercise
-  Plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the gamma distribution for several values of the shape and scale (or rate) parameters.
-  Put in a vertical line to indicate the mean.
-  Be sure to explore both large and small values of the shape parameter.
+Plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the Poisson distribution for several values of the parameter $\lambda$.
 
 
 #### Exercise
-  Use **Rstudio**'s `manipulate` facility to plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the beta distribution for several values of the first and second shape parameters.
-  Put in a vertical line to indicate the mean.
-  Be sure to explore the full ranges of the parameters.
+Plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the gamma distribution for several values of the shape and scale (or rate) parameters.
+Put in a vertical line to indicate the mean.
+Be sure to explore both large and small values of the shape parameter.
+
+
+#### Exercise
+Use **Rstudio**'s `manipulate` facility to plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the beta distribution for several values of the first and second shape parameters.
+Put in a vertical line to indicate the mean.
+Be sure to explore the full ranges of the parameters.
 
 
 ## Script files and data files
@@ -1210,25 +1211,24 @@ They are also **essential** for making research reproducible.
 Tips for working with data and script files (sounding slightly scary but just trying to help you avoid common pitfalls):
 
 - To let **R** know where data and script files are located, you have a few choices:
-  - change your working directory to wherever the file(s) are located before running **R**.
-  - change your working directory within an **R** session to wherever the file(s) are located using the `setwd()` (**set** **w**orking **d**irectory) function, e.g. `setwd("c:/temp")`.
-  - spell out the path to the file explicitly. 
-    Use a single forward slash to separate folders (e.g., &#9420;&nbsp;`"c:/My~Documents/R/script.R"` or 
-ix&nbsp;`"/home/kingaa/projects/hurricanes"`): this works on all platforms.
-    The first option is far preferable, since it makes your codes portable:
-    as long as you copy the whole directory, you can copy it whereever you like and **R** will find what it needs.
-    
+- change your working directory to wherever the file(s) are located before running **R**.
+- change your working directory within an **R** session to wherever the file(s) are located using the `setwd()` (**set** **w**orking **d**irectory) function, e.g. `setwd("c:/temp")`.
+- spell out the path to the file explicitly. 
+Use a single forward slash to separate folders (e.g., &#9420;&nbsp;`"c:/My~Documents/R/script.R"` or &#9421;&nbsp;`"/home/kingaa/projects/hurricanes"`): this works on all platforms.
+The first option is far preferable, since it makes your codes portable:
+as long as you copy the whole directory, you can copy it whereever you like and **R** will find what it needs.
+
 &#9420;
 If you have a shortcut defined for **R** on your desktop (or possibly in the Start menu) you can *permanently* change your default working directory by right-clicking on the shortcut icon, selecting `Properties`, and changing the starting directory to somewhere like (for example) `My~Documents/projectX`.
 
 - It's important that script files be preserved as *plain text* and data files also as plain text, using comma- or tab-separated format.
-  There are three things that can go wrong here: 
+There are three things that can go wrong here: 
 (1) if you use a web browser to download files, be careful that it doesn't automatically append some weird suffix to the files or translate them into something other than plain text.
 (2) if your web browser uses "file associations" (e.g., it thinks that all files ending in `.dat` are Excel files), make sure to save the file as plain text, and without any extra extensions; 
 (3) **never use Microsoft Word or other word-processors to edit your data and script files**; 
 MS Word will try very hard to get you to save them as Word (rather than text) files, which will screw them up!
 (4) If you send script files by e-mail, even if you are careful to send them as plain text, lines will occasionally get broken in different places, which can lead to confusion.
-  Beware.
+Beware.
 
 As a first example, the file `Intro1.R` has the commands from the interactive regression analysis. 
 Download `Intro1.R` and save it to your computer:
@@ -1261,7 +1261,7 @@ In `ChlorellaGrowth.csv` the two variables are entered as columns of a data matr
 Then instead of typing these in by hand, the command
 ```{r echo=F,results='hide'}
 <<fetch-chlorella-data>>  
-```{r eval=F}
+  ```{r eval=F}
 X <- read.csv("ChlorellaGrowth.csv",comment.char='#')
 ```
 reads the file (from the current directory) and puts the data values into the variable `X`.
@@ -1298,45 +1298,45 @@ par(op)
 ```
 
 #### Exercise
-  Run `Intro2.R`, then enter the command `plot(fit)` in the console and follow the directions in the console.
-  Figure out what just happened by entering `?plot.lm` to bring up the help page for the function `plot.lm()` that carries out a `plot()` command for an object produced by `lm()`. 
-  (This is one example of how **R** uses the fact that statistical analyses are stored as model objects. 
-  `fit` "knows" what kind of object it is (in this case an object of type `lm`), and so `plot(fit)` invokes a function that produces plots suitable for an `lm` object.) 
-  **Answer:** **R** produced a series of diagnostic plots exploring whether or not the fitted linear model is a suitable fit to the data. In each of the plots, the 3 most extreme points (the most likely candidates for "outliers") have been identified according to their sequence in the data set. 
+Run `Intro2.R`, then enter the command `plot(fit)` in the console and follow the directions in the console.
+Figure out what just happened by entering `?plot.lm` to bring up the help page for the function `plot.lm()` that carries out a `plot()` command for an object produced by `lm()`. 
+(This is one example of how **R** uses the fact that statistical analyses are stored as model objects. 
+`fit` "knows" what kind of object it is (in this case an object of type `lm`), and so `plot(fit)` invokes a function that produces plots suitable for an `lm` object.) 
+**Answer:** **R** produced a series of diagnostic plots exploring whether or not the fitted linear model is a suitable fit to the data. In each of the plots, the 3 most extreme points (the most likely candidates for "outliers") have been identified according to their sequence in the data set. 
 
 
-  The axes in plots are scaled automatically, but the outcome is not always ideal (e.g. if you want several graphs with exactly the same axes limits). 
-  You can control scaling using the `xlim` and `ylim` arguments in `plot`:
-  \hspace*{1in}  `plot(x,y,xlim=c(x1,x2), [other stuff]) ` 
-  will draw the graph with the $x$-axis running from `x1` to `x2`, and using `ylim=c(y1,y2)` within the `plot()` command will do the same for the $y$-axis. 
-
-#### Exercise
-  Create a plot of growth rate versus light intensity with the $x$-axis running from 0 to 120, and the $y$-axis running from 1 to 4. 
-
+The axes in plots are scaled automatically, but the outcome is not always ideal (e.g. if you want several graphs with exactly the same axes limits). 
+You can control scaling using the `xlim` and `ylim` arguments in `plot`:
+\hspace*{1in}  `plot(x,y,xlim=c(x1,x2), [other stuff]) ` 
+will draw the graph with the $x$-axis running from `x1` to `x2`, and using `ylim=c(y1,y2)` within the `plot()` command will do the same for the $y$-axis. 
 
 #### Exercise
-  Several graphs can be placed within a single figure by using the `par` function (short for "parameter") to adjust the layout of the plot. 
-  For example the command 
-  \hspace*{0.5in} `par(mfrow=c(m,n))` 
-  divides the plotting area into $m$ rows and $n$ columns. 
-  As a series of graphs is drawn, they are placed along the top row from left to right, then along the next row, and so on.
-  `mfcol=c(m,n)` has the same effect except that successive graphs are drawn down the first column, then down the second column, and so on. 
+Create a plot of growth rate versus light intensity with the $x$-axis running from 0 to 120, and the $y$-axis running from 1 to 4. 
 
-  Save `Intro2.R` with a new name and modify the program as follows. 
-  Use `mfcol=c(2,1)` to create graphs of growth rate as a function of `Light`, and of `log(growth rate)` as a function of `log(Light)` in the same figure.  
-  Do the same again, using `mfcol=c(1,2)`. 
+
+#### Exercise
+Several graphs can be placed within a single figure by using the `par` function (short for "parameter") to adjust the layout of the plot. 
+For example the command 
+\hspace*{0.5in} `par(mfrow=c(m,n))` 
+divides the plotting area into $m$ rows and $n$ columns. 
+As a series of graphs is drawn, they are placed along the top row from left to right, then along the next row, and so on.
+`mfcol=c(m,n)` has the same effect except that successive graphs are drawn down the first column, then down the second column, and so on. 
+
+Save `Intro2.R` with a new name and modify the program as follows. 
+Use `mfcol=c(2,1)` to create graphs of growth rate as a function of `Light`, and of `log(growth rate)` as a function of `log(Light)` in the same figure.  
+Do the same again, using `mfcol=c(1,2)`. 
 
 
 #### Exercise
 Use `?par` to read about other plot control parameters that can be set using `par()`.
-  Then draw a $2 \times 2$ set of plots, each showing the line $y=5x+3$ with x running from 3 to 8, but with 4 different line styles and 4 different line colors. 
+Then draw a $2 \times 2$ set of plots, each showing the line $y=5x+3$ with x running from 3 to 8, but with 4 different line styles and 4 different line colors. 
 
 #### Exercise
-  Modify one of your scripts so that at the very end it saves the plot to disk. 
-  You can accomplish this using the `dev.print()` function.
-  Do `?dev.print` to read about this function. 
-  Note that you need to specify the `file` argument to write your graphics to a file; if you don't, it will try and send it to a printer.
-  Also note that many alternative formats are available via the `dev` argument.
+Modify one of your scripts so that at the very end it saves the plot to disk. 
+You can accomplish this using the `dev.print()` function.
+Do `?dev.print` to read about this function. 
+Note that you need to specify the `file` argument to write your graphics to a file; if you don't, it will try and send it to a printer.
+Also note that many alternative formats are available via the `dev` argument.
 
 
 ## Looping in **R** 
@@ -1369,7 +1369,7 @@ As an aside, note that the final value of `phi` is the Golden Ratio, `r signif((
 
 As an example of a situation where a loop of some sort is really needed, suppose we wish to iterate the Beverton-Holt map (one of the simplest discrete-time models of population growth),
 \begin{equation*}
-  N_{t+1} = \frac{a\,N_t}{1+b\,N_t}.
+N_{t+1} = \frac{a\,N_t}{1+b\,N_t}.
 \end{equation*}
 We simply have no option but to do the calculation one step at a time.
 Here's an **R** code that does this
@@ -1401,11 +1401,11 @@ for (t in 1:length(T)) {
 ``` 
 
 #### Exercise
-  Check that this works with different vectors `T`.
-  What happens when `T` has length 1?
-  What happens when `T` has length 0?  Why?
-  To avoid this trap, it's preferable to use `seq_len`, `seq_along`, or `seq.int` instead of the `1:n` construction used above.
-  This and many other **R** gotchas are described in the useful [*R Inferno* [@Burns2012]](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf).
+Check that this works with different vectors `T`.
+What happens when `T` has length 1?
+What happens when `T` has length 0?  Why?
+To avoid this trap, it's preferable to use `seq_len`, `seq_along`, or `seq.int` instead of the `1:n` construction used above.
+This and many other **R** gotchas are described in the useful [*R Inferno* [@Burns2012]](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf).
 
 
 
@@ -1630,7 +1630,7 @@ f(1); y
 ``` 
 
 #### Exercise
-  Why hasn't `y` changed its value?
+Why hasn't `y` changed its value?
 
 
 What about this?
@@ -1643,7 +1643,7 @@ f(1); y
 ``` 
 
 #### Exercise
-  Why is the return value of `f` different?
+Why is the return value of `f` different?
 
 
 How about the following?
@@ -1659,7 +1659,7 @@ f(2); g(2)
 ``` 
 
 #### Exercise
-  Be sure you understand what's happening at each line and why you get the results you see.
+Be sure you understand what's happening at each line and why you get the results you see.
 
 
 Another example:
@@ -1676,7 +1676,7 @@ f(1); y
 ``` 
 
 #### Exercise
-  Which value of `y` was used?
+Which value of `y` was used?
 
 
 Compare that with this:
@@ -1697,7 +1697,7 @@ and this:
 y <- 11
 f <- function (x) {
   g <- function (x) {
-     x+y
+    x+y
   }
   g(x)
 }
@@ -1721,18 +1721,18 @@ Finally, consider the following:
 ```{r }
 rm(y)
 f <- function (x) {
-   g <- function (x) {
-     y <<- 2*x
-     y+1
-   }
-   g(x)+1
- }
+  g <- function (x) {
+    y <<- 2*x
+    y+1
+  }
+  g(x)+1
+}
 f(11); y
 f(-2); y
 ``` 
 
 #### Exercise
-  In the above five code snippets, make sure you understand the differences.
+In the above five code snippets, make sure you understand the differences.
 
 
 As mentioned above, each function is associated with an environment: the environment within which it was defined.
@@ -1800,13 +1800,13 @@ In such cases, it is faster and more elegant (to the **R** afficiando's eye) to 
 
 `lapply` applies a function to each element of a list or vector, returning a list.
 ```{r }
-  x <- list("teenage","mutant","ninja","turtle",
-            "hamster","plumber","pickle","baby")
-  lapply(x,nchar)
+x <- list("teenage","mutant","ninja","turtle",
+          "hamster","plumber","pickle","baby")
+lapply(x,nchar)
 
-  y <- c("teenage","mutant","ninja","turtle",
-         "hamster","plumber","pickle","baby")
-  lapply(y,nchar)
+y <- c("teenage","mutant","ninja","turtle",
+       "hamster","plumber","pickle","baby")
+lapply(y,nchar)
 ``` 
 
 ### Sloppy list apply: `sapply`
@@ -1814,27 +1814,27 @@ In such cases, it is faster and more elegant (to the **R** afficiando's eye) to 
 `sapply` isn't content to always return a list:
 it attempts to simplify the results into a non-list vector if possible.
 ```{r }
-  x <- list("pizza","monster","jigsaw","puddle",
-            "hamster","plumber","pickle","baby")
-  sapply(x,nchar)
+x <- list("pizza","monster","jigsaw","puddle",
+          "hamster","plumber","pickle","baby")
+sapply(x,nchar)
 
-  y <- c("pizza","monster","jigsaw","puddle",
-         "hamster","plumber","pickle","baby")
-  sapply(y,nchar)
+y <- c("pizza","monster","jigsaw","puddle",
+       "hamster","plumber","pickle","baby")
+sapply(y,nchar)
 ``` 
 
 ### Multiple-list apply: `mapply`
 
 `mapply` is a multiple-argument version of `sapply`:
 ```{r }
-  x <- c("pizza","monster","jigsaw","puddle")
-  y <- c("cowboy","barbie","slumber","party")
-  mapply(paste,x,y,sep="/")
+x <- c("pizza","monster","jigsaw","puddle")
+y <- c("cowboy","barbie","slumber","party")
+mapply(paste,x,y,sep="/")
 ``` 
 As usual, the recycling rule applies:
 ```{r }
-  mapply(paste,x,y[2:3])
-  mapply(paste,x[c(1,3)],y)
+mapply(paste,x,y[2:3])
+mapply(paste,x[c(1,3)],y)
 ``` 
 
 ### Array apply: `apply`
@@ -1843,40 +1843,40 @@ As usual, the recycling rule applies:
 It allows an arbitrary function to applied to each slice of an array, where the slices can be defined in all possible ways.
 Let's create a matrix:
 ```{r }
-  A <- array(data=seq_len(15),dim=c(3,5)); A
+A <- array(data=seq_len(15),dim=c(3,5)); A
 ``` 
 To apply an operation to each row, we *marginalize* over the first dimension (rows).
 For example, to sum the rows, we'd do
 ```{r }
-  apply(A,1,sum)
+apply(A,1,sum)
 ``` 
 To sum the columns (the second dimension), we'd do
 ```{r }
-  apply(A,2,sum)
+apply(A,2,sum)
 ``` 
 
 Now suppose we have a 3-dimensional array:
 ```{r }
-  A <- array(data=seq_len(30),dim=c(3,5,2)); A
+A <- array(data=seq_len(30),dim=c(3,5,2)); A
 ``` 
 To sum the rows within each slice, we'd do
 ```{r }
-  apply(A,c(1,3),sum)
+apply(A,c(1,3),sum)
 ``` 
 while to sum the slices, we'd do
 ```{r }
-  apply(A,3,sum)
+apply(A,3,sum)
 ``` 
 For each of the above, make sure you understand exactly what has happened.
 
 Of course, we can apply an anonymous function wherever we apply a named function:
 ```{r }
-  apply(A,c(2,3),function (x) sd(x)/sqrt(length(x)))
+apply(A,c(2,3),function (x) sd(x)/sqrt(length(x)))
 ``` 
 Additional arguments are passed to the function:
 ```{r }
-  apply(A,c(1,2),function (x, y) sum(x>y),y=8)
-  apply(A,c(1,2),function (x, y) sum(x>y),y=-1)
+apply(A,c(1,2),function (x, y) sum(x>y),y=8)
+apply(A,c(1,2),function (x, y) sum(x>y),y=-1)
 ``` 
 
 ### Table apply: `tapply`
@@ -1888,14 +1888,14 @@ The vector `X` will be split into subvectors according to `INDEX`, and `FUN` wil
 By default, the result is simplified into an array if possible.
 Some examples:
 ```{r }
-  x <- seq(1,30,by=1)
-  b <- rep(letters[1:10],times=3)
-  data.frame(x,b)
-  tapply(x,b,sum)
+x <- seq(1,30,by=1)
+b <- rep(letters[1:10],times=3)
+data.frame(x,b)
+tapply(x,b,sum)
 
-  b <- rep(letters[1:10],each=3)
-  data.frame(x,b)
-  tapply(x,b,sum)
+b <- rep(letters[1:10],each=3)
+data.frame(x,b)
+tapply(x,b,sum)
 ``` 
 
 ```{r }
@@ -1913,18 +1913,18 @@ The syntax is like that of `sapply`: `vapply(X,FUN,FUN.VALUE,...)`, where `X` an
 For example, suppose we define a function that, given a number between 1 and 26 will return the corresponding letter of the alphabet:
 ```{r }
 alph <- function (x) {
-    stopifnot(x >= 1 && x <= 26)
-    LETTERS[as.integer(x)]
+  stopifnot(x >= 1 && x <= 26)
+  LETTERS[as.integer(x)]
 }
 ``` 
 This function will return a vector of length 1 and class `character`.
 To apply it to a randomly sampled set of integers, we might do
 ```{r echo=F,results='hide'}
-  set.seed(1950064303L)
+set.seed(1950064303L)
 ```{r }
-  x <- sample(1:26,50,replace=TRUE)
-  y <- vapply(x,alph,character(1))
-  paste(y,collapse="")
+x <- sample(1:26,50,replace=TRUE)
+y <- vapply(x,alph,character(1))
+paste(y,collapse="")
 ``` 
 
 <!-- %% Bank-account example? -->
@@ -1962,8 +1962,8 @@ Clearly, calling `sin` directly is much faster.
 What about using `sapply`?
 
 #### Exercise
-  Compare the time spent on the equivalent calculation, using `sapply`.
-  What does this result tell you about where the computational cost is incurred?
+Compare the time spent on the equivalent calculation, using `sapply`.
+What does this result tell you about where the computational cost is incurred?
 ```{r include=F}
 system.time(w <- sapply(x,sin))
 ``` 
@@ -1978,10 +1978,10 @@ f <- function (x) {
   (((x+1)*x+1)*x+1)*x+1
 }
 system.time({
-    res1 <- numeric(length(x))
-    for (k in seq_along(x)) {
-        res1[k] <- f(x[k])
-    }
+  res1 <- numeric(length(x))
+  for (k in seq_along(x)) {
+    res1[k] <- f(x[k])
+  }
 })
 system.time(res2 <- sapply(x,f))
 ```
