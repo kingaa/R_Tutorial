@@ -14,7 +14,7 @@ FILES = R_Tutorial.html R_Tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaG
 default: $(FILES)
 
 publish: default
-	rsync -avz --delete-after --exclude=cache --exclude=figure --chmod=a+rX,go-w $(FILES) $(PUBSITE)
+	rsync -avz --delete-after --chmod=a+rX,go-w $(FILES) $(PUBSITE)
 
 %.html: %.Rmd
 	PATH=/usr/lib/rstudio/bin/pandoc:$$PATH \
