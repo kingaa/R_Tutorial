@@ -53,7 +53,6 @@ options(
         keep.source=TRUE,
         encoding="UTF-8"
         )
-pdf.options(useDingbats=FALSE)
 @ 
 
 \section{How to use this document}
@@ -83,7 +82,7 @@ This particular version is limited (it has similar coverage to the \emph{Introdu
 
 \R\ is an open source project, available for free download via the Web \citep{R}.
 Originally a research project in statistical computing \citep{Ihaka1996}, it is now managed by a development team that includes a number of well-regarded statisticians, and is widely used by statistical researchers and working scientists as a platform for making new methods available to users.  
-The commercial implementation of \Slang\ (called \textsf{S-PLUS}) offers an Office-style ``point and click'' interface that \R\ lacks. 
+The commercial implementation of \Slang\ (called \textsf{S-PLUS}) offers a ``point and click'' interface that \R\ lacks. 
 The advantage of this front-end is outweighed by the fact that \R\ is free and open-source, built on a faster and much less memory-hungry implementation of \Slang\, and is easier to interface with other languages. 
 A standard installation of of \R\ also includes extensive documentation, including an introductory manual ($\approx 100$ pages) and a comprehensive reference manual (over 1000 pages).  
 
@@ -101,26 +100,28 @@ You can download precompiled binaries for most major platforms from any CRAN mir
 To do so:
 \begin{itemize}
 \item go to \url{http://cran.r-project.org/mirrors.html} and find a mirror site that is geographically somewhat near you.
-\item Find the appropriate page for your operating system --- when you get to the download section, go to \code{base} rather than \code{contrib}.
+\item Find the appropriate page for your operating system---when you get to the download section, go to \code{base} rather than \code{contrib}.
 Download the binary file (e.g. \code{base/R-x.y.z-win32.exe} for Windows, \code{R-x.y.z.dmg} for MacOS, where \code{x.y.z} is the version number).  
-The binary files are large (30--60 megabytes) --- you will need to find a fast internet connection.
 \item Read and follow the instructions.
 \end{itemize}
 \textbf{Be sure to install the latest version, which is \Sexpr{paste(R.version$major,R.version$minor,sep='.')}, nicknamed ``\Sexpr{R.version$nickname}''.}
 
-\R\ should work well on any reasonably recent computer.
-
 For Windows, \R\ is installed by launching the downloaded file and following the on-screen instructions. 
 At the end you'll have an \R\ icon on your desktop that can be used to launch the program. 
 
-\textbf{In the following, we've tried to mark Windows-specific items with a \windows\ and *nix (linux/unix/MacOSX)-specific items with a \nix.}
+\textbf{In the following, Windows-specific items are marked with a \windows\ and *nix (linux/unix/MacOSX)-specific items with a \nix.}
 
 The standard distributions of \R\ include several \emph{packages}: user-contributed suites of add-on functions.  
 These notes use some additional packages which you will have to install.
-In the Windows version additional packages can be installed easily from within \R\ using the \textbf{Packages} menu.
+\windows In the Windows version additional packages can be installed easily from within \R\ using the \textbf{Packages} menu.
 Under all platforms, you can use the commands \code{install.packages()} and \code{update.packages()} to install and update packages, respectively.
 Most packages are available pre-compiled for MacOS X and Windows;
 under *nix, \R\ will download and compile the source code for you.
+
+
+\subsection{Installing \pkg{RStudio}}
+
+Instructions here.
 
 \subsection{Starting \R}
 
@@ -295,14 +296,9 @@ By default, \R's help system only provides information about functions that are 
 will list information related to \code{topic} available in the base system or in any extra installed packages:
 then use \code{?topic} to see the information, perhaps using
 \code{library(pkg)} to load the appropriate package first.
-\code{help.search} uses ``fuzzy matching'' --- for example, 
-\code{help.search("log")} finds 528 entries (on my
-particular system) including lots of
-functions with ``plot'', which includes the letters ``lot'', which
-are \emph{almost} like ``log''.  If you can't stand it, you
-can turn this behavior off by specifying the incantation
-\code{help.search("log",agrep=FALSE)} (81 results which still include
-matches for ``logistic'', ``myelogenous'', and ``phylogeny'' \ldots)
+\code{help.search} uses ``fuzzy matching''---for example, 
+\code{help.search("log")} finds 528 entries (on my particular system) including lots of functions with ``plot'', which includes the letters ``lot'', which are \emph{almost} like ``log''.
+If you can't stand it, you can turn this behavior off by specifying the incantation \code{help.search("log",agrep=FALSE)} (81 results which still include matches for ``logistic'', ``myelogenous'', and ``phylogeny'' \ldots)
 \item \code{help(package="pkg")} will list all the help pages for
 a loaded package.
 \item \code{example(fun)} will run the examples (if any) given
@@ -539,35 +535,29 @@ to learn about them somewhere else. }
 You may be able to install new packages from a menu within \R. 
 You can always type, e.g.,
 <<eval=FALSE>>=
-install.packages("plotrix")
+install.packages("ggplot2")
 @
-This installs the \code{plotrix} package.
+This installs the \pkg{ggplot2} package.
 You can install more than one package at a time:
 <<eval=FALSE>>=
-install.packages(c("ellipse","plotrix"))
+install.packages(c("plyr","reshape2"))
 @
 (\code{c} stands for ``combine'', and is the command for combining multiple things into a single object.)
-If the machine on which you use \R\ is not connected to the
-Internet, you can download the packages to some other medium
-(such as a flash drive or CD)
-and install them later, using \code{Install from local zip file}
-in the menu (\windows) or
+If the machine on which you use \R\ is not connected to the Internet, you can download the packages to some other medium (such as a flash drive or CD) and install them later, using \code{Install from local zip file} in the menu (\windows) or
 <<eval=FALSE>>=
-install.packages("plotrix",repos=NULL)
+install.packages("ggplot2",repos=NULL)
 @ 
 
-If you do not have permission to install packages in \R's central directory, \R\ will
-may ask whether you want to install the packages in a user-specific directory.
+If you do not have permission to install packages in \R's central directory, \R\ will may ask whether you want to install the packages in a user-specific directory.
 It is safe to answer ``yes'' here.
 
-You will frequently get a warning message something like
+You will frequently get warning message like
 \begin{verbatim}
 Warning message: In file.create(f.tg) :
 cannot create file '.../packages.html', reason 'Permission denied'.
 \end{verbatim}
-Don't worry about this; it means the package has been installed successfully,
-but the main help system index files couldn't be updated
-because of file permissions problems.
+Don't worry about this; 
+it means the package has been installed successfully, but the main help system index files couldn't be updated because of file permissions problems.
 
 \section{Vectors} 
 
@@ -582,7 +572,7 @@ Several different kinds of vectors are available:
   \item ordered factors, and
   \item lists.
 \end{inparaenum}
-Lists are treated a bit differently in \R\ than the other kinds, so we'll postpone talking about them until later.
+Lists are a bit different than the other kinds, so we'll postpone talking about them until later.
 
 Besides its \emph{class}---which kind of vector it is---a vector's only other necessary attribute is its length.
 Optionally, vectors in \R\ can have a \code{names} attribute, which allows you to refer to entries by name.
@@ -660,7 +650,7 @@ There is also a shortcut for creating vectors with \code{by=1}:
   This is one of the first ``gotchas'' \R\ newbies run into.
 \end{exercise}
 
-A constant vector such as \code{(1 1 1 1)} can be created with \code{rep} function, whose basic syntax is \verb! rep(values,lengths) !.  
+A constant vector such as \code{(1 1 1 1)} can be created with \code{rep} function, whose basic syntax is \verb!rep(values,lengths)!.  
 For example,
 <<>>=
 rep(3,5)

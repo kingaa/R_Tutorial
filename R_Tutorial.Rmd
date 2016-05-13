@@ -1,0 +1,2017 @@
+---
+title: "A Tutorial Introduction to R"
+author: Aaron A. King and others
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+bibliography: R_Tutorial.bib
+csl: ecology.csl
+---
+
+\newcommand\prob[1]{\mathbb{P}\left[{#1}\right]}
+\newcommand\expect[1]{\mathbb{E}\left[{#1}\right]}
+\newcommand\var[1]{\mathrm{Var}\left[{#1}\right]}
+\newcommand\dist[2]{\mathrm{#1}\left(#2\right)}
+\newcommand\dlta[1]{{\Delta}{#1}}
+\newcommand\lik{\mathscr{L}}
+\newcommand\loglik{\ell}
+
+[Licensed under the Creative Commons Attribution-NonCommercial license](http://creativecommons.org/licenses/by-nc/4.0/).
+Please share and remix noncommercially, mentioning its origin.  
+![CC-BY_NC](cc-by-nc.png)
+
+```{r knitr-opts,include=FALSE,purl=FALSE}
+library(knitr)
+prefix <- "tutorial"
+opts_chunk$set(
+  progress=TRUE,
+  prompt=FALSE,tidy=FALSE,highlight=TRUE,
+  strip.white=TRUE,
+  warning=FALSE,
+  message=FALSE,
+  error=FALSE,
+  echo=TRUE,
+  cache=TRUE,
+  cache.extra=rand_seed,
+  results='markup',
+  fig.show='asis',
+  fig.path=paste0("figure/",prefix,"-"),
+  cache.path=paste0("cache/",prefix,"-"),
+  fig.height=4,fig.width=6.83,
+  dpi=100,
+  dev='png',
+  dev.args=list(bg='transparent')
+)
+options(keep.source=TRUE,encoding="UTF-8")
+```
+```{r prelims,include=FALSE,purl=TRUE,cache=FALSE}
+options(cores=20,stringsAsFactors=FALSE)
+```
+
+----------------------------
+
+<!--
+NOTES:
+Need to include pseudo-RNG functions, etc.
+-->
+
+## How to use this document
+
+These notes contain many sample calculations. 
+It is important to do these yourself---**type them in at your keyboard and see what happens on your screen**---to get the feel of working in **R**. 
+**Exercises** in the middle of a section should be done immediately when you get to them, and make sure you have them right before moving on. 
+ 
+Many other similar introductions are scattered around the web;
+a partial list is in the "contributed documentation" section on the R web site (http://cran.r-project.org/other-docs.html). 
+This particular version is limited (it has similar coverage to the *Introduction to **R** * that comes with **R** ) and targets biologists who are neither (yet) programmers nor statisticians.
+
+## What is **R** ?
+**R** is a computing environment that combines 
+
+- a programming language called \Slang, developed by John Chambers at Bell Labs, that implements the idea of *programming with data* [@Chambers1998],
+- an extensive set of functions for classical and modern statistical data analysis and modeling,
+- powerful numerical analysis tools for linear algebra, differential equations, and stochastics,
+- graphics functions for visualizing data and model output, 
+- a modular and extensible structure that supports a vast array of optional add-on packages, and
+- extensive help and documentation facilities.
+
+**R** is an [open source project](https://en.wikipedia.org/wiki/Open-source_software), available for [free download](https://www.r-project.org/) [@R].
+Originally a research project in statistical computing [@Ihaka1996], it is now managed by a development team that includes a number of well-regarded statisticians, and is widely used by statistical researchers and working scientists as a platform for making new methods available to users.
+
+There are a number of graphical front-ends for **R**.
+At present, the best of these appears to be [**RStudio**](http://www.rstudio.com).
+Before learning about these, however, you should learn a little about **R** itself.
+ 
+## Getting started with **R** 
+
+### Installing **R** on your computer
+
+The main source for **R** is the [Comprehensive R Archive Network (CRAN)](http://cran.r-project.org). 
+You can get the source code and compile it yourself, but you may prefer at this point to download and install a precompiled version. 
+You can download precompiled binaries for most major platforms from any CRAN mirror.
+To do so, go to http://cran.r-project.org/mirrors.html and find a mirror site that is geographically somewhat near you.
+Find the appropriate page for your operating system, and read and follow the installation instructions.
+**Be sure to install the latest version.
+
+**R** should work well on any reasonably recent computer.
+
+Under Windows, **R** is installed by launching the downloaded file and following the on-screen instructions. 
+At the end you'll have an **R** icon on your desktop that can be used to launch the program. 
+
+Under Linux, binary versions of **R** are available as packages for the most common Linux distributions.
+It is also not difficult to install **R** from source.
+
+Under Mac OS X, **R** is available as a binary package.
+
+**In the following, we've endeavored to mark Windows-specific items with a &#9420;&nbsp;and *nix (linux/unix/MacOSX)-specific items with a &#9421;.**
+
+The standard distributions of **R** include several *packages*:
+user-contributed suites of add-on functions.
+These notes use some additional packages which you will have to install.
+&#9420;&nbsp;In the Windows version additional packages can be installed easily from within **R** using the **Packages** menu.
+Under all platforms, you can use the commands `install.packages()` and `update.packages()` to install and update packages, respectively.
+Most packages are available pre-compiled for MacOS X and Windows;
+under Linux, **R** will download and compile the source code for you.
+
+### Starting **R** 
+
+&#9421;&nbsp;Execute `R` from the command line.
+
+&#9420;&nbsp;Click on the icon on your desktop, or in the `Start` menu (if you allowed the Setup program to make either or both of these).
+
+### Stopping **R** 
+
+*When entering, always look for the exit.*  ---Lebanese proverb
+
+Stop **R** by typing `q()` at the command prompt.
+[Note the `()`:
+if you type `q` by itself, you will get some confusing output which is actually **R** trying to tell you the definition of the `q` function;
+more on this later.]
+
+&#9420;&nbsp; You can also stop **R** from the `File` menu.
+
+When you quit, **R** will ask you if you want to save the workspace (that is, all of the variables you have defined in this session); 
+in general, you should say "no" to avoid clutter and unintentional loading of old data.
+
+Should an **R** command seem to be stuck or take longer than you're willing to wait, click on the stop sign on the menu bar or hit the `Esc` key (&#9420;), or `Ctrl-c` (&#9421;).
+
+## Interactive calculations
+
+&#9420;&nbsp;When you start **R**, a console window is opened.
+The console has a few basic menus at the top; check them out on your own. 
+
+The console is where you enter commands for **R** to execute *interactively*, meaning that the command is executed and the result is displayed as soon as you hit the ` Enter` key. 
+For example, at the command prompt `>`, type in `2+2` and hit `Enter`; you will see 
+```{r }
+2+2 
+```
+
+The results from calculations can be stored in (*assigned to*) variables. 
+For example:
+```{r }
+a <- 2+2
+```
+**R** automatically creates the variable `a` and stores the result (`r a`) in it, but by default doesn't print anything.
+To ask **R** to print the value, just type the variable name by itself
+```{r}
+a
+```
+The `[1]` at the beginning of the line is just **R** printing an index of element numbers;
+if you print a result that displays on multiple lines, **R** will put an index at the beginning of each line.
+`print(a)` also works to print the value of a variable.
+By default, a variable created this way is a *vector* (an ordered list), and it is *numeric* because we gave **R** a number rather than (e.g.) a character string like `"pxqr"`;
+in this case `a` is a numeric vector of length 1;
+
+You could also type
+```
+a <- 2+2; a
+```
+using a semicolon to put two or more commands on a single line.
+Conversely, you can break lines *anywhere that* **R** *can tell you haven't finished your command* and **R** will give you a "continuation" prompt (`+`) to let you know that it doesn't think you're finished yet: try typing
+```
+a <- 3*(4+
+5)
+```
+to see what happens (this often happens e.g. if you forget to close parentheses or quotes).
+If you get stuck continuing a command you don't want---e.g., you opened the wrong parentheses---just hit `Ctrl-c` (&#9421;), the `Esc` key or the stop icon in the menu bar (&#9420;) to get out.
+
+You can assign values to variables in **R** using the `<-` operator.
+There are several alternative forms for assignment.
+Each of these three commands accomplishes the same thing;
+the first is the preferred form, however.
+```
+a <- 2+2
+2+2 -> a
+a = 2+2
+```
+
+Variable names in **R** must begin with a letter, followed by alphanumeric characters. 
+You can break up long names with a period, as in `long.variable.number.3`, an underscore (`very_very_long_variable_name`), or by using camel case (`quiteLongVariableName`); 
+you cannot use blank spaces in variable names. 
+**R** is case sensitive:
+`Abc` and \textsf{abc} are different variables.
+Good practice is to make variable names long enough to be evocative, short enough to type.
+`N.per.ha` or `pop.density` are better than `x` and `y` (too generic) or `available.nitrogen.per.hectare` (too long).
+
+Note that `c`, `q`, `t`, `C`, `D`, `F`, `I`, and `T`, are built-in **R** functions.
+Using these are variable names may cause confusion or actual errors.
+
+**R** uses `+`, `-`, `*`, `/`, and `^` for addition, subtraction, multiplication, division and exponentiation, respectively.
+For example:
+```{r }
+x <- 5
+y <- 2
+z1 <- x*y
+z2 <- x/y
+z3 <- x^y
+z1; z2; z3
+``` 
+
+You can retrieve and edit previous commands. 
+The up-arrow (\thinspace $\uparrow$ \thinspace) key or `Ctrl-p` recalls previous commands to the prompt. 
+For example, you can bring back the second-to-last command and edit it to
+```{r }
+z3 <- 2*x^y
+``` 
+Experiment with the $\downarrow$, $\rightarrow$, $\leftarrow$, `Home` and `End` keys too (also `Ctrl-n`, `Ctrl-b`, `Ctrl-f`, `Ctrl-a`, `Ctrl-e`).
+
+You can combine several operations in one calculation:
+```{r }
+A <- 3
+C <- (A+2*sqrt(A))/(A+5*sqrt(A)); C
+``` 
+
+Parentheses specify the order of operations. 
+The command
+```{r }
+C <- A+2*sqrt(A)/A+5*sqrt(A)
+``` 
+is not the same as the one above;
+rather, it is equivalent to 
+```{r eval=FALSE}
+C <- A + 2*(sqrt(A)/A) + 5*sqrt(A)
+``` 
+The default order of operations is:
+	(1) parentheses,
+	(2) exponentiation,
+	(3) multiplication and division,
+	(4) addition and subtraction.
+Thus:
+
+`> b <- 12-4/2^3`  ***gives***  `12 - 4/8 = 12 - 0.5 = 11.5`  
+`> b <- (12-4)/2^3` ***gives*** `8/8 = 1`  
+`> b <- -1^2`   ***gives***  `-(1^2) = -1`  
+`> b <- (-1)^2` ***gives***  `1`  
+
+In complicated expressions it's best to **use parentheses to specify explicitly what you want**, such as ` > b <- 12 - (4/(2^3)) ` or at least ` > b <- 12 - 4/(2^3) `; 
+a few extra sets of parentheses never hurt anything.
+
+**R** also has many **built-in mathematical functions** that operate on variables (see below). 
+
+#### Exercise
+
+Using editing shortcuts wherever you can, use **R** to compute.
+
+1. $\frac{2^7}{2^7 - 1}$
+1. $({1 - \frac{1}{2^7}})^{-1}$
+1. $1+0.2$
+1. $1+0.2+0.2^2/2$
+1. $1+0.2+0.2^2/2+0.2^3/6$
+1. $e^{0.2}$ 
+
+Remembering that **R** knows `exp()` but not Euler's number, $e$, how would you get **R** to tell you the value of $e$?
+
+Compute the standard normal probability density, $\frac{1}{\sqrt{2 \pi}} e^{-x^2/2}$, for values of $x=1$ and $x=2$.
+[**R** knows $\pi$ as `pi`.] 
+Check your answers against those given by the built-in function for the normal distribution, `dnorm(x=c(1,2))`.
+
+
+## The help system
+
+**R** has a help system, although it is generally better for reminding you about syntax or details, and for giving cross-references, than for answering basic "how do I ...?" questions.
+
+- You can get help on any **R** function by entering
+```
+?foo
+```
+(where `foo` is the name of the function you are are seeking help about) into the console window (e.g., try `?sin`). 
+
+- &#9420;&nbsp;The `Help` menu on the tool bar provides links to other documentation, including the manuals and FAQs, and a search facility (`Apropos` on the menu) which is useful if you half remember part of the the name of what it is you need help on.
+- Typing `help.start()` opens a web browser with help information.
+- `example(cmd)` will run any examples that are included in the help page for command `cmd`.
+- `demo(topic)` runs demonstration code on topic `topic`:
+  type `demo()` by itself to list all available demos
+
+By default, **R** 's help system only provides information about functions that are in the base system and packages that you have loaded with `library` (see below).
+
+- `??topic` or `help.search("topic")` will list information related to `topic` available in the base system or in any extra installed packages:
+then use `?topic` to see the information, perhaps using
+`library(pkg)` to load the appropriate package first.
+- `help.search` uses fuzzy matching---for example, `help.search("log")` finds more than 800 entries (on my particular system) including lots of functions with "plot", which includes the letters "lot", which are *almost* like "log".
+  If you can't stand it, you can turn this behavior off with the incantation `help.search("log",agrep=FALSE)` (81 results which still include matches for "logistic", "myelogenous", "phylogeny", \dots).
+- `help(package="pkg")` will list all the help pages for a loaded package.
+- `example(fun)` will run the examples (if any) given in the help for a particular function `fun`: e.g., `example(log)`
+- `RSiteSearch("topic")` does a full-text search of all the **R** documentation and the mailing list archives for information on `topic` (you need an active internet connection).
+- the `sos` package is a web-aware help function that searches all of the packages on CRAN; its `findFn` function tries to find and organize functions in any package on CRAN that match a search string (again, you need a network connection for this).
+
+Try out one or more of these aspects of the help system.
+
+Finally, here's a commentary on the help system in **R** from Graham Lawrence:
+
+> I hate to say this, but what really helped me the most, after the initial feet-wetting, was to abandon the help manuals.
+> Searching manuals for the answer to a specific question is frustrating because one does not know the key term for the search engine to deliver the item needed.
+>
+> So I stopped being serious and production oriented and simply played with **R** for a couple of months.
+> Open the Base package, scan the list of contents for titles that pique my curiosity, paste their examples into **R** and see what happens.
+> And those examples use other functions and their documentation has more examples and so on and on; and pretty soon after, whoops, there's another afternoon gone down the tubes.
+> But all this apparent time wasting had a most happy result.
+> I now find, much more often than not, that I know what I need to look up to answer a specific question, and that does wonders for my disposition.
+>
+> I think of **R** as a vast jungle, criss-crossed with myriad game trails (the documentation to each function in the packages).
+> And I can explore each trail and see what animal it leads to in its native habitat, by pasting the examples into **R** and examining the result.
+> So when I see an interesting spoor or paw print, I take a stroll down that trail and see where it leads.
+> Not the most efficient way of learning the language, no doubt, but a pleasant and interesting entertainment rather than a chore.
+
+#### Other help resources
+
+- R reference card: http://cran.r-project.org/doc/contrib/Short-refcard.pdf
+- contributed documentation at CRAN: http://cran.us.r-project.org/other-docs.html
+- R ecology ("environmetrics") task view: http://cran.r-project.org/web/views/Environmetrics.html
+
+
+##### Exercise
+  Do an Apropos on `sin` to see what it does. 
+  Now enter the command
+```{r eval=FALSE}
+??sin
+```
+and see what that does.
+[Answer: `help.search` pulls up all help pages that include `sin` anywhere in their title or text. 
+Apropos just looks at the name of the function.]
+Note that `??sin` is equivalent to `help.search("sin")`.
+If you have a net connection, try `RSiteSearch("sin")` from the command line or the equivalent from the menu and see what happens. 
+
+**R** command             | function
+-----------------         | ------------------------------
+`abs()`                   | absolute value, $|x|$
+`cos()`, `sin()`, `tan()` | cosine, sine, tangent
+`acos()`, `asin()`, `atan()` | arc-cosine, arc-sine, arc-tangent
+`exp(x)`     | exponential function, $e^x$
+`log(x)`     | natural (base-$e$) logarithm, $\log{x}=\ln{x}$
+`log10(x)`   | base-10 logarithm, $\log_10{x}$
+`sqrt(x)`    | square root, $\sqrt{x}$
+`atan2(y,x)` | $\arctan(y/x)$
+`sum()`      | sum of the entries in a vector
+`diff()`     | first differences
+`cumsum()`   | cumulative sum
+`gamma(x)`   | the Gamma function, $\Gamma(x)$
+
+Table: Some of the built-in mathematical functions in **R**.
+
+You can get a more complete list from the help system: 
+`?Arithmetic` for arithmetic operations, `?log` for logarithmic functions, `?sin` for trigonometric functions, and `?Special` for special functions.
+
+## A first interactive session: descriptive statistics
+
+Below are some data on the maximum growth rate $r_{\text{max}}$ of laboratory populations of the green alga *Chlorella vulgaris* as a function of light intensity ($\mu\mathrm{E}~\mathrm{m}^{-2}~\mathrm{s}^{-1}$).
+These experiments were run during the system-design phase of the study reported by @Fussman2000.
+
+| 
+------|------------------------------------------------------
+Light: | 20,  20,  20,  20,  21,  24,  44,  60,  90,  94, 101
+$r_{\text{max}}$: | 1.73, 1.65, 2.02, 1.89, 2.61, 1.36, 2.37, 2.08, 2.69, 2.32, 3.67
+
+
+To analyze these data in **R** , first enter them as numerical *vectors*: 
+```{r }
+Light <- c(20,20,20,20,21,24,44,60,90,94,101)
+rmax <- c(1.73,1.65,2.02,1.89,2.61,1.36,2.37,2.08,2.69,2.32,3.67)
+``` 
+The function `c()` *combines* the individual numbers into a vector.
+Try recalling (with $\uparrow$) and modifying the above command to 
+```{r eval=FALSE}
+Light <- 20,20,20,20,21,24,44,60,90,94,101
+``` 
+and see the error message you get: 
+in order to create a vector of specified numbers, you must use the `c()` function.
+
+To see a histogram of the growth rates enter `hist(rmax)`, which opens a graphics window and displays the histogram. 
+There are **many** other built-in statistics functions in **R**.
+Some of the most commonly used are shown in the table below.
+Play around with these functions, and any others you can think of.
+
+| 
+--------------------|------------------------------------
+`mean(x)`           | the arithmetic mean of the data in `x`
+`exp(mean(log(x)))` | the geometric mean of `x`
+`1/mean(1/x)`       | the harmonic mean of `x`
+`median(x)`         | the median of `x`
+`min(x)`, `max(x)`  | the minimum and maximum, respectively, of `x`
+`range(x)`          | the range of `x`
+`sd(x)`             | the standard deviation of `x`
+`var(x)`            | the variance of `x`
+`quantile(x, p)`    | the `p`-th quantiles of `x`
+`ecdf(x)`        | the empirical cumulative distribution function of `x`
+
+Table: Some functions for descriptive statistics in **R**
+
+To see how the algal rate of increase varies with light intensity, type
+```{r chlorella-plot,eval=FALSE}
+plot(rmax~Light)
+``` 
+to plot `rmax` ($y$) against `Light` ($x$).
+You can also do `plot(Light,rmax)`.
+Based on what you see, does it seem reasonable to hypothesize a linear relationship between these variables?
+
+## Linear regression
+
+To perform linear regression we create a linear model using the `lm()` function:
+```{r}
+fit <- lm(rmax~Light)
+``` 
+In the formula `rmax~Light`, `rmax` is the response variable and `Light` is the predictor.
+
+The `lm` command created an *object* we have named `fit`.
+In **R** , an *object* is a data structure consisting of multiple parts.
+In this case, `fit` holds the results of the linear regression analysis. 
+Unlike other statistics packages, **R** rarely summarizes an analysis for you by default.
+Statistical analyses in **R** are done by fitting a model to data and then issuing additional commands to extract desired information about the model or display results graphically.
+
+To get a summary of the results, enter the command `summary(fit)`. 
+**R** sets up model objects (more on this later) so that the function `summary()` "knows" that `fit` was created by `lm()`, and produces an appropriate summary of results for an `lm()` object: 
+```{r}
+summary(fit)
+``` 
+
+If you've had a statistics course, the output will make sense to you. 
+The table of coefficients gives the estimated regression line as
+$$\text{rmax}=`r signif(coef(fit)[1],3)`+`r signif(coef(fit)[2],3)`\times\text{Light}.$$
+Associated with each coefficient is the standard error of the estimate.
+In addition, a $t$-test is performed on the hypothesis that each coefficient differs from zero: the $t$-statistic and the corresponding $p$-values are reported.
+Finally, the summary reports $R^2$ values and the results of an $F$-test comparing the model to the a simple normal null hypothesis.
+
+You can add the regression line to the plot of the data with a function taking `fit` as its input (if you closed the plot of the data, you will need to create it again in order to add the regression line):
+```{r eval=FALSE}
+abline(fit)
+```
+[`abline` is a general-purpose function for adding lines to a plot.
+You can specify horizontal or vertical lines, a slope and an intercept, or a regression model: `?abline`.] 
+
+```{r echo=FALSE}
+plot(rmax~Light,main="Graphical summary of regression analysis")
+abline(fit)
+```  
+
+You can get the coefficients by using the `coef()` function:
+```{r }
+coef(fit)
+``` 
+There are many other results stored inside `fit`.
+Try the following:
+```{r eval=FALSE}
+residuals(fit)
+fitted(fit)
+effects(fit)
+vcov(fit)
+anova(fit)
+```
+
+## Statistics in **R** 
+
+Some of the important functions and packages (collections of functions) for statistical modeling and data analysis are summarized in \cref{StatModelingFunctions}. 
+The book *Modern Applied Statistics with S* [@Venables2002] gives a good practical overview, and a list of available packages and their contents can be found at the main **R** website (http://cran.r-project.org, and click on `Packages`). 
+
+A few of the functions and packages in **R** for statistical modeling and data analysis. 
+There are **many** more, but you will have to learn about them somewhere else.
+
+| 
+--------------------------|------------------------
+`aov`, `anova`            | Analysis of variance or deviance
+`lm`                      | Linear models (regression, ANOVA, ANCOVA) 
+`glm`                     |  Generalized linear models (e.g. logistic, Poisson regression) 
+`gam`                     | Generalized additive models (in package `mgcv`) 
+`nls`                     | Fit nonlinear models by least-squares
+`lme`, `nlme`             | Linear and nonlinear mixed-effects models (repeated measures, block effects, spatial models): in package `nlme` 
+`princomp`, `manova`, `lda`, `cancor`  | Multivariate analysis (also see packages **vegan**, **ade4**)
+**boot**                  | Package: bootstrapping functions 
+**splines**               | Package: nonparametric regression (more in packages **fields**, **KernSmooth**, **logspline**, **sm** and others)
+**survival**                           | survival analysis 
+**tree**, **rpart**                    | tree-based regression
+
+Table: Statistical modeling and data analysis functions and packages.
+
+
+## The **R** package system
+
+**R** has many extra packages that provide extra functions.
+You may be able to install new packages from a menu within **R**. 
+You can always type, e.g.,
+```{r eval=FALSE}
+install.packages("ggplot2")
+```
+This installs the **ggplot2** package.
+You can install more than one package at a time:
+```{r eval=FALSE}
+install.packages(c("plyr","reshape2"))
+```
+(`c` stands for "combine", and is the command for combining multiple things into a single object.)
+If the machine on which you use **R** is not connected to the Internet, you can download the packages to some other medium (such as a flash drive or CD)
+and install them later, using `Install from local zip file` in the menu (&#9420;) or
+```{r eval=FALSE}
+install.packages("ggplot2",repos=NULL)
+``` 
+
+If you do not have permission to install packages in **R** 's central directory, **R** will may ask whether you want to install the packages in a user-specific directory.
+It is safe to answer "yes" here.
+
+You will frequently get a warning message like
+```
+Warning message: In file.create(f.tg) :
+cannot create file '.../packages.html', reason 'Permission denied'.
+```
+Don't worry about this;
+it means the package has been installed successfully, but the main help system index files couldn't be updated because of file permissions problems.
+
+## Vectors 
+
+The most basic data-type in **R** is the vector.
+A vector is just a 1-dimensional array of values.
+Several different kinds of vectors are available:
+
+  - numerical vectors,
+  - logical vectors,
+  - character-string vectors,
+  - factors,
+  - ordered factors, and
+  - lists.
+
+Lists are treated a bit differently in **R** than the other kinds, so we'll postpone talking about them until later.
+
+Besides its *class*---which kind of vector it is---a vector's only other necessary attribute is its length.
+Optionally, vectors in **R** can have a `names` attribute, which allows you to refer to entries by name.
+
+We've already how to create vectors in **R** using the `c` function, e.g.,
+```{r }
+x <- c(1,3,5,7,9,11)
+y <- c(6.5,4.3,9.1,-8.5,0,3.6)
+z <- c("dog","cat","dormouse","chinchilla")
+w <- c(a=4,b=5.5,c=8.8)
+```{r }
+length(x)
+mode(y)
+mode(z)
+names(w)
+``` 
+
+The nice thing about having vectors as a basic type is that many operations in **R** are efficiently *vectorized*.
+That is, the operation acts on the vector as a unit, saving you the trouble of treating each entry individually.
+For example:
+```{r }
+x <- x+1
+xx <- sqrt(x)
+x; xx
+``` 
+
+Notice that the operations were applied to every entry in the vector. 
+Similarly, commands like `x-5, 2*x, x/10`, and `x^2` apply subtraction, multiplication, and division to each element of the vector. 
+The same is true for operations involving multiple vectors:
+```{r }
+x+y
+``` 
+
+#### Exercise
+  What do the `%%` and `%/%` operators do?
+
+
+In **R** the default is to apply functions and operations to vectors
+in an *element by element* manner; 
+anything else (e.g. matrix multiplication) is done using special notation (discussed below). 
+
+#### Warning: element recycling
+
+**R** has a very useful, but unusual and perhaps unexpected, behavior when two vector operands in a vectorized operation are of unequal lengths.
+It will effectively extend the shorter vector using element "re-cycling": 
+re-using elements of the shorter vector.
+Thus
+```{r}
+x <- c(1,2,3)
+y <- c(10,20,30,40,50,60)
+x+y
+y-x
+``` 
+
+#### Exercise
+  What happens when the length of the longer vector is not a multiple of that of the shorter?
+
+
+### Functions for creating vectors
+
+A set of regularly spaced values can be created with the `seq` function, whose syntax is `x <- seq(from,to,by)` or `x <- seq(from,to)` or `x <- seq(from,to,length.out)`.
+The first form generates a vector `(from,from+by,from+2*by,...)` with the last entry not extending further than than `to`;
+in the second form the value of `by` is assumed to be 1 or -1, depending on whether `from` or `to` is larger; 
+and the third form creates a vector with the desired endpoints and length.
+There is also a shortcut for creating vectors with `by=1`:
+```{r }
+1:8
+```
+
+#### Exercise
+  Use `seq` to create the vector `v=(1 5 9 13)`, and to create a vector going from 1 to 5 in increments of 0.2 . 
+
+
+#### Exercise
+  What happens when `to` is less than `from` in `seq`?
+  What result does `3:1` give?
+  This is one of the first "gotchas" **R** newbies run into.
+
+
+A constant vector such as `(1 1 1 1)` can be created with `rep` function, whose basic syntax is `rep(values,lengths)`.  
+For example,
+```{r }
+rep(3,5)
+``` 
+creates a vector in which the value 3 is repeated 5 times. 
+`rep()` will repeat a whole vector multiple times
+```{r }
+rep(1:3,3)
+```
+or will repeat each of the elements in a vector a given number of times:
+```{r }
+rep(1:3,each=3)
+```
+Even more flexibly, you can repeat each element in the vector a different number of times:
+```{r }
+rep(c(3,4),c(2,5))
+``` 
+The value 3 was repeated 2 times, followed by the value 4 repeated 5 times.
+`rep()` can be a little bit mind-blowing as you get started, but you'll get used to it---and it will turn out to be useful.
+
+| 
+----------------------------|-----------------------------------
+`seq(from,to,by=1)`         | Vector of evenly spaced values (default increment = 1) 
+`seq(from,to,length.out)`   | Vector of evenly spaced values, specified length 
+`c(u,v,...) `               | Combine a set of numbers and/or vectors into a single vector 
+`rep(a,b)`                  | Create vector by repeating elements of `a` `b` times each
+`hist(v)`                   | Histogram plot of value in v 
+`mean(v),var(v),sd(v)`      | Estimate of population mean, variance, standard deviation based on data values in `v` 
+`cov(v,w)`                  | Covariance between two vectors 
+`cor(v,w)`                  | Correlation between two vectors 
+
+Table: Some important **R** functions for creating and working with vectors.
+
+Many of these have other optional arguments; use the help system (e.g. `?cor`) for more information. 
+The statistical functions such as `var` regard the values as samples from a population and compute the unbiased estimate of the population statistic; 
+for example `sd(1:3)=1`.
+
+### Vector indexing
+
+It is often necessary to extract a specific entry or other part of a vector. 
+This procedure is called *vector indexing*, and uses square brackets ([]):
+```{r }
+z <- c(1,3,5,7,9,11); z[3]
+``` 
+`z[3]` extracts the third element of the vector `z`. 
+You can also access a block of elements by giving a vector of indices:
+```{r }
+v <- z[c(2,3,4,5)]
+``` 
+or
+```{r }
+v <- z[2:5]; v
+``` 
+This has extracted the 2nd through 5th elements in the vector. 
+
+#### Exercise
+  If you enter `v <- z[seq(1,5,2)]`, what will happen? 
+  Make sure you understand why.
+
+Extracted parts of a vector don't have to be regularly spaced. For example
+```{r }
+v <- z[c(1,2,5)]; v
+``` 
+
+Indexing is also used to **set specific values within a vector**. 
+For example, 
+```{r }
+z[1] <- 12
+``` 
+changes the value of the first entry in `z` while leaving all the rest alone, and 
+```{r }
+z[c(1,3,5)] <- c(22,33,44)
+``` 
+changes the 1st, 3rd, and 5th values.
+
+Elements in a named vector can be accessed and modified by name as well as by position.
+Thus
+```{r }
+w
+w["a"]
+w[c("c","b")]
+w["b"] <- 0
+w
+``` 
+
+#### Exercise
+  Write a *one-line* command to extract a vector consisting of the second, first, and third elements of `z` *in that order*. 
+
+#### Exercise
+What happens when I set the value of an element that doesn't exist?
+For example, try
+```{r eval=F}
+z[9] <- 11
+```   
+
+You may be wondering if vectors in **R** are row vectors or column vectors (if you don't know what those are, don't worry).
+The answer is "both and neither".
+Vectors are printed out as row vectors, but if you use a vector in an operation that succeeds or fails depending on the vector's orientation, **R** will assume that you want the operation to succeed and will proceed as if the vector has the necessary orientation.
+For example, **R** will let you add a vector of length 5 to a $5 \times 1$ matrix or to a $1 \times 5$ matrix, in either case yielding a matrix of the same dimensions.
+
+#### Exercise
+Write code that computes values of $y=\frac{(x-1)}{(x+1)}$ for $x=1,2,\cdots,10$, and plots $y$ versus $x$ with the points plotted and connected by a line. 
+
+#### Warning: unavoidable imprecision
+
+Note that comparing very similar numeric values can be tricky: rounding can happen, and some numbers cannot be represented exactly on a digital computer.
+By default, **R** displays 7~significant digits.
+This behavior can be modified with `options("digits")`.
+```{r }
+x <- 1.999999; x; x-2
+x <- 1.9999999999999; x; x-2
+x <- 1.99999999999999999; x; x-2
+``` 
+All the digits are still there, in the second case, but they are not shown.
+Also note that `x-2` is not exactly $-1 \times 10^{-13}$; this is unavoidable.
+What happened in the third case?
+
+#### Exercise
+The sum of the geometric series $1 + r + r^2 + r^3 + ... + r^n$ approaches the limit $1/(1-r)$ for $r < 1$ as $n \rightarrow \infty$.
+Take $r=0.5$ and $n=10$, and write a **one-line** command that creates the vector $G = (r^0,r^1,r^2,...,r^n)$.
+Compare the sum (using `sum()`) of this vector to the limiting value $1/(1-r)$. Repeat for $n=50$.
+
+### Logical operations
+
+Some operations return a logical value (i.e., `TRUE` or `FALSE`). 
+For example, try:
+
+```{r }
+a <- 1; b <- 3; 
+c <- a < b
+d <- (a > b)
+c; d
+``` 
+
+The parentheses around `a > b` above are optional but do make the code easier to read.
+Be careful when you make comparisons with negative values:
+`a<-1` may surprise you by setting `a` to 1, because `<-` is the assignment operator in **R**.
+Use `a< -1` or `a<(-1)` to make this comparison.
+
+**R** code | comparison
+---------|-----------------------------------
+`x < y`  | $x$ strictly less than $y$
+`x > y`  | $x$ strictly greater than $y$
+`x <= y` | $x$ less than or equal to $y$
+`x >= y` | $x$ greater than or equal to $y$
+`x == y` | $x$ equal to $y$
+`x != y` | $x$ *not* equal to $y$
+`identical(x,y)` | $x$ completely identical to $y$
+`all.equal(x,y)` | $x$ pretty much equal to $y$
+
+Table: Some comparison operators in **R**. Use `?Comparison` to learn more.
+
+When we compare two vectors or matrices, comparisons are done element-by-element (and the recycling rule applies).
+For example,
+```{r }
+x <- 1:5; b <- (x<=3); b
+``` 
+So if `x` and `y` are vectors, then `(x==y)` will return a vector of values giving the element-by-element comparisons. 
+If you want to know whether `x` and `y` are identical vectors, use `identical(x,y)` or `all.equal(x,y)`. 
+You can use `?Logical` to read more about logical operations. 
+**Note the difference between = and ==.**
+**Can you figure out what happened in the following cautionary tale?**
+```{r }
+a=1:3
+b=2:4
+a==b
+a=b
+a==b
+```
+
+**R** can also do arithmetic on logical values, treating `TRUE` as 1 and `FALSE` as 0.
+So `sum(x<3)` returns the value 2, telling us that two entries of `x` satisfied the condition (`x<3`). 
+This is useful for counting the number of elements of a vector that satisfy a given condition.
+
+More complicated conditions are built by using **logical operators** to combine comparisons:
+
+operator  | meaning
+----------|--------------
+`!`       |   logical NOT
+`&`       |   logical AND, elementwise
+`&&`      |  logical AND, first element only
+`|`       |   logical OR, elementwise 
+`||`      |  logical OR, first element only 
+`xor(x,y)`| exclusive OR, elementwise 
+
+The two forms of logical OR (`|`and `||`) are *inclusive*, meaning that `x|y` is true if either `x` or `y` or both are true. 
+For example, try
+```{r }
+a <- c(1,2,3,4)
+b <- c(1,1,5,5)
+(a<b) | (a>3)
+(a<b) || (a>3)
+```
+and make sure you understand what happened. 
+Use `xor` when exclusive OR is needed.
+The two forms of AND and OR differ in how they handle vectors. 
+The shorter one (`|`, `&`) does element-by-element comparisons; 
+the longer one (`||`, `&&`) looks only at the first element in each vector. 
+
+### More on vector indexing 
+
+We can also use *logical* vectors (lists of `TRUE` and `FALSE` values) to pick elements out of vectors.
+This is useful, for example, in subsetting data.
+
+As a simple example, we might want to focus on just the low-light values of $r_{\text{max}}$ in the *Chlorella* example:
+```{r fetch-chlorella-data,include=FALSE}
+course.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/"
+X <- read.csv(paste0(course.url,"ChlorellaGrowth.csv"),comment.char='#')
+Light <- X[,1]
+rmax <- X[,2];
+```{r }
+lowLight <- Light[Light<50]
+lowLightrmax <- rmax[Light<50]
+lowLight
+lowLightrmax
+```
+
+What is really happening here (think about it for a minute) is that `Light<50` generates a logical vector the same length as `Light` (`TRUE TRUE TRUE ...`) which is then used to select the appropriate values.
+
+If you want the positions at which `Light` is lower than 50, you can use `which`: `which(Light<50)`.
+If you wanted the position at which the maximum value of `Light` occurs, you could say `which(Light==max(Light))` or `which.max(Light)`.
+Note that, if `Light` has several elements that are maximal, the first will return the positions of them all, while the second will return the position only of the *first* one.
+
+#### Exercise
+What would happen if instead of setting `lowLight` you replaced `Light` by saying `Light <- Light[Light<50]`?
+Why would that be the wrong thing to do in the above example?
+
+We can also combine logical operators:
+```{r }
+Light[Light<50 | rmax <= 2.0]
+rmax[Light<50 | rmax <= 2.0]
+```
+Note that we have to be sure to use the elementwise versions of AND and OR (`&` and `|`).
+ 
+#### Exercise
+`runif(n)` is a function that generates a vector of `n` random, uniformly distributed numbers between 0 and 1.
+Create a vector of 20 numbers, then find the subset of those numbers that is less than the mean.
+More on `runif` and related functions soon.
+
+#### Exercise
+Find the *positions* of the elements that are less than the mean of the vector you just created (e.g. if your vector were `(0.1 0.9 0.7 0.3)` the answer would be `(1 4)`).
+
+As was mentioned above, vectors can have names associated with their elements:
+if they do, you can also extract elements by name (use `names()` to find out the names).
+
+```{r }
+x <- c(first=7,second=5,third=2)
+names(x)
+x["first"]
+x[c("third","first")]
+x[c('second','first')] <- c(8,9); x
+```
+
+Finally, it is sometimes handy to be able to drop a particular set of elements, rather than taking a particular set:
+you can do this with negative indices.
+For example, `x[-1]` extracts all but the first element of a vector.
+
+#### Exercise
+Specify two ways to take only the elements in the odd positions (first, third, ...) of a vector of arbitrary length.
+
+## Matrices and arrays
+
+### Creating matrices
+
+A matrix is a two-dimensional array of items.
+Most straightforwardly, we can create a matrix by specifying the number of rows and columns, and specifying the entries.
+For example 
+```{r }
+X <- matrix(c(1,2,3,4,5,6),nrow=2,ncol=3); X
+``` 
+takes the values 1 to 6 and reshapes them into a 2 by 3 matrix. 
+Note that the values in the data vector are put into the matrix *column-wise*, by default.
+You can change this by using the optional parameter `byrow`: 
+```{r }
+A <- matrix(1:9,nrow=3,ncol=3,byrow=TRUE); A
+``` 
+
+**R** will re-cycle through entries in the data vector, if need be, to fill a matrix of the specified size. 
+So for example 
+```{r eval=F}
+matrix(1,nrow=50,ncol=50)
+``` 
+creates a $50{\times}50$ matrix, every entry of which is $1$.
+
+#### Exercise
+Use a command of the form `X <- matrix(v,nrow=2,ncol=4)` where `v` is a data vector, to create the following matrix `X`:
+```{r echo=F,comment=""}
+print(X <- matrix(rep(c(1,2),times=4),nrow=2))
+```   
+
+**R** will also collapse a matrix to behave like a vector whenever it makes sense: 
+for example `sum(X)` above is `r sum(X)`.
+
+
+#### Exercise
+  Use `rnorm` and `matrix` to create a $5{\times}7$ matrix of Gaussian random numbers with mean 1 and standard deviation 2. 
+
+ 
+Another useful function for creating matrices is `diag`.
+`diag(v,n)` creates an $n{\times}n$ matrix with data vector $v$ on its diagonal. 
+So for example `diag(1,5)` creates the $5{\times}5$ *identity matrix*, which has 1s on the diagonal and 0 everywhere else.
+
+Finally, one can use the `data.entry` function. 
+This function can only edit existing matrices, but for example (try this now!)
+```{r eval=F}
+A <- matrix(0,3,4)
+data.entry(A)
+``` 
+will create `A` as a $3{\times}4$ matrix, and then call up a spreadsheet-like interface in which the values can be edited directly.
+You can further modify `A` with the same primitive interface, using `fix`.
+
+**R** code                | purpose
+--------------------------|---------------------------------------------
+`matrix(v,nrow=m,ncol=n)` | $m \times n$ matrix using the values in `v` 
+`t(A)`                    | transpose (exchange rows and columns) of matrix `A` 
+`dim(X)`                  | dimensions of matrix X. `dim(X)[1]`=\# rows, `dim(X)[2]`=\# columns 
+`data.entry(A)`           | call up a spreadsheet-like interface to edit the values in `A` 
+`diag(v,n)`               | diagonal $n \times n$ matrix with $v$ on diagonal, 0 elsewhere (`v` is 1 by default, so `diag(n)` gives an $n \times n$ identity matrix)
+`cbind(a,b,c,...)`        | combine compatible objects by attaching them along columns 
+`rbind(a,b,c,...)`        | combine compatible objects by attaching them along rows 
+`as.matrix(x)`            | convert an object of some other type to a matrix, if possible 
+`outer(v,w)`              | "outer product" of vectors `v`, `w`: the matrix whose $(i,j)$-th element is `v[i]*w[j]` 
+
+Table: Some important functions for creating and working with matrices.
+
+Many of these have additional optional arguments; use the help system for full details.
+
+### `cbind` and `rbind` 
+If their sizes match, vectors can be combined to form matrices, and matrices can be combined with vectors or matrices to form other matrices. 
+The functions that do this are `cbind` and `rbind`. 
+
+`cbind` binds together columns of two objects. 
+One thing it can do is put vectors together to form a matrix: 
+```{r }
+C <- cbind(1:3,4:6,5:7); C
+``` 
+Remember that **R** interprets vectors as row or column vectors according to what you're doing with them. 
+Here it treats them as column vectors so that columns exist to be bound together. 
+On the other hand, 
+```{r }
+D <- rbind(1:3,4:6); D
+``` 
+treats them as rows. 
+Now we have two matrices that can be combined. 
+
+#### Exercise
+  Verify that `rbind(C,D)` works, `cbind(C,C)` works, but `cbind(C,D)` doesn't. 
+  Why not? 
+
+
+
+### Matrix indexing
+Matrix indexing is like vector indexing except that you have to specify both the row and column, or range of rows and columns. 
+For example `z~<-~A[2,3]` sets `z` equal to 6, which is the (2\textsuperscript{nd} row, 3\textsuperscript{rd} column) entry of the matrix **A** that you recently created, and 
+```{r }
+A[2,2:3]; 
+B <- A[2:3,1:2]; B
+``` 
+
+There is an easy shortcut to extract entire rows or columns: leave out the limits, leaving a blank before or after the comma.
+```{r }
+first.row <- A[1,]; first.row
+second.column <- A[,2]; second.column;
+``` 
+
+(What does `A[,]` do?)
+
+As with vectors, indexing also works in reverse for assigning values to matrix entries. 
+For example,
+```{r }
+A[1,1] <- 12; A
+``` 
+
+The same can be done with blocks, rows, or columns, for example
+```{r }
+A[1,] <- c(2,4,5); A
+``` 
+
+If you use `which()` on a matrix, **R** will normally treat the matrix as a vector---so for example `which(A==8)` will give the answer 6 (can you see why?).
+However, `which()` does have an option that will treat its argument as a matrix:
+```{r }
+which(A>=8,arr.ind=TRUE)
+``` 
+
+### Arrays
+
+The generalization of the matrix to more (or less) than 2 dimensions is the array.
+In fact, in **R** , a matrix is nothing other than a 2-dimensional array.
+How does **R** store arrays?
+In the simplest possible way: an array is just a vector plus information on the size of the array.
+Most straightforwardly, we can create an array from a vector:
+```{r}
+X <- array(1:24,dim=c(3,4,2)); X
+``` 
+Note, again, that the arrays are filled in a particular order: the first dimension first, then the second, and so on.
+A one-dimensional array is subtly different from a vector:
+```{r }
+y <- 1:5; y
+z <- array(1:5,dim=5); z
+y==z
+identical(y,z)
+dim(y); dim(z)
+``` 
+
+#### Exercise
+  What happens when we set the dimension attribute on a vector?
+  For example:
+```{r eval=F}
+x <- seq(1,27)
+dim(x) <- c(3,9)
+is.array(x)
+is.matrix(x)
+```   
+
+
+## Factors
+
+For dealing with measurements on the nominal and ordinal scales [@Stevens1946], **R** provides vectors of type *factor*.
+A factor is a variable that can take one of a finite number of distinct *levels*.
+To construct a factor, we can apply the `factor` function to a vector of any class:
+```{r }
+x <- rep(c(1,2),each=3); factor(x)
+trochee <- c("jetpack","ferret","pizza","lawyer")
+trochee <- factor(trochee); trochee
+``` 
+By default, `factor` sets the levels to the unique set of values taken by the vector.
+To modify that behavior, there is the `levels` argument:
+```{r }
+factor(trochee,levels=c("ferret","pizza","cowboy","scrapple"))
+``` 
+Note that the order of the levels is arbitrary, in keeping with the fact that the only operation permissible on the nominal scale is the test for equality.
+In particular, the factors created with the `factor` command are un-ordered: there is no sense in which we can ask whether, e.g., `ferret < cowboy`.
+
+To represent variables measured on the ordinal scale, **R** provides *ordered factors*, constructed via the `ordered` function.
+An ordered factor is just like an un-ordered factor except that the order of the levels matters:
+```{r echo=F}
+set.seed(349585885L)
+``` 
+```{r }
+x <- ordered(sample(x=letters,size=22,replace=TRUE)); x
+``` 
+Here, we've relied on `ordered`'s default behavior, which is to put the levels in alphabetical order.
+It's typically safer to specify explicitly what order we want:
+```{r }
+x <- ordered(x,levels=rev(letters))
+x[1:5] < x[18:22]
+``` 
+
+#### Exercise
+  Look up the documentation on the `sample` function used above.
+
+
+#### Exercise
+  Can I make a matrix or an array out of a factor variable?
+
+
+#### Exercise
+  What is the internal representation of factors in **R** ?
+  Try converting factors to integers using `as.integer`.
+  Try converting an integer vector to a factor using `factor`.
+
+## Other structures: Lists and data frames
+
+### Lists
+While vectors and matrices may seem familiar, lists may be new to you.
+Vectors and matrices have to contain elements that are all the same type: 
+lists in **R** can contain anything---vectors, matrices, other lists, \ldots.
+Indexing is a little different too: use `[[ ]]` to extract an element of a list by number or name or `$` to extract an element by name (only).
+Given a list like this:
+```{r }
+L <- list(A=x,B=trochee,C=c("a","b","c"))
+``` 
+Then `L$A`, `L[["A"]]`, and `L[[1]]` will each return the first element of the list.
+To extract a sublist, use the ordinary single square brackets: `[]`:
+```{r }
+L[c("B","C")]
+``` 
+
+
+### Data frames
+
+Vectors, matrices, and lists of one sort or another are found in just about every programming language.
+The *data frame* structure is (or was last time I checked) unique to **R** , and is central to many of **R** 's useful data-analysis features.
+It's very natural to want to store data in vectors and matrices.
+Thus, in the example above, we stored measurements of two variables ($r_\text{max}$ and light level) in vectors.
+This was done in such a way that the observations of the first replicate were stored in the first element of each vector, the second in the second, and so on.
+To explicitly bind together observations corresponding to the same replicate, we might join the two vectors into a matrix using `cbind`.
+In the resulting data structure, each row would correspond to an observation, each column to a variable.
+This is possible, however, only because both variables are of the same type: they're both numerical.
+More commonly, a data set is made up of several different kinds of variables.
+The data frame is **R** 's solution to this problem.
+
+Data frames are a hybrid of lists and vectors.
+Internally, they are a list of vectors which can be of different types but must all be the same length.
+However, they behave somewhat like matrices, in that you can do most things to them that you can do with matrices.
+You can index them either the way you would index a list, using `[[ ]]` or `$`---where each variable is a different item in the list---or the way you would index a matrix.  
+You can turn a data frame into a matrix (using `as.matrix()`, but only if all variables are of the same class) and a matrix into a data frame (using `as.data.frame()`).
+
+When data are read into **R** from an external file using one of the `read.xxx` commands (`read.csv`, `read.table`, `read.xls`, etc.), the object that is created is a data frame.
+```{r }
+data.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/ChlorellaGrowth.csv"
+dat <- read.csv(data.url,comment.char='#')
+dat
+``` 
+
+#### Exercise
+Download the `hurricanes.csv` file from the course website:
+http://kinglab.eeb.lsa.umich.edu/R_Tutorial/hurricanes.csv.
+Examine the resulting data frame by printing it and using the `str` command.
+Note the class type of each variable.
+
+
+## Probability distributions in R
+
+**R** contains a great deal of distilled knowledge about probability distributions.
+In particular, for each of a large class of important distributions, methods to compute probability distribution functions (p.d.f., i.e., density or mass functions), cumulative distribution functions (c.d.f.), and quantile functions are available, as are methods for simulating these distributions (i.e., drawing random deviates with the desired distribution).
+Conveniently, these are all named using the same scheme:
+
+&nbsp;   | &nbsp;
+-------------------|----------------------------------
+`dxxx(x, ...)` | probability distribution function
+`pxxx(q, ...)` | cumulative distribution function
+`qxxx(p, ...)` | quantile function (i.e., inverse of `pxxx`)
+`rxxx(n, ...)` | simulator
+
+In the above `xxx` stands for the abbreviated name of the specific distribution (the "**R** name" as given in \cref{tab:distribs}).
+In each case, the `...` indicates that additional, distribution-specific, parameters are to be supplied.
+\Cref{tab:distribs} lists some of the more common distributions built in to **R**.
+A complete list of distributions provided by the base **stats** package can be viewed by executing `?Distributions`.
+
+Some of the probability distributions built in to **R**.
+For complete documentation, execute e.g., `?dbinom` in an **R** session.
+
+Distribution | **R** name | Parameters | Range
+-------------|------------|------------|---------
+Discrete distributions|||
+    Binomial | `binom` | size, prob | $0,1,\dots,\mathrm{size}$
+    Bernoulli | `binom` (`size=1`) | prob | $0,1$
+    Poisson | `pois` | lambda | $0,1,\dots,\infty$
+    Negative binomial | `nbinom` | size, (prob or mu) | $0,1,\dots,\infty$
+    Geometric | `geom` | rate | $0,1,\dots,\infty$
+    Hypergeometric | `hyper` | m, n, k | $0,1,\dots,m$
+    Multinomial | `multinom` | size, $\mathrm{prob}\in[0,1]^m$ | $\{(x_1,\dots,x_m): \sum\!x_i=\mathrm{size}\}$
+Continuous distributions|||
+    Uniform | `unif` | min, max | $[\mathrm{min},\mathrm{max}]$
+    Normal | `norm` | mean, sd | $(-\infty,\infty)$
+    Gamma | `gamma` | shape, (scale or rate) | $[0,\infty)$
+    Exponential | `exp` | mu | $[0,\infty)$
+    Beta | `beta` | shape1, shape2 | $[0,1]$
+    Lognormal | `lnorm` | meanlog, sdlog | $[0,\infty)$
+    Cauchy | `cauchy` | location, scale | $(\infty,\infty)$
+    $\chi^2$ | `chisq` | df | $[0,\infty)$
+    Student's T | `t` | df | $[0,\infty)$
+    Weibull | `weibull` | shape, scale | $[0,\infty)$
+
+#### Exercise
+  Write codes to plot the c.d.f.&nbsp;of the binomial distribution (`pbinom`).
+  Verify the relationship between the p.d.f.&nbsp;(`dbinom`) and the c.d.f.
+
+
+#### Exercise
+  Plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the Poisson distribution for several values of the parameter $\lambda$.
+
+
+#### Exercise
+  Plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the gamma distribution for several values of the shape and scale (or rate) parameters.
+  Put in a vertical line to indicate the mean.
+  Be sure to explore both large and small values of the shape parameter.
+
+
+#### Exercise
+  Use **Rstudio**'s `manipulate` facility to plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the beta distribution for several values of the first and second shape parameters.
+  Put in a vertical line to indicate the mean.
+  Be sure to explore the full ranges of the parameters.
+
+
+## Script files and data files
+
+Modeling and complicated data analysis are often accomplished more efficiently using *scripts*, which are a series of  commands stored in a text file. 
+The Windows and MacOS versions of **R** both have basic script editors.
+You can also use Windows Notepad or Wordpad, or a more featureful editor like PFE, emacs (with ESS, "emacs speaks statistics"), or Tinn-R: 
+you **should not** use MS Word or other fancy editors (see below).
+
+Most programs for working with models or analyzing data follow a simple pattern of program parts:
+1. Setup statements.
+2. Input some data from a file.
+3. Carry out the calculations that you want.
+4. Print the results, graph them, and/or save them to a file.
+
+
+For example, a script file might
+
+1. Load some packages, or "source" another script file that creates some functions (more on functions later). 
+2. Read in data from a text file.
+2. Fit several statistical models to the data and compare them.
+1. Graph the results, and save the graph to disk for including in your paper. 
+
+Even for relatively simple tasks, script files are useful for building up a calculation step-by-step, making sure that each part works before adding on to it.
+They are also **essential** for making research reproducible.
+
+Tips for working with data and script files (sounding slightly scary but just trying to help you avoid common pitfalls):
+
+- To let **R** know where data and script files are located, you have a few choices:
+  - change your working directory to wherever the file(s) are located before running **R**.
+  - change your working directory within an **R** session to wherever the file(s) are located using the `setwd()` (**set** **w**orking **d**irectory) function, e.g. `setwd("c:/temp")`.
+  - spell out the path to the file explicitly. 
+    Use a single forward slash to separate folders (e.g., &#9420;&nbsp;`"c:/My~Documents/R/script.R"` or 
+ix&nbsp;`"/home/kingaa/projects/hurricanes"`): this works on all platforms.
+    The first option is far preferable, since it makes your codes portable:
+    as long as you copy the whole directory, you can copy it whereever you like and **R** will find what it needs.
+    
+&#9420;
+If you have a shortcut defined for **R** on your desktop (or possibly in the Start menu) you can *permanently* change your default working directory by right-clicking on the shortcut icon, selecting `Properties`, and changing the starting directory to somewhere like (for example) `My~Documents/projectX`.
+
+- It's important that script files be preserved as *plain text* and data files also as plain text, using comma- or tab-separated format.
+  There are three things that can go wrong here: 
+(1) if you use a web browser to download files, be careful that it doesn't automatically append some weird suffix to the files or translate them into something other than plain text.
+(2) if your web browser uses "file associations" (e.g., it thinks that all files ending in `.dat` are Excel files), make sure to save the file as plain text, and without any extra extensions; 
+(3) **never use Microsoft Word or other word-processors to edit your data and script files**; 
+MS Word will try very hard to get you to save them as Word (rather than text) files, which will screw them up!
+(4) If you send script files by e-mail, even if you are careful to send them as plain text, lines will occasionally get broken in different places, which can lead to confusion.
+  Beware.
+
+As a first example, the file `Intro1.R` has the commands from the interactive regression analysis. 
+Download `Intro1.R` and save it to your computer:
+
+<!--
+%% **Important:** before working with an example file, create a personal copy in some location on your own computer. 
+%% We will refer to this location as your *temp folder*. 
+%% At the end of a lab session you **must** move files onto your personal disk (or email them to yourself).
+-->
+
+```{r }
+download.file(paste0(course.url,"Intro1.R"),destfile="Intro1.R",mode="w")
+``` 
+Open **your copy** of `Intro1.R`. 
+In your editor, select and Copy the entire text of the file, and then Paste the text into the **R** console window. 
+This has the same effect as entering the commands by hand into the console: they will be executed and so a graph is displayed with the results. 
+Cut-and-Paste allows you to execute script files one piece at a time (which is useful for finding and fixing errors). 
+The `source` function allows you to run an entire script file, e.g., 
+```{r eval=FALSE}
+source("Intro1.R")
+```
+
+Another important time-saver is loading data from a text file. 
+Grab copies of `Intro2.R` and `ChlorellaGrowth.csv` from the dropsite to see how this is done. 
+```{r }
+download.file(paste0(course.url,"Intro2.R"),destfile="Intro2.R",mode="w")
+download.file(paste0(course.url,"ChlorellaGrowth.csv"),destfile="ChlorellaGrowth.csv",mode="w")
+``` 
+In `ChlorellaGrowth.csv` the two variables are entered as columns of a data matrix. 
+Then instead of typing these in by hand, the command
+```{r echo=F,results='hide'}
+<<fetch-chlorella-data>>  
+```{r eval=F}
+X <- read.csv("ChlorellaGrowth.csv",comment.char='#')
+```
+reads the file (from the current directory) and puts the data values into the variable `X`.
+**Note** that as specified above you need to make sure that **R** is looking for the data file in the right place:
+either move the data file to your current working directory, or change the line so that it points to the actual location of the data file.
+Note also the `comment.char` option in the call to `read.csv`; 
+this tells **R** to ignore lines that begin with a `#` and allows us to use self-documenting data files (a very good practice).
+
+Extract the variables from `X` with the commands
+```{r }
+Light <- X[,1]
+rmax <- X[,2]
+``` 
+Think of these as shorthand for "`Light` = everything in column 1 of `X`", and "`rmax` = everything in column 2 of `X`" (we'll learn about working with data matrices later). From there on out it's the same as before, with some additions
+that set the axis labels and add a title.  
+
+#### Exercise
+
+Make a copy of `Intro2.R` under a new name, and modify the copy so that it does linear regression of algal growth rate on the natural log of light intensity, `LogLight=log(Light)`, and plots the data appropriately. 
+You should end up with a graph that resembles the following.
+
+```{r echo=FALSE,results='hide',fig.width=8,fig.height=6}
+Light <- X$light; rmax <- X$rmax
+logLight <- log(Light)
+op <- par(cex=1.5,cex.main=0.9)
+plot(logLight,rmax,xlab="Log light intensity (uE/m2/s)",
+     ylab="Maximum growth rate rmax (1/d)",pch=16); 
+title(main="Data from Fussmann et al. (2000) system");
+fit <- lm(rmax~logLight);
+summary(fit); abline(fit); 
+rcoef <- round(coef(fit),digits=3)
+text(3.7,3.5,paste("rmax=",rcoef[1],"+",rcoef[2],"log(Light)"));
+par(op)
+```
+
+#### Exercise
+  Run `Intro2.R`, then enter the command `plot(fit)` in the console and follow the directions in the console.
+  Figure out what just happened by entering `?plot.lm` to bring up the help page for the function `plot.lm()` that carries out a `plot()` command for an object produced by `lm()`. 
+  (This is one example of how **R** uses the fact that statistical analyses are stored as model objects. 
+  `fit` "knows" what kind of object it is (in this case an object of type `lm`), and so `plot(fit)` invokes a function that produces plots suitable for an `lm` object.) 
+  **Answer:** **R** produced a series of diagnostic plots exploring whether or not the fitted linear model is a suitable fit to the data. In each of the plots, the 3 most extreme points (the most likely candidates for "outliers") have been identified according to their sequence in the data set. 
+
+
+  The axes in plots are scaled automatically, but the outcome is not always ideal (e.g. if you want several graphs with exactly the same axes limits). 
+  You can control scaling using the `xlim` and `ylim` arguments in `plot`:
+  \hspace*{1in}  `plot(x,y,xlim=c(x1,x2), [other stuff]) ` 
+  will draw the graph with the $x$-axis running from `x1` to `x2`, and using `ylim=c(y1,y2)` within the `plot()` command will do the same for the $y$-axis. 
+
+#### Exercise
+  Create a plot of growth rate versus light intensity with the $x$-axis running from 0 to 120, and the $y$-axis running from 1 to 4. 
+
+
+#### Exercise
+  Several graphs can be placed within a single figure by using the `par` function (short for "parameter") to adjust the layout of the plot. 
+  For example the command 
+  \hspace*{0.5in} `par(mfrow=c(m,n))` 
+  divides the plotting area into $m$ rows and $n$ columns. 
+  As a series of graphs is drawn, they are placed along the top row from left to right, then along the next row, and so on.
+  `mfcol=c(m,n)` has the same effect except that successive graphs are drawn down the first column, then down the second column, and so on. 
+
+  Save `Intro2.R` with a new name and modify the program as follows. 
+  Use `mfcol=c(2,1)` to create graphs of growth rate as a function of `Light`, and of `log(growth rate)` as a function of `log(Light)` in the same figure.  
+  Do the same again, using `mfcol=c(1,2)`. 
+
+
+#### Exercise
+Use `?par` to read about other plot control parameters that can be set using `par()`.
+  Then draw a $2 \times 2$ set of plots, each showing the line $y=5x+3$ with x running from 3 to 8, but with 4 different line styles and 4 different line colors. 
+
+#### Exercise
+  Modify one of your scripts so that at the very end it saves the plot to disk. 
+  You can accomplish this using the `dev.print()` function.
+  Do `?dev.print` to read about this function. 
+  Note that you need to specify the `file` argument to write your graphics to a file; if you don't, it will try and send it to a printer.
+  Also note that many alternative formats are available via the `dev` argument.
+
+
+## Looping in **R** 
+
+Very frequently, a computation involves iterating some procedure across a range of cases, and every computer language I've ever come across has one or more facilities for producing such *loops*.
+**R** is no exception, though judging by their code, many **R** programmers look down their noses at loops.
+The fact remains that, at some point in life, one simply has to write a `for` loop.
+Here, we'll look at the looping constructs available in **R**.
+
+### `for` loops
+
+Execute the following code.
+```{r results='hide'}
+phi <- 1
+for (k in 1:100) {
+  phi <- 1+1/phi
+  print(c(k,phi))
+}
+``` 
+What does it do?
+Sequentially, for each value of `k` between 1 and 100, `phi` is modified.
+More specifically, at the beginning of the `for` loop, a vector containing all the integers from 1 to 100 in order is created.
+Then, `k` is set to the first element in that vector, i.e., 1.
+Then the **R** expression from the `{` to the `}` is evaluated.
+When that expression has been evaluated, `k` is set to the next value in the vector.
+The process is repeated until, at the last evaluation, `k` has value 100.
+
+As an aside, note that the final value of `phi` is the Golden Ratio, `r signif((sqrt(5)+1)/2,12)`.
+`r if (phi!=(sqrt(5)+1)/2) "LIE!!"`
+
+As an example of a situation where a loop of some sort is really needed, suppose we wish to iterate the Beverton-Holt map (one of the simplest discrete-time models of population growth),
+\begin{equation*}
+  N_{t+1} = \frac{a\,N_t}{1+b\,N_t}.
+\end{equation*}
+We simply have no option but to do the calculation one step at a time.
+Here's an **R** code that does this
+```{r }
+a <- 1.1
+b <- 0.001
+T <- seq(from=1,to=200,by=1)
+N <- numeric(length(T))
+n <- 2
+for (t in T) {
+  n <- a*n/(1+b*n)
+  N[t] <- n
+}
+``` 
+Spend some time to make sure you understand what happens at each line of the above.
+We can plot the population sizes $N_t$ through time via
+```{r }
+plot(T,N)
+``` 
+
+#### Gotcha:
+An alternative way to do the above might be something like
+```{r }
+N <- numeric(length(T))
+for (t in 1:length(T)) {
+  n <- a*n/(1+b*n)
+  N[t] <- n
+}
+``` 
+
+#### Exercise
+  Check that this works with different vectors `T`.
+  What happens when `T` has length 1?
+  What happens when `T` has length 0?  Why?
+  To avoid this trap, it's preferable to use `seq_len`, `seq_along`, or `seq.int` instead of the `1:n` construction used above.
+  This and many other **R** gotchas are described in the useful [*R Inferno* [@Burns2012]](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf).
+
+
+
+### `while` loops
+
+A second looping construct is the `while` loop.
+Using `while`, we can compute the Golden Ratio as before:
+```{r results='hide'}
+phi <- 20
+k <- 1
+while (k <= 100) {
+  phi <- 1+1/phi
+  print(c(k,phi))
+  k <- k+1
+}
+``` 
+What's going on here?
+First, `phi` and `k` are initialized.
+Then the `while` loop is started.
+At each iteration of the loop, `phi` is modified, and intermediate results printed, as before.
+In addition, `k` is incremented.
+The `while` loop continues to iterate until the condition `k <= 100` is no longer `TRUE`, at which point, the `while` loop terminates.
+
+Note that here we've chosen a large number (100) of iterations.
+Perhaps we could get by with fewer.
+If we wanted to terminate the iterations as soon as the value of `phi` stopped changing, we could do:
+```{r results='hide'}
+phi <- 20
+conv <- FALSE
+while (!conv) {
+  phi.new <- 1+1/phi
+  conv <- phi==phi.new
+  phi <- phi.new
+}
+``` 
+
+#### Exercise
+Verify that the above works as intended.
+How many iterations are needed?
+
+
+Another way to accomplish this would be to use `break` to stop the iteration when a condition is met.
+For example
+```{r results='hide'}
+phi <- 20
+while (TRUE) {
+  phi.new <- 1+1/phi
+  if (phi==phi.new) break
+  phi <- phi.new
+}
+``` 
+While this `while` loop is equivalent to the one before, it does have the drawback that, if the `break` condition is never met, the loop will go on indefinitely.
+An alternative that avoids this is to use a `for` loop with a large (but finite) number of iterations, together with `break`:
+```{r results='hide'}
+phi <- 3
+for (k in seq_len(1000)) {
+  phi.new <- 1+1/phi
+  if (phi==phi.new) break
+  phi <- phi.new
+}
+``` 
+
+#### Exercise
+Recompute the trajectory of the Beverton-Holt model using a `while` loop.
+Verify that your answer is exactly equivalent to the one above.
+
+
+### `repeat` loops
+
+A third looping construct in **R** involves the `repeat` keyword.
+For example,
+```{r }
+phi <- 12
+repeat {
+  phi.new <- 1/(1+phi)
+  if (phi==phi.new) break
+  phi <- phi.new
+}
+``` 
+
+In addition, **R** provides the `next` keyword, which, like `break`, is used in the body of a looping construct.
+Rather than terminating the iteration, however, it aborts the current iteration and leads to the immediate execution of the next iteration.
+
+For more information on looping and other control-flow constructs, execute `?Control`.
+
+## Functions and environments
+
+### Definitions and examples
+
+An extremely useful feature in **R** is the ability to write arbitrary *functions*.
+A function, in this context, is an algorithm that performs a specific computation that depends on inputs (the function's *arguments*) and produces some output (the function's *value*) and/or has some *side effects*.
+Let's see how this is done.
+
+Here is a function that squares a number.
+```{r }
+sq <- function (x) x^2
+``` 
+The syntax is `function (arglist) expr`.
+The one argument in this case is `x`.
+When a particular value of `x` is supplied, **R** performs the squaring operation.
+The function then *returns* the value `x^2`:
+```{r }
+sq(3); sq(9); sq(-2);
+``` 
+
+Here is a function with two arguments and a more complex *body*, as we call the expression that is evaluated when the function is called.
+```{r }
+f <- function (x, y = 3) {
+  a <- sq(x)
+  a+y
+}
+```
+Here, the body is the **R** expression from `{` to `}`. 
+Unless the `return` codeword is used elsewhere in the function body, the value returned is always the last expression evaluated.
+Thus:
+```{r }
+f(3,0); f(2,2); f(3);
+``` 
+Note that in the last case, only one argument was supplied.
+In this case, `y` assumed its default value, 3.
+
+Note that functions need not be assigned to symbols; they can be *anonymous*:
+```{r }
+function (x) x^5
+(function (x) x^5)(2)
+``` 
+
+A function can also have side effects, e.g.,
+```{r }
+hat <- "hat"
+hattrick <- function (y) {
+  hat <<- "rabbit"
+  2*y
+}
+hat; hattrick(5); hat
+``` 
+However, the very idea of a function insists that we should never experience *unintentional* side effects.
+We'll see how **R** realizes this imperative below.
+
+#### An aside 
+If we want the function not to automatically print, we can wrap the return value in `invisible()`:
+```{r }
+hattrick <- function (y) {
+  hat <<- "rabbit"
+  invisible(2*y)
+}
+hattrick(5)
+print(hattrick(5))
+``` 
+
+A function in **R** is defined by three components:
+
+- its *formal parameters*, i.e., its argument list,
+- its body, and
+- its *environment*, i.e., the context in which the function was defined.
+
+**R** provides simple functions to interrogate these function components:
+```{r }
+formals(hattrick)
+body(hattrick)
+environment(hattrick)
+``` 
+
+### Function scope
+
+\footnote{This section draws heavily, and sometimes verbatim, on {\S}10.7 of the *Introduction to **R** * manual [@RIntro].}As noted above, a paramount consideration in the implementation of functions in any programming language is that unintentional side effects should never occur.
+In particular, I should be free to write a function that creates temporary variables as an aid to its computations, and be able to rest assured that no variables I create temporarily will interfere with any other variables I've defined anywhere else.
+To accomplish this, **R** has a specific set of *scoping rules*.
+
+Consider the function
+```{r }
+f <- function (x) {
+  y <- 2*x
+  print(x)
+  print(y)
+  print(z)
+}
+``` 
+In this function's body, `x` is a formal parameter, `y` is a local variable, and `z` is a free, or *unbound* variable.
+When `f` is evaluated, each of these variables must be *bound* to some value.
+In **R** , the free variable bindings are resolved---each time the function is evaluated---by first looking in the environment where the function was created.
+This is called *lexical scope*.
+Thus if we execute
+```{r echo=F,results='hide'}
+rm(z)
+```{r eval=F}
+f(3)
+``` 
+we get an error, because no object named `z` can be found.
+If, however, we do
+```{r }
+z <- 10
+f(3)
+``` 
+we don't get an error, because `z` is defined in the environment, `<environment: R_GlobalEnv>`, of `f`.
+Similarly, when we do
+```{r }
+z <- 13
+g <- function (x) {
+  2*x+z
+}
+f <- function (x) {
+  z <- -100
+  g(x)
+}
+f(5)  
+``` 
+The relevant value of `z` is the one in the environment where `g` was *defined*, not the one in the environment wherein it is *called*.
+
+### Nested functions and environments
+
+In each of the following examples, make sure you understand exactly what has happened.
+
+Consider this:
+```{r }
+y <- 11
+f <- function (x) {
+  y <- 2*x
+  y+x
+}
+f(1); y
+``` 
+
+#### Exercise
+  Why hasn't `y` changed its value?
+
+
+What about this?
+```{r }
+y <- 0
+f <- function (x) {
+  2*x+y
+}
+f(1); y
+``` 
+
+#### Exercise
+  Why is the return value of `f` different?
+
+
+How about the following?
+```{r }
+g <- function (y) y
+f <- function (x) {
+  g <- function (y) {
+    2*y
+  }
+  11+g(x)
+}
+f(2); g(2)
+``` 
+
+#### Exercise
+  Be sure you understand what's happening at each line and why you get the results you see.
+
+
+Another example:
+```{r }
+y <- 11
+f <- function (x) {
+  y <- 22
+  g <- function (x) {
+    x+y
+  }
+  g(x)
+}
+f(1); y
+``` 
+
+#### Exercise
+  Which value of `y` was used?
+
+
+Compare that with this:
+```{r }
+y <- 11
+f <- function (x) {
+  y <- 22
+  g <- function (x) {
+    y <<- 7
+    x+y
+  }
+  c(g(x),y)
+}
+f(1); y
+``` 
+and this:
+```{r }
+y <- 11
+f <- function (x) {
+  g <- function (x) {
+     x+y
+  }
+  g(x)
+}
+f(1); y
+``` 
+and this:
+```{r }
+f <- function (x) {
+  y <- 37
+  g <- function (x) {
+    h <- function (x) {
+      x+y
+    }
+    h(x)
+  }
+  g(x)
+}
+f(1); y
+``` 
+Finally, consider the following:
+```{r }
+rm(y)
+f <- function (x) {
+   g <- function (x) {
+     y <<- 2*x
+     y+1
+   }
+   g(x)+1
+ }
+f(11); y
+f(-2); y
+``` 
+
+#### Exercise
+  In the above five code snippets, make sure you understand the differences.
+
+
+As mentioned above, each function is associated with an environment: the environment within which it was defined.
+When a function is evaluated, a new temporary environment is created, within which the function's calculations are performed.
+Every new environment has a parent, the environment wherein it was created.
+The parent of this new environment is the function's environment.
+To see this, try
+```{r results="hold"}
+f <- function () {
+  g <- function () {
+    h <- function () {
+      cat("inside function h:\n")
+      cat("current env: ")
+      print(sys.frame(sys.nframe()))
+      cat("parent env: ")
+      print(parent.frame(1))
+      cat("grandparent env: ")
+      print(parent.frame(2))
+      cat("great-grandparent env: ")
+      print(parent.frame(3))
+      invisible(NULL)
+    }
+    cat("inside function g:\n")
+    cat("environment of h: ")
+    print(environment(h))
+    cat("current env: ")
+    print(sys.frame(sys.nframe()))
+    cat("parent env: ")
+    print(parent.frame(1))
+    cat("grandparent env: ")
+    print(parent.frame(2))
+    h()
+  }
+  cat("inside function f:\n")
+  cat("environment of g: ")
+  print(environment(g))
+  cat("current env: ")
+  print(sys.frame(sys.nframe()))
+  cat("parent env: ")
+  print(parent.frame(1))
+  g()
+}
+cat("environment of f: "); print(environment(f))
+cat("global env: "); print(sys.frame(sys.nframe()))
+f()
+``` 
+
+Each variable referenced in the function's body is bound, first, to a formal argument if possible.
+If a local variable of that name has previously been created (via one of the assignment operators `<-`, `->`, or `=`, this is the variable that is affected by any subsequent assignments.
+If the variable is neither a formal parameter nor a local variable, then the parent environment of the function is searched for that variable.
+If the variable has not been found in the parent environment, then the grand-parent environment is searched, and so on.
+
+If the assignment operators `<<-` or `->>` are used, a more extensive search for the referenced assignee is made.
+If the variable does not exist in the local environment, the parent environment is searched.
+If it does not exist in the parent environment, then the grand-parent environment is searched, and so on.
+Finally, if the variable cannot be found anywhere along the lineage of environments, a new global variable is created, with the assigned value.
+
+## The `apply` family of functions
+
+As mentioned above, there are circumstances under which looping constructs are really necessary.
+Very often, however, we wish to perform some operation across all the elements of a vector, array, or dataset.
+In such cases, it is faster and more elegant (to the **R** afficiando's eye) to use the `apply` family of functions.
+
+### List apply: `lapply`
+
+`lapply` applies a function to each element of a list or vector, returning a list.
+```{r }
+  x <- list("teenage","mutant","ninja","turtle",
+            "hamster","plumber","pickle","baby")
+  lapply(x,nchar)
+
+  y <- c("teenage","mutant","ninja","turtle",
+         "hamster","plumber","pickle","baby")
+  lapply(y,nchar)
+``` 
+
+### Sloppy list apply: `sapply`
+
+`sapply` isn't content to always return a list:
+it attempts to simplify the results into a non-list vector if possible.
+```{r }
+  x <- list("pizza","monster","jigsaw","puddle",
+            "hamster","plumber","pickle","baby")
+  sapply(x,nchar)
+
+  y <- c("pizza","monster","jigsaw","puddle",
+         "hamster","plumber","pickle","baby")
+  sapply(y,nchar)
+``` 
+
+### Multiple-list apply: `mapply`
+
+`mapply` is a multiple-argument version of `sapply`:
+```{r }
+  x <- c("pizza","monster","jigsaw","puddle")
+  y <- c("cowboy","barbie","slumber","party")
+  mapply(paste,x,y,sep="/")
+``` 
+As usual, the recycling rule applies:
+```{r }
+  mapply(paste,x,y[2:3])
+  mapply(paste,x[c(1,3)],y)
+``` 
+
+### Array apply: `apply`
+
+`apply` is very powerful and a bit more complex.
+It allows an arbitrary function to applied to each slice of an array, where the slices can be defined in all possible ways.
+Let's create a matrix:
+```{r }
+  A <- array(data=seq_len(15),dim=c(3,5)); A
+``` 
+To apply an operation to each row, we *marginalize* over the first dimension (rows).
+For example, to sum the rows, we'd do
+```{r }
+  apply(A,1,sum)
+``` 
+To sum the columns (the second dimension), we'd do
+```{r }
+  apply(A,2,sum)
+``` 
+
+Now suppose we have a 3-dimensional array:
+```{r }
+  A <- array(data=seq_len(30),dim=c(3,5,2)); A
+``` 
+To sum the rows within each slice, we'd do
+```{r }
+  apply(A,c(1,3),sum)
+``` 
+while to sum the slices, we'd do
+```{r }
+  apply(A,3,sum)
+``` 
+For each of the above, make sure you understand exactly what has happened.
+
+Of course, we can apply an anonymous function wherever we apply a named function:
+```{r }
+  apply(A,c(2,3),function (x) sd(x)/sqrt(length(x)))
+``` 
+Additional arguments are passed to the function:
+```{r }
+  apply(A,c(1,2),function (x, y) sum(x>y),y=8)
+  apply(A,c(1,2),function (x, y) sum(x>y),y=-1)
+``` 
+
+### Table apply: `tapply`
+
+`tapply` is, in a way, an extension of `table`.
+The syntax is `tapply(X,INDEX,FUN,...)`,
+where `X` is a vector, `INDEX` is a list of one or more factors, each the same length as `X`, and `FUN` is a function.
+The vector `X` will be split into subvectors according to `INDEX`, and `FUN` will be applied to each of the subvectors.
+By default, the result is simplified into an array if possible.
+Some examples:
+```{r }
+  x <- seq(1,30,by=1)
+  b <- rep(letters[1:10],times=3)
+  data.frame(x,b)
+  tapply(x,b,sum)
+
+  b <- rep(letters[1:10],each=3)
+  data.frame(x,b)
+  tapply(x,b,sum)
+``` 
+
+```{r }
+datafile <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/seedpred.dat"
+seeds <- read.table(datafile,header=TRUE,
+                    colClasses=c(station='factor',dist='factor',date='Date'))
+x <- subset(seeds,available>0)
+with(x, tapply(tcum,list(dist,station),max,na.rm=TRUE))
+``` 
+
+### sapply with expected result: `vapply`
+
+When we could use `sapply` and we know exactly what the size and class of the value of the function will be, it is sometimes faster to use `vapply`.
+The syntax is like that of `sapply`: `vapply(X,FUN,FUN.VALUE,...)`, where `X` and `FUN` are as in `sapply`, but we specify the size and class of the value of `FUN` via the `FUN.VALUE` argument.
+For example, suppose we define a function that, given a number between 1 and 26 will return the corresponding letter of the alphabet:
+```{r }
+alph <- function (x) {
+    stopifnot(x >= 1 && x <= 26)
+    LETTERS[as.integer(x)]
+}
+``` 
+This function will return a vector of length 1 and class `character`.
+To apply it to a randomly sampled set of integers, we might do
+```{r echo=F,results='hide'}
+  set.seed(1950064303L)
+```{r }
+  x <- sample(1:26,50,replace=TRUE)
+  y <- vapply(x,alph,character(1))
+  paste(y,collapse="")
+``` 
+
+<!-- %% Bank-account example? -->
+
+
+## Vectorized functions vs loops
+
+As @Ligges2008 point out, the idea that one should avoid loops wherever possible in **R**, using instead vectorized functions like those in the `apply` family, is quite widespread in some quarters.
+The belief, which probably dates back to infelicities in early versions of **S** and **Splus** but is remarkably persistent, is that loops are very slow in **R**.
+Let's have a critical look at this.
+
+Consider the following loop code that can be vectorized:
+```{r }
+x <- runif(n=1e6,min=0,max=2*pi)
+y <- numeric(length(x))
+for (k in seq_along(x)) {
+  y[k] <- sin(x[k])
+}
+``` 
+To time this, we can wrap the vectorizable parts in a call to `system.time`:
+```{r cache=F}
+x <- runif(n=1e6,min=0,max=2*pi)
+system.time({
+  y <- numeric(length(x))
+  for (k in seq_along(x)) {
+    y[k] <- sin(x[k])
+  }
+})
+``` 
+We can compare this with a simple call to `sin` (which is vectorized):
+```{r cache=F}
+system.time(z <- sin(x))
+``` 
+Clearly, calling `sin` directly is much faster.
+What about using `sapply`?
+
+#### Exercise
+  Compare the time spent on the equivalent calculation, using `sapply`.
+  What does this result tell you about where the computational cost is incurred?
+```{r include=F}
+system.time(w <- sapply(x,sin))
+``` 
+
+The above example is very simple in that there is a builtin function (`sin` in this case) which is capable of the fully vectorized computation.
+In such a case, it is clearly preferable to use it.
+Frequently, however, no such builtin function exists, i.e., we have a custom function of our own we want to apply to a set of data.
+Let's compare the relative speeds of loops and `sapply` in this case.
+```{r cache=F}
+x <- seq.int(from=20,to=1e6,by=10)
+f <- function (x) {
+  (((x+1)*x+1)*x+1)*x+1
+}
+system.time({
+    res1 <- numeric(length(x))
+    for (k in seq_along(x)) {
+        res1[k] <- f(x[k])
+    }
+})
+system.time(res2 <- sapply(x,f))
+```
+[Actually, in this case, `f` is vectorized automatically.
+Why is this?]
+```{r cache=F}
+system.time(f(x))
+``` 
+
+Another example: in this case function `g` is not vectorized.
+```{r cache=F}
+g <- function (x) {
+  if ((x[1] > 30) && (x[1] < 5000)) 1 else 0
+}
+
+system.time({
+  res1 <- numeric(length(x))
+  for (k in seq_along(x)) {
+    res1[k] <- g(x[k])
+  }
+})
+system.time(res2 <- sapply(x,g))
+``` 
+
+## Acknowledgments
+
+These notes are based in part on materials used in the series of NSF-funded workshops taught in association with the Ecology and Evolution of Infectious Diseases conference.
+Instructors there included Ben Bolker, Ottar Bj&oslash;rnstad, Steve Ellner, and Stu Field.
+Steve Ellner contributed the document that formed the early skeleton of these notes; he based them in turn on course materials by Colleen Webb, Jonathan Rowell, and Daniel Fink at Cornell, Professors Lou Gross (University of Tennessee) and Paul Fackler (NC State University), and on the book *Getting Started with Matlab* by Rudra Pratap (Oxford University Press).
+The document also draws on the documentation supplied with **R**, including the *Introduction to **R*** manual.
+Versions of this document have been used in courses taught by BB and AAK at Florida and Michigan, at workshops run under the auspices of the International Centre for Theoretical Physics in Trieste, and elsewhere.
+
+## References

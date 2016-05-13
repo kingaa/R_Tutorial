@@ -1,32 +1,5 @@
-## ----include=FALSE-------------------------------------------------------
-library(knitr)
-prefix <- "R_Tutorial"
-opts_chunk$set(
-               progress=T,prompt=F,tidy=F,highlight=T,
-               warning=T,message=T,error=F,strip.white=T,cache=T,
-               results='markup',echo=T,
-               size='small',
-               fig.lp="fig:",
-               fig.path=paste0("figure/",prefix,"-"),
-               cache.path=paste0("cache/",prefix,"-"),
-               fig.align='left',
-               fig.show='asis',
-               fig.height=4,fig.width=6.83,
-               out.width="\\linewidth",
-               dpi=300,
-               dev='png',
-               dev.args=list(
-                 png=list(bg='transparent'),
-                 tiff=list(compression='lzw')
-                 )
-               )
-
-## ----include=FALSE-------------------------------------------------------
-options(
-        keep.source=TRUE,
-        encoding="UTF-8"
-        )
-pdf.options(useDingbats=FALSE)
+## ----prelims,include=FALSE,purl=TRUE,cache=FALSE-------------------------
+options(cores=20,stringsAsFactors=FALSE)
 
 ## ------------------------------------------------------------------------
 2+2 
@@ -59,7 +32,7 @@ C <- A+2*sqrt(A)/A+5*sqrt(A)
 ## C <- A + 2*(sqrt(A)/A) + 5*sqrt(A)
 
 ## ----eval=FALSE----------------------------------------------------------
-## help.search("sin")
+## ??sin
 
 ## ------------------------------------------------------------------------
 Light <- c(20,20,20,20,21,24,44,60,90,94,101)
@@ -68,8 +41,8 @@ rmax <- c(1.73,1.65,2.02,1.89,2.61,1.36,2.37,2.08,2.69,2.32,3.67)
 ## ----eval=FALSE----------------------------------------------------------
 ## Light <- 20,20,20,20,21,24,44,60,90,94,101
 
-## ----eval=F--------------------------------------------------------------
-## plot(Light,rmax)
+## ----chlorella-plot,eval=FALSE-------------------------------------------
+## plot(rmax~Light)
 
 ## ------------------------------------------------------------------------
 fit <- lm(rmax~Light)
@@ -80,27 +53,28 @@ summary(fit)
 ## ----eval=FALSE----------------------------------------------------------
 ## abline(fit)
 
-## ----echo=FALSE,fig.width=8,fig.height=6---------------------------------
-plot(Light,rmax)
+## ----echo=FALSE----------------------------------------------------------
+plot(rmax~Light,main="Graphical summary of regression analysis")
 abline(fit)
 
 ## ------------------------------------------------------------------------
 coef(fit)
 
-## ------------------------------------------------------------------------
-names(fit)
-
-## ------------------------------------------------------------------------
-fit$coefficients
+## ----eval=FALSE----------------------------------------------------------
+## residuals(fit)
+## fitted(fit)
+## effects(fit)
+## vcov(fit)
+## anova(fit)
 
 ## ----eval=FALSE----------------------------------------------------------
-## install.packages("plotrix")
+## install.packages("ggplot2")
 
 ## ----eval=FALSE----------------------------------------------------------
-## install.packages(c("ellipse","plotrix"))
+## install.packages(c("plyr","reshape2"))
 
 ## ----eval=FALSE----------------------------------------------------------
-## install.packages("plotrix",repos=NULL)
+## install.packages("ggplot2",repos=NULL)
 
 ## ------------------------------------------------------------------------
 x <- c(1,3,5,7,9,11)
@@ -144,7 +118,7 @@ rep(1:3,each=3)
 rep(c(3,4),c(2,5))
 
 ## ------------------------------------------------------------------------
-  z <- c(1,3,5,7,9,11); z[3]
+z <- c(1,3,5,7,9,11); z[3]
 
 ## ------------------------------------------------------------------------
 v <- z[c(2,3,4,5)]
@@ -195,24 +169,24 @@ a==b
 ## ------------------------------------------------------------------------
 a <- c(1,2,3,4)
 b <- c(1,1,5,5)
-(a<b) & (a>3)
 (a<b) | (a>3)
+(a<b) || (a>3)
 
-## ----fetch-chlorella-data,echo=F,results='hide'--------------------------
+## ----fetch-chlorella-data,include=FALSE----------------------------------
 course.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/"
 X <- read.csv(paste0(course.url,"ChlorellaGrowth.csv"),comment.char='#')
-
-## ------------------------------------------------------------------------
 Light <- X[,1]
 rmax <- X[,2];
+
+## ------------------------------------------------------------------------
 lowLight <- Light[Light<50]
 lowLightrmax <- rmax[Light<50]
 lowLight
 lowLightrmax
 
 ## ------------------------------------------------------------------------
-Light[Light<50 & rmax <= 2.0]
-rmax[Light<50 & rmax <= 2.0]
+Light[Light<50 | rmax <= 2.0]
+rmax[Light<50 | rmax <= 2.0]
 
 ## ------------------------------------------------------------------------
 x <- c(first=7,second=5,third=2)
@@ -230,8 +204,12 @@ A <- matrix(1:9,nrow=3,ncol=3,byrow=TRUE); A
 ## ----eval=F--------------------------------------------------------------
 ## matrix(1,nrow=50,ncol=50)
 
-## ----echo=F,comment=''---------------------------------------------------
+## ----echo=F,comment=""---------------------------------------------------
 print(X <- matrix(rep(c(1,2),times=4),nrow=2))
+
+## ----eval=F--------------------------------------------------------------
+## A <- matrix(0,3,4)
+## data.entry(A)
 
 ## ------------------------------------------------------------------------
 C <- cbind(1:3,4:6,5:7); C
@@ -297,9 +275,8 @@ L <- list(A=x,B=trochee,C=c("a","b","c"))
 L[c("B","C")]
 
 ## ------------------------------------------------------------------------
-course.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/"
-dat <- read.csv(file.path(course.url,"ChlorellaGrowth.csv"),
-                comment.char='#')
+data.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/ChlorellaGrowth.csv"
+dat <- read.csv(data.url,comment.char='#')
 dat
 
 ## ------------------------------------------------------------------------
@@ -315,6 +292,8 @@ download.file(paste0(course.url,"ChlorellaGrowth.csv"),destfile="ChlorellaGrowth
 ## ----echo=F,results='hide'-----------------------------------------------
 course.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/"
 X <- read.csv(paste0(course.url,"ChlorellaGrowth.csv"),comment.char='#')
+Light <- X[,1]
+rmax <- X[,2];
 
 ## ----eval=F--------------------------------------------------------------
 ## X <- read.csv("ChlorellaGrowth.csv",comment.char='#')
@@ -327,7 +306,8 @@ rmax <- X[,2]
 Light <- X$light; rmax <- X$rmax
 logLight <- log(Light)
 op <- par(cex=1.5,cex.main=0.9)
-plot(logLight,rmax,xlab="Log light intensity (uE/m2/s)", ylab="Maximum growth rate rmax (1/d)",pch=16); 
+plot(logLight,rmax,xlab="Log light intensity (uE/m2/s)",
+     ylab="Maximum growth rate rmax (1/d)",pch=16); 
 title(main="Data from Fussmann et al. (2000) system");
 fit <- lm(rmax~logLight);
 summary(fit); abline(fit); 
@@ -337,7 +317,7 @@ par(op)
 
 ## ----results='hide'------------------------------------------------------
 phi <- 1
-for (k in 1:1000) {
+for (k in 1:100) {
   phi <- 1+1/phi
   print(c(k,phi))
 }
@@ -366,7 +346,7 @@ for (t in 1:length(T)) {
 ## ----results='hide'------------------------------------------------------
 phi <- 20
 k <- 1
-while (k <= 1000) {
+while (k <= 100) {
   phi <- 1+1/phi
   print(c(k,phi))
   k <- k+1
@@ -557,7 +537,7 @@ f <- function (x) {
 f(11); y
 f(-2); y
 
-## ----results='markup'----------------------------------------------------
+## ----results="hold"------------------------------------------------------
 f <- function () {
   g <- function () {
     h <- function () {
@@ -606,17 +586,17 @@ f()
   lapply(y,nchar)
 
 ## ------------------------------------------------------------------------
-  x <- list("teenage","mutant","ninja","turtle",
+  x <- list("pizza","monster","jigsaw","puddle",
             "hamster","plumber","pickle","baby")
   sapply(x,nchar)
 
-  y <- c("teenage","mutant","ninja","turtle",
+  y <- c("pizza","monster","jigsaw","puddle",
          "hamster","plumber","pickle","baby")
   sapply(y,nchar)
 
 ## ------------------------------------------------------------------------
-  x <- c("teenage","mutant","ninja","turtle")
-  y <- c("hamster","plumber","pickle","baby")
+  x <- c("pizza","monster","jigsaw","puddle")
+  y <- c("cowboy","barbie","slumber","party")
   mapply(paste,x,y,sep="/")
 
 ## ------------------------------------------------------------------------
@@ -659,18 +639,16 @@ f()
   tapply(x,b,sum)
 
 ## ------------------------------------------------------------------------
-  course.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/"
-  datafile <- "seedpred.dat"
-  seeds <- read.table(paste0(course.url,datafile),header=TRUE,
-                      colClasses=c(station='factor',dist='factor',date='Date'))
-  x <- subset(seeds,available>0)
-  with(x, tapply(tcum,list(dist,station),max,na.rm=TRUE))
-
+datafile <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/seedpred.dat"
+seeds <- read.table(datafile,header=TRUE,
+                    colClasses=c(station='factor',dist='factor',date='Date'))
+x <- subset(seeds,available>0)
+with(x, tapply(tcum,list(dist,station),max,na.rm=TRUE))
 
 ## ------------------------------------------------------------------------
 alph <- function (x) {
-  if (x < 1 || x > 26) stop("bad value of x")
-  LETTERS[as.integer(x)]
+    stopifnot(x >= 1 && x <= 26)
+    LETTERS[as.integer(x)]
 }
 
 ## ----echo=F,results='hide'-----------------------------------------------
@@ -700,7 +678,7 @@ system.time({
 ## ----cache=F-------------------------------------------------------------
 system.time(z <- sin(x))
 
-## ----echo=F,cache=F------------------------------------------------------
+## ----include=F-----------------------------------------------------------
 system.time(w <- sapply(x,sin))
 
 ## ----cache=F-------------------------------------------------------------
@@ -709,10 +687,10 @@ f <- function (x) {
   (((x+1)*x+1)*x+1)*x+1
 }
 system.time({
-  res1 <- numeric(length(x))
-  for (k in seq_along(x)) {
-    res1[k] <- f(x[k])
-  }
+    res1 <- numeric(length(x))
+    for (k in seq_along(x)) {
+        res1[k] <- f(x[k])
+    }
 })
 system.time(res2 <- sapply(x,f))
 
@@ -721,11 +699,7 @@ system.time(f(x))
 
 ## ----cache=F-------------------------------------------------------------
 g <- function (x) {
-  if ((x[1] > 30) && (x[1] < 5000)) {
-    1
-  } else {
-    0
-  }
+  if ((x[1] > 30) && (x[1] < 5000)) 1 else 0
 }
 
 system.time({

@@ -9,7 +9,7 @@ MAKEIDX = makeindex
 CP = cp
 RM = rm -f
 
-FILES = R_Tutorial.pdf R_Tutorial.R ChlorellaGrowth.csv seedpred.dat Intro1.R Intro2.R
+FILES = R_Tutorial.html R_Tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaGrowth.csv seedpred.dat
 
 default: $(FILES)
 
@@ -43,7 +43,7 @@ clean:
 	$(RM) *.log *.blg *.ilg *.aux *.lof *.lot *.toc *.idx
 	$(RM) *.ttt *.fff *.out *.nav *.snm
 	$(RM) *.o *.so *.bak *~
-	$(RM) *-concordance.tex *.synctex.gz
+	$(RM) *-concordance.tex *.synctex.gz *.knit.md *.utf8.md
 	$(RM) *.brf
 	$(RM) Rplots.*
 
