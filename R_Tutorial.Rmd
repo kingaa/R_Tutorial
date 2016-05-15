@@ -1,6 +1,6 @@
 ---
 title: "A Tutorial Introduction to R"
-author: Aaron A. King and others
+author: Aaron A. King, Stu Field, Ben Bolker, Steve Ellner
 output:
   html_document:
     toc: yes

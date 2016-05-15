@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Aaron A. King and others" />
+<meta name="author" content="Aaron A. King, Stu Field, Ben Bolker, Steve Ellner" />
 
 
 <title>A Tutorial Introduction to R</title>
@@ -116,7 +116,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">A Tutorial Introduction to R</h1>
-<h4 class="author"><em>Aaron A. King and others</em></h4>
+<h4 class="author"><em>Aaron A. King, Stu Field, Ben Bolker, Steve Ellner</em></h4>
 
 </div>
 
@@ -1811,18 +1811,18 @@ f()</code></pre>
 <pre><code>## environment of f: &lt;environment: R_GlobalEnv&gt;
 ## global env: &lt;environment: R_GlobalEnv&gt;
 ## inside function f:
-## environment of g: &lt;environment: 0x1b66a68&gt;
-## current env: &lt;environment: 0x1b66a68&gt;
+## environment of g: &lt;environment: 0x1f87088&gt;
+## current env: &lt;environment: 0x1f87088&gt;
 ## parent env: &lt;environment: R_GlobalEnv&gt;
 ## inside function g:
-## environment of h: &lt;environment: 0x1b63330&gt;
-## current env: &lt;environment: 0x1b63330&gt;
-## parent env: &lt;environment: 0x1b66a68&gt;
+## environment of h: &lt;environment: 0x1f829e8&gt;
+## current env: &lt;environment: 0x1f829e8&gt;
+## parent env: &lt;environment: 0x1f87088&gt;
 ## grandparent env: &lt;environment: R_GlobalEnv&gt;
 ## inside function h:
-## current env: &lt;environment: 0x249b760&gt;
-## parent env: &lt;environment: 0x1b63330&gt;
-## grandparent env: &lt;environment: 0x1b66a68&gt;
+## current env: &lt;environment: 0x28bada8&gt;
+## parent env: &lt;environment: 0x1f829e8&gt;
+## grandparent env: &lt;environment: 0x1f87088&gt;
 ## great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <p>Each variable referenced in the function’s body is bound, first, to a formal argument if possible. If a local variable of that name has previously been created (via one of the assignment operators <code>&lt;-</code>, <code>-&gt;</code>, or <code>=</code>, this is the variable that is affected by any subsequent assignments. If the variable is neither a formal parameter nor a local variable, then the parent environment of the function is searched for that variable. If the variable has not been found in the parent environment, then the grand-parent environment is searched, and so on.</p>
 <p>If the assignment operators <code>&lt;&lt;-</code> or <code>-&gt;&gt;</code> are used, a more extensive search for the referenced assignee is made. If the variable does not exist in the local environment, the parent environment is searched. If it does not exist in the parent environment, then the grand-parent environment is searched, and so on. Finally, if the variable cannot be found anywhere along the lineage of environments, a new global variable is created, with the assigned value.</p>
@@ -2118,11 +2118,11 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.060   0.000   1.059</code></pre>
+##   1.156   0.000   1.153</code></pre>
 <p>We can compare this with a simple call to <code>sin</code> (which is vectorized):</p>
 <pre class="r"><code>system.time(z &lt;- sin(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.036   0.000   0.034</code></pre>
+##   0.036   0.000   0.035</code></pre>
 <p>Clearly, calling <code>sin</code> directly is much faster. What about using <code>sapply</code>?</p>
 <div id="exercise-41" class="section level4">
 <h4>Exercise</h4>
@@ -2139,10 +2139,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.22    0.00    0.22</code></pre>
+##   0.220   0.000   0.221</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,f))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.136   0.000   0.138</code></pre>
+##   0.140   0.000   0.141</code></pre>
 <p>[Actually, in this case, <code>f</code> is vectorized automatically. Why is this?]</p>
 <pre class="r"><code>system.time(f(x))</code></pre>
 <pre><code>##    user  system elapsed 
@@ -2159,10 +2159,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.204   0.000   0.205</code></pre>
+##   0.204   0.000   0.207</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,g))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.112   0.000   0.116</code></pre>
+##   0.116   0.000   0.118</code></pre>
 </div>
 </div>
 <div id="acknowledgments" class="section level2">
