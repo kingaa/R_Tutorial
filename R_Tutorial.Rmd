@@ -66,6 +66,8 @@ Many other similar introductions are scattered around the web;
 a partial list is in the "contributed documentation" section on the R web site (http://cran.r-project.org/other-docs.html). 
 This particular version is limited (it has similar coverage to the *Introduction to **R** * that comes with **R** ) and targets biologists who are neither (yet) programmers nor statisticians.
 
+Throughout, we've endeavored to mark Windows-specific items with a &#9420;&nbsp;and *nix (linux/unix/MacOSX)-specific items with a &#9421;.
+
 ## What is **R** ?
 **R** is a computing environment that combines 
 
@@ -92,19 +94,17 @@ You can get the source code and compile it yourself, but you may prefer at this 
 You can download precompiled binaries for most major platforms from any CRAN mirror.
 To do so, go to http://cran.r-project.org/mirrors.html and find a mirror site that is geographically somewhat near you.
 Find the appropriate page for your operating system, and read and follow the installation instructions.
-**Be sure to install the latest version.
+**Be sure to install the latest version.**
 
 **R** should work well on any reasonably recent computer.
 
-Under Windows, **R** is installed by launching the downloaded file and following the on-screen instructions. 
+&#9420;&nbsp;Under Windows, **R** is installed by launching the downloaded file and following the on-screen instructions. 
 At the end you'll have an **R** icon on your desktop that can be used to launch the program. 
 
-Under Linux, binary versions of **R** are available as packages for the most common Linux distributions.
+&#9421;&nbsp;Under Linux, binary versions of **R** are available as packages for the most common Linux distributions.
 It is also not difficult to install **R** from source.
 
-Under Mac OS X, **R** is available as a binary package.
-
-**In the following, we've endeavored to mark Windows-specific items with a &#9420;&nbsp;and *nix (linux/unix/MacOSX)-specific items with a &#9421;.**
+&#9421;&nbsp;Under Mac OS X, **R** is available as a binary package.
 
 The standard distributions of **R** include several *packages*:
 user-contributed suites of add-on functions.
