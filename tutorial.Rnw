@@ -883,7 +883,7 @@ This is important, e.g., for subsetting data.
 
 As a simple example, we might want to focus on just the low-light values of $r_{\text{max}}$ in the \emph{Chlorella} example:
 <<fetch-chlorella-data,echo=F,results='hide'>>=
-course.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/"
+course.url <- "http://kingaa.github.io/R_Tutorial/"
 X <- read.csv(paste0(course.url,"ChlorellaGrowth.csv"),comment.char='#')
 <<>>=
 Light <- X[,1]
@@ -1180,7 +1180,7 @@ You can turn a data frame into a matrix (using \code{as.matrix()}, but only if a
 
 When data are read into \R\ from an external file using one of the \code{read.xxx} commands (\code{read.csv}, \code{read.table}, \code{read.xls}, etc.), the object that is created is a data frame.
 <<>>=
-course.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/"
+course.url <- "http://kingaa.github.io/R_Tutorial/"
 dat <- read.csv(file.path(course.url,"ChlorellaGrowth.csv"),
                 comment.char='#')
 dat
@@ -1991,7 +1991,7 @@ Some examples:
 @ 
 
 <<>>=
-  course.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/"
+  course.url <- "http://kingaa.github.io/R_Tutorial/"
   datafile <- "seedpred.dat"
   seeds <- read.table(paste0(course.url,datafile),header=TRUE,
                       colClasses=c(station='factor',dist='factor',date='Date'))
@@ -2114,6 +2114,6 @@ The document also draws on the documentation supplied with \R, including the \em
 Versions of this document have been used in courses taught by BB and AAK at Florida and Michigan, at workshops run under the auspices of the International Centre for Theoretical Physics in Trieste, and elsewhere.
 
 \bibliographystyle{kingbib}
-\bibliography{R_Tutorial}
+\bibliography{tutorial}
 
 \end{document}

@@ -1183,7 +1183,7 @@ x[1:5] &lt; x[18:22]</code></pre>
 <p>Data frames are a hybrid of lists and vectors. Internally, they are a list of vectors which can be of different types but must all be the same length. However, they behave somewhat like matrices, in that you can do most things to them that you can do with matrices. You can index them either the way you would index a list, using <code>[[ ]]</code> or <code>$</code>—where each variable is a different item in the list—or the way you would index a matrix.<br />
 You can turn a data frame into a matrix (using <code>as.matrix()</code>, but only if all variables are of the same class) and a matrix into a data frame (using <code>as.data.frame()</code>).</p>
 <p>When data are read into <strong>R</strong> from an external file using one of the <code>read.xxx</code> commands (<code>read.csv</code>, <code>read.table</code>, <code>read.xls</code>, etc.), the object that is created is a data frame.</p>
-<pre class="r"><code>data.url &lt;- &quot;http://kinglab.eeb.lsa.umich.edu/R_Tutorial/ChlorellaGrowth.csv&quot;
+<pre class="r"><code>data.url &lt;- &quot;http://kingaa.github.io/R_Tutorial/ChlorellaGrowth.csv&quot;
 dat &lt;- read.csv(data.url,comment.char='#')
 dat</code></pre>
 <pre><code>##    light rmax
@@ -1200,7 +1200,7 @@ dat</code></pre>
 ## 11   101 3.67</code></pre>
 <div id="exercise-22" class="section level4">
 <h4>Exercise</h4>
-<p>Download the <code>hurricanes.csv</code> file from the course website: <a href="http://kinglab.eeb.lsa.umich.edu/R_Tutorial/hurricanes.csv" class="uri">http://kinglab.eeb.lsa.umich.edu/R_Tutorial/hurricanes.csv</a>. Examine the resulting data frame by printing it and using the <code>str</code> command. Note the class type of each variable.</p>
+<p>Download the <code>hurricanes.csv</code> file from the course website: <a href="http://kingaa.github.io/R_Tutorial/hurricanes.csv" class="uri">http://kingaa.github.io/R_Tutorial/hurricanes.csv</a>. Examine the resulting data frame by printing it and using the <code>str</code> command. Note the class type of each variable.</p>
 </div>
 </div>
 </div>
@@ -2052,7 +2052,7 @@ data.frame(x,b)</code></pre>
 <pre class="r"><code>tapply(x,b,sum)</code></pre>
 <pre><code>##  a  b  c  d  e  f  g  h  i  j 
 ##  6 15 24 33 42 51 60 69 78 87</code></pre>
-<pre class="r"><code>datafile &lt;- &quot;http://kinglab.eeb.lsa.umich.edu/R_Tutorial/seedpred.dat&quot;
+<pre class="r"><code>datafile &lt;- &quot;http://kingaa.github.io/R_Tutorial/seedpred.dat&quot;
 seeds &lt;- read.table(datafile,header=TRUE,
                     colClasses=c(station='factor',dist='factor',date='Date'))
 x &lt;- subset(seeds,available&gt;0)
@@ -2118,11 +2118,11 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.100   0.000   1.098</code></pre>
+##   1.112   0.008   1.121</code></pre>
 <p>We can compare this with a simple call to <code>sin</code> (which is vectorized):</p>
 <pre class="r"><code>system.time(z &lt;- sin(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.036   0.000   0.036</code></pre>
+##   0.036   0.000   0.037</code></pre>
 <p>Clearly, calling <code>sin</code> directly is much faster. What about using <code>sapply</code>?</p>
 <div id="exercise-41" class="section level4">
 <h4>Exercise</h4>
@@ -2139,14 +2139,14 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.228   0.000   0.228</code></pre>
+##   0.216   0.000   0.216</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,f))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.148   0.000   0.147</code></pre>
+##   0.152   0.000   0.149</code></pre>
 <p>[Actually, in this case, <code>f</code> is vectorized automatically. Why is this?]</p>
 <pre class="r"><code>system.time(f(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##       0       0       0</code></pre>
+##   0.000   0.000   0.001</code></pre>
 <p>Another example: in this case function <code>g</code> is not vectorized.</p>
 <pre class="r"><code>g &lt;- function (x) {
   if ((x[1] &gt; 30) &amp;&amp; (x[1] &lt; 5000)) 1 else 0
@@ -2159,10 +2159,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.232   0.000   0.229</code></pre>
+##   0.196   0.000   0.195</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,g))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.116   0.000   0.114</code></pre>
+##   0.112   0.000   0.113</code></pre>
 </div>
 </div>
 <div id="acknowledgments" class="section level2">

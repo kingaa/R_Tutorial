@@ -9,11 +9,11 @@ MAKEIDX = makeindex
 CP = cp
 RM = rm -f
 
-FILES = R_Tutorial.html R_Tutorial.pdf R_Tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaGrowth.csv seedpred.dat
+FILES = tutorial.html tutorial.pdf tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaGrowth.csv seedpred.dat
 
 publish: default
 	rsync -avz --delete-after --chmod=a+rX,go-w $(FILES) $(PUBSITE)
-	cp $(PUBSITE)/R_Tutorial.html $(PUBSITE)/index.html
+	cp $(PUBSITE)/tutorial.html $(PUBSITE)/index.html
 
 default: $(FILES)
 

@@ -173,7 +173,7 @@ b <- c(1,1,5,5)
 (a<b) || (a>3)
 
 ## ----fetch-chlorella-data,include=FALSE----------------------------------
-course.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/"
+course.url <- "http://kingaa.github.io/R_Tutorial/"
 X <- read.csv(paste0(course.url,"ChlorellaGrowth.csv"),comment.char='#')
 Light <- X[,1]
 rmax <- X[,2];
@@ -275,7 +275,7 @@ L <- list(A=x,B=trochee,C=c("a","b","c"))
 L[c("B","C")]
 
 ## ------------------------------------------------------------------------
-data.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/ChlorellaGrowth.csv"
+data.url <- "http://kingaa.github.io/R_Tutorial/ChlorellaGrowth.csv"
 dat <- read.csv(data.url,comment.char='#')
 dat
 
@@ -290,7 +290,7 @@ download.file(paste0(course.url,"Intro2.R"),destfile="Intro2.R",mode="w")
 download.file(paste0(course.url,"ChlorellaGrowth.csv"),destfile="ChlorellaGrowth.csv",mode="w")
 
 ## ----echo=F,results='hide'-----------------------------------------------
-course.url <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/"
+course.url <- "http://kingaa.github.io/R_Tutorial/"
 X <- read.csv(paste0(course.url,"ChlorellaGrowth.csv"),comment.char='#')
 Light <- X[,1]
 rmax <- X[,2];
@@ -639,7 +639,7 @@ data.frame(x,b)
 tapply(x,b,sum)
 
 ## ------------------------------------------------------------------------
-datafile <- "http://kinglab.eeb.lsa.umich.edu/R_Tutorial/seedpred.dat"
+datafile <- "http://kingaa.github.io/R_Tutorial/seedpred.dat"
 seeds <- read.table(datafile,header=TRUE,
                     colClasses=c(station='factor',dist='factor',date='Date'))
 x <- subset(seeds,available>0)
