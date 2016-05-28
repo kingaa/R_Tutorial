@@ -20,6 +20,9 @@ csl: ecology.csl
 [Licensed under the Creative Commons Attribution-NonCommercial license](http://creativecommons.org/licenses/by-nc/4.0/).
 Please share and remix noncommercially, mentioning its origin.  
 ![CC-BY_NC](cc-by-nc.png)
+The source code for this document is [here](http://github.com/kingaa/R_Tutorial).
+Comments, suggestions, criticism, corrections are most welcome.
+Please submit these via the [issues page](https://github.com/kingaa/R_Tutorial/issues).
 
 ```{r knitr-opts,include=FALSE,purl=FALSE}
 library(knitr)
@@ -2015,3 +2018,4 @@ The document also draws on the documentation supplied with **R**, including the 
 Versions of this document have been used in courses taught by BB and AAK at Florida and Michigan, at workshops run under the auspices of the International Centre for Theoretical Physics in Trieste, and elsewhere.
 
 ## References
+
