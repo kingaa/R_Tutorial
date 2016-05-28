@@ -1,4 +1,4 @@
-PUBSITE = kinglab.eeb.lsa.umich.edu:/var/www/html/R_Tutorial
+PUBSITE = www
 
 REXE = R --vanilla
 RSCRIPT = Rscript --vanilla
@@ -11,10 +11,11 @@ RM = rm -f
 
 FILES = R_Tutorial.html R_Tutorial.pdf R_Tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaGrowth.csv seedpred.dat
 
-default: $(FILES)
-
 publish: default
 	rsync -avz --delete-after --chmod=a+rX,go-w $(FILES) $(PUBSITE)
+	cp $(PUBSITE)/R_Tutorial.html $(PUBSITE)/index.html
+
+default: $(FILES)
 
 %.html: %.Rmd
 	PATH=/usr/lib/rstudio/bin/pandoc:$$PATH \
