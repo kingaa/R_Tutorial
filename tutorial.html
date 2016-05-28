@@ -2118,11 +2118,11 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.112   0.008   1.121</code></pre>
+##   1.104   0.000   1.105</code></pre>
 <p>We can compare this with a simple call to <code>sin</code> (which is vectorized):</p>
 <pre class="r"><code>system.time(z &lt;- sin(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.036   0.000   0.037</code></pre>
+##   0.036   0.000   0.035</code></pre>
 <p>Clearly, calling <code>sin</code> directly is much faster. What about using <code>sapply</code>?</p>
 <div id="exercise-41" class="section level4">
 <h4>Exercise</h4>
@@ -2139,10 +2139,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.216   0.000   0.216</code></pre>
+##   0.220   0.000   0.223</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,f))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.152   0.000   0.149</code></pre>
+##   0.156   0.000   0.157</code></pre>
 <p>[Actually, in this case, <code>f</code> is vectorized automatically. Why is this?]</p>
 <pre class="r"><code>system.time(f(x))</code></pre>
 <pre><code>##    user  system elapsed 
@@ -2159,10 +2159,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.196   0.000   0.195</code></pre>
+##   0.252   0.000   0.251</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,g))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.112   0.000   0.113</code></pre>
+##   0.124   0.000   0.124</code></pre>
 </div>
 </div>
 <div id="acknowledgments" class="section level2">

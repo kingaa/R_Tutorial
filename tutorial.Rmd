@@ -49,7 +49,7 @@ opts_chunk$set(
 options(keep.source=TRUE,encoding="UTF-8")
 ```
 ```{r prelims,include=FALSE,purl=TRUE,cache=FALSE}
-options(cores=20,stringsAsFactors=FALSE)
+options(stringsAsFactors=FALSE)
 ```
 
 ----------------------------

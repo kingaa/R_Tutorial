@@ -1,5 +1,5 @@
 ## ----prelims,include=FALSE,purl=TRUE,cache=FALSE-------------------------
-options(cores=20,stringsAsFactors=FALSE)
+options(stringsAsFactors=FALSE)
 
 ## ------------------------------------------------------------------------
 2+2 

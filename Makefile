@@ -28,9 +28,6 @@ default: $(FILES)
 %.R: %.Rmd
 	Rscript --vanilla -e "library(knitr); purl(\"$*.Rmd\",output=\"$*.R\")"
 
-%.R: %.Rnw
-	Rscript --vanilla -e "library(knitr); purl(\"$*.Rnw\",output=\"$*.R\")"
-
 %.tex: %.Rnw
 	$(RSCRIPT) -e "library(knitr); knit(\"$*.Rnw\")"
 
