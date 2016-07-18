@@ -1812,18 +1812,18 @@ f()</code></pre>
 <pre><code>## environment of f: &lt;environment: R_GlobalEnv&gt;
 ## global env: &lt;environment: R_GlobalEnv&gt;
 ## inside function f:
-## environment of g: &lt;environment: 0x7f99bc17d470&gt;
-## current env: &lt;environment: 0x7f99bc17d470&gt;
+## environment of g: &lt;environment: 0x7f8dd795db10&gt;
+## current env: &lt;environment: 0x7f8dd795db10&gt;
 ## parent env: &lt;environment: R_GlobalEnv&gt;
 ## inside function g:
-## environment of h: &lt;environment: 0x7f99bc1ae550&gt;
-## current env: &lt;environment: 0x7f99bc1ae550&gt;
-## parent env: &lt;environment: 0x7f99bc17d470&gt;
+## environment of h: &lt;environment: 0x7f8dd7961678&gt;
+## current env: &lt;environment: 0x7f8dd7961678&gt;
+## parent env: &lt;environment: 0x7f8dd795db10&gt;
 ## grandparent env: &lt;environment: R_GlobalEnv&gt;
 ## inside function h:
-## current env: &lt;environment: 0x7f99bc1b6668&gt;
-## parent env: &lt;environment: 0x7f99bc1ae550&gt;
-## grandparent env: &lt;environment: 0x7f99bc17d470&gt;
+## current env: &lt;environment: 0x7f8dd7967038&gt;
+## parent env: &lt;environment: 0x7f8dd7961678&gt;
+## grandparent env: &lt;environment: 0x7f8dd795db10&gt;
 ## great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <p>Each variable referenced in the function’s body is bound, first, to a formal argument if possible. If a local variable of that name has previously been created (via one of the assignment operators <code>&lt;-</code>, <code>-&gt;</code>, or <code>=</code>, this is the variable that is affected by any subsequent assignments. If the variable is neither a formal parameter nor a local variable, then the parent environment of the function is searched for that variable. If the variable has not been found in the parent environment, then the grand-parent environment is searched, and so on.</p>
 <p>If the assignment operators <code>&lt;&lt;-</code> or <code>-&gt;&gt;</code> are used, a more extensive search for the referenced assignee is made. If the variable does not exist in the local environment, the parent environment is searched. If it does not exist in the parent environment, then the grand-parent environment is searched, and so on. Finally, if the variable cannot be found anywhere along the lineage of environments, a new global variable is created, with the assigned value.</p>
@@ -2119,11 +2119,11 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.188   0.012   1.200</code></pre>
+##   1.190   0.005   1.195</code></pre>
 <p>We can compare this with a simple call to <code>sin</code> (which is vectorized):</p>
 <pre class="r"><code>system.time(z &lt;- sin(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.020   0.003   0.022</code></pre>
+##   0.017   0.001   0.017</code></pre>
 <p>Clearly, calling <code>sin</code> directly is much faster. What about using <code>sapply</code>?</p>
 <div id="exercise-41" class="section level4">
 <h4>Exercise</h4>
@@ -2140,14 +2140,14 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.245   0.003   0.248</code></pre>
+##   0.269   0.006   0.276</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,f))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.185   0.002   0.188</code></pre>
+##   0.182   0.004   0.186</code></pre>
 <p>[Actually, in this case, <code>f</code> is vectorized automatically. Why is this?]</p>
 <pre class="r"><code>system.time(f(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.001   0.000   0.001</code></pre>
+##   0.001   0.000   0.000</code></pre>
 <p>Another example: in this case function <code>g</code> is not vectorized.</p>
 <pre class="r"><code>g &lt;- function (x) {
   if ((x[1] &gt; 30) &amp;&amp; (x[1] &lt; 5000)) 1 else 0
@@ -2160,10 +2160,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.229   0.003   0.231</code></pre>
+##   0.231   0.003   0.235</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,g))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.126   0.000   0.126</code></pre>
+##   0.131   0.001   0.131</code></pre>
 </div>
 </div>
 <div id="acknowledgments" class="section level2">
