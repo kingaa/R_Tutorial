@@ -289,14 +289,8 @@ download.file(paste0(course.url,"Intro1.R"),destfile="Intro1.R",mode="w")
 download.file(paste0(course.url,"Intro2.R"),destfile="Intro2.R",mode="w")
 download.file(paste0(course.url,"ChlorellaGrowth.csv"),destfile="ChlorellaGrowth.csv",mode="w")
 
-## ----echo=F,results='hide'-----------------------------------------------
-course.url <- "http://kingaa.github.io/R_Tutorial/"
-X <- read.csv(paste0(course.url,"ChlorellaGrowth.csv"),comment.char='#')
-Light <- X[,1]
-rmax <- X[,2];
-
-## ----eval=F--------------------------------------------------------------
-## X <- read.csv("ChlorellaGrowth.csv",comment.char='#')
+## ------------------------------------------------------------------------
+X <- read.csv("ChlorellaGrowth.csv",comment.char='#')
 
 ## ------------------------------------------------------------------------
 Light <- X[,1]
@@ -306,7 +300,7 @@ rmax <- X[,2]
 Light <- X$light; rmax <- X$rmax
 logLight <- log(Light)
 op <- par(cex=1.5,cex.main=0.9)
-plot(logLight,rmax,xlab="Log light intensity (uE/m2/s)",
+plot(logLight,rmax,xlab=expression("Log light intensity ("*mu*"E/m"^2*"/s)"),
      ylab="Maximum growth rate rmax (1/d)",pch=16); 
 title(main="Data from Fussmann et al. (2000) system");
 fit <- lm(rmax~logLight);
