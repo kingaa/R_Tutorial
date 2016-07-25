@@ -577,7 +577,7 @@ Lists are a bit different than the other kinds, so we'll postpone talking about 
 Besides its \emph{class}---which kind of vector it is---a vector's only other necessary attribute is its length.
 Optionally, vectors in \R\ can have a \code{names} attribute, which allows you to refer to entries by name.
 
-We've already how to create vectors in \R\ using the \code{c} function, e.g.,
+We've already seen how to create vectors in \R\ using the \code{c} function, e.g.,
 <<>>=
 x <- c(1,3,5,7,9,11)
 y <- c(6.5,4.3,9.1,-8.5,0,3.6)
@@ -600,7 +600,7 @@ x; xx
 @ 
 
 Notice that the operations were applied to every entry in the vector. 
-Similarly, commands like \code{x-5, 2*x, x/10}, and \verb!x^2! apply subtraction, multiplication, and division to each element of the vector. 
+Similarly, commands like \code{x-5, 2*x, x/10}, and \verb!x^2! apply subtraction, multiplication, division, and square to each element of the vector. 
 The same is true for operations involving multiple vectors:
 <<>>=
 x+y
@@ -633,7 +633,7 @@ y-x
 \subsection{Functions for creating vectors}
 
 A set of regularly spaced values can be created with the \code{seq} function, whose syntax is \code{x~<-~seq(from,to,by)} or \code{x~<-~seq(from,to)} or \code{x~<-~seq(from,to,length.out)}.  
-The first form generates a vector \code{(from,from+by,from+2*by,...)} with the last entry not extending further than than \code{to}; 
+The first form generates a vector \code{(from,from+by,from+2*by,...)} with the last entry not extending further than\code{to}; 
 in the second form the value of \code{by} is assumed to be 1 or -1, depending on whether \code{from} or \code{to} is larger; 
 and the third form creates a vector with the desired endpoints and length.
 There is also a shortcut for creating vectors with \code{by=1}:
@@ -1309,7 +1309,7 @@ Tips for working with data and script files (sounding slightly scary but just tr
 \windows 
 If you have a shortcut defined for \R\ on your desktop (or possibly in the Start menu) you can \emph{permanently} change your default working directory by right-clicking on the shortcut icon, selecting \code{Properties}, and changing the starting directory to somewhere like (for example) \code{My~Documents/projectX}.
 
-\item It's important that script files be preserved as \emph{plain text} and data files also as plain text, using comma- or tab-separated format.
+\item It's important that script files should be preserved as \emph{plain text} and data files also as plain text, using comma- or tab-separated format.
   There are three things that can go wrong here: 
   \begin{enumerate}[(1)]
   \item if you use a web browser to download files, be careful that it doesn't automatically append some weird suffix to the files or translate them into something other than plain text.
@@ -1376,7 +1376,7 @@ that set the axis labels and add a title.
 Light <- X$light; rmax <- X$rmax
 logLight <- log(Light)
 op <- par(cex=1.5,cex.main=0.9)
-plot(logLight,rmax,xlab="Log light intensity (uE/m2/s)", ylab="Maximum growth rate rmax (1/d)",pch=16); 
+plot(logLight,rmax,xlab=expression("Log light intensity ("*mu*"E/m"^2*"/s)"), ylab="Maximum growth rate rmax (1/d)",pch=16); 
 title(main="Data from Fussmann et al. (2000) system");
 fit <- lm(rmax~logLight);
 summary(fit); abline(fit); 

@@ -1,6 +1,6 @@
 ---
 title: "A Tutorial Introduction to R"
-author: Aaron A. King, Stu Field, Ben Bolker, Steve Ellner
+author: "Aaron A. King, Stu Field, Ben Bolker, Steve Ellner"
 output:
   html_document:
     toc: yes
@@ -74,7 +74,7 @@ Throughout, we've endeavored to mark Windows-specific items with a &#9420;&nbsp;
 ## What is **R** ?
 **R** is a computing environment that combines 
 
-- a programming language called \Slang, developed by John Chambers at Bell Labs, that implements the idea of *programming with data* [@Chambers1998],
+- a programming language called **S**, developed by John Chambers at Bell Labs, that implements the idea of *programming with data* [@Chambers1998],
 - an extensive set of functions for classical and modern statistical data analysis and modeling,
 - powerful numerical analysis tools for linear algebra, differential equations, and stochastics,
 - graphics functions for visualizing data and model output, 
@@ -193,7 +193,7 @@ Variable names in **R** must begin with a letter, followed by alphanumeric chara
 You can break up long names with a period, as in `long.variable.number.3`, an underscore (`very_very_long_variable_name`), or by using camel case (`quiteLongVariableName`); 
 you cannot use blank spaces in variable names. 
 **R** is case sensitive:
-`Abc` and \textsf{abc} are different variables.
+`Abc` and `abc` are different variables.
 Good practice is to make variable names long enough to be evocative, short enough to type.
 `N.per.ha` or `pop.density` are better than `x` and `y` (too generic) or `available.nitrogen.per.hectare` (too long).
 
@@ -278,9 +278,9 @@ Check your answers against those given by the built-in function for the normal d
 ```
 ?foo
 ```
-(where `foo` is the name of the function you are are seeking help about) into the console window (e.g., try `?sin`). 
+(where `foo` is the name of the function you are seeking help about) into the console window (e.g., try `?sin`). 
 
-- &#9420;&nbsp;The `Help` menu on the tool bar provides links to other documentation, including the manuals and FAQs, and a search facility (`Apropos` on the menu) which is useful if you half remember part of the the name of what it is you need help on.
+- &#9420;&nbsp;The `Help` menu on the tool bar provides links to other documentation, including the manuals and FAQs, and a search facility (`Apropos` on the menu) which is useful if you half remember part of the name of what it is you need help on.
 - Typing `help.start()` opens a web browser with help information.
 - `example(cmd)` will run any examples that are included in the help page for command `cmd`.
 - `demo(topic)` runs demonstration code on topic `topic`:
@@ -342,7 +342,7 @@ If you have a net connection, try `RSiteSearch("sin")` from the command line or 
 `acos()`, `asin()`, `atan()` | arc-cosine, arc-sine, arc-tangent
 `exp(x)`     | exponential function, $e^x$
 `log(x)`     | natural (base-$e$) logarithm, $\log{x}=\ln{x}$
-`log10(x)`   | base-10 logarithm, $\log_10{x}$
+`log10(x)`   | base-10 logarithm, $\log_{10}{x}$
 `sqrt(x)`    | square root, $\sqrt{x}$
 `atan2(y,x)` | $\arctan(y/x)$
 `sum()`      | sum of the entries in a vector
@@ -432,7 +432,7 @@ The table of coefficients gives the estimated regression line as
 $$\text{rmax}=`r signif(coef(fit)[1],3)`+`r signif(coef(fit)[2],3)`\times\text{Light}.$$
 Associated with each coefficient is the standard error of the estimate.
 In addition, a $t$-test is performed on the hypothesis that each coefficient differs from zero: the $t$-statistic and the corresponding $p$-values are reported.
-Finally, the summary reports $R^2$ values and the results of an $F$-test comparing the model to the a simple normal null hypothesis.
+Finally, the summary reports $R^2$ values and the results of an $F$-test comparing the model to a simple normal null hypothesis.
 
 You can add the regression line to the plot of the data with a function taking `fit` as its input (if you closed the plot of the data, you will need to create it again in order to add the regression line):
 ```{r eval=FALSE}
@@ -462,25 +462,26 @@ anova(fit)
 
 ## Statistics in **R** 
 
-Some of the important functions and packages (collections of functions) for statistical modeling and data analysis are summarized in \cref{StatModelingFunctions}. 
+Some of the important functions and packages (collections of functions) for statistical modeling and data analysis are summarized in following table.
+Functions are named in `fixed-width font` and packages in **bold face**.
 The book *Modern Applied Statistics with S* [@Venables2002] gives a good practical overview, and a list of available packages and their contents can be found at the main **R** website (http://cran.r-project.org, and click on `Packages`). 
 
-A few of the functions and packages in **R** for statistical modeling and data analysis. 
-There are **many** more, but you will have to learn about them somewhere else.
+A few of the functions and packages in **R** for statistical modeling and data analysis are listed below.
+There are *many* more, but you will have to learn about them somewhere else.
 
 | 
 --------------------------|------------------------
 `aov`, `anova`            | Analysis of variance or deviance
 `lm`                      | Linear models (regression, ANOVA, ANCOVA) 
 `glm`                     |  Generalized linear models (e.g. logistic, Poisson regression) 
-`gam`                     | Generalized additive models (in package `mgcv`) 
+`gam`                     | Generalized additive models (in package **mgcv**) 
 `nls`                     | Fit nonlinear models by least-squares
-`lme`, `nlme`             | Linear and nonlinear mixed-effects models (repeated measures, block effects, spatial models): in package `nlme` 
+`lme`, `nlme`             | Linear and nonlinear mixed-effects models (repeated measures, block effects, spatial models): in package **nlme** 
 `princomp`, `manova`, `lda`, `cancor`  | Multivariate analysis (also see packages **vegan**, **ade4**)
-**boot**                  | Package: bootstrapping functions 
-**splines**               | Package: nonparametric regression (more in packages **fields**, **KernSmooth**, **logspline**, **sm** and others)
-**survival**                           | survival analysis 
-**tree**, **rpart**                    | tree-based regression
+**boot**                    | Package: bootstrapping functions 
+**splines**                 | Package: nonparametric regression (more in packages **fields**, **KernSmooth**, **logspline**, **sm** and others)
+**survival**                | survival analysis 
+**tree**, **rpart**           | tree-based regression
 
 Table: Statistical modeling and data analysis functions and packages.
 
@@ -534,7 +535,7 @@ Lists are treated a bit differently in **R** than the other kinds, so we'll post
 Besides its *class*---which kind of vector it is---a vector's only other necessary attribute is its length.
 Optionally, vectors in **R** can have a `names` attribute, which allows you to refer to entries by name.
 
-We've already how to create vectors in **R** using the `c` function, e.g.,
+We've already seen how to create vectors in **R** using the `c` function, e.g.,
 ```{r }
 x <- c(1,3,5,7,9,11)
 y <- c(6.5,4.3,9.1,-8.5,0,3.6)
@@ -557,7 +558,7 @@ x; xx
 ``` 
 
 Notice that the operations were applied to every entry in the vector. 
-Similarly, commands like `x-5, 2*x, x/10`, and `x^2` apply subtraction, multiplication, and division to each element of the vector. 
+Similarly, commands like `x-5, 2*x, x/10`, and `x^2` apply subtraction, multiplication, division, and square to each element of the vector. 
 The same is true for operations involving multiple vectors:
 ```{r }
 x+y
@@ -591,7 +592,7 @@ What happens when the length of the longer vector is not a multiple of that of t
 ### Functions for creating vectors
 
 A set of regularly spaced values can be created with the `seq` function, whose syntax is `x <- seq(from,to,by)` or `x <- seq(from,to)` or `x <- seq(from,to,length.out)`.
-The first form generates a vector `(from,from+by,from+2*by,...)` with the last entry not extending further than than `to`;
+The first form generates a vector `(from,from+by,from+2*by,...)` with the last entry not extending further than `to`;
 in the second form the value of `by` is assumed to be 1 or -1, depending on whether `from` or `to` is larger; 
 and the third form creates a vector with the desired endpoints and length.
 There is also a shortcut for creating vectors with `by=1`:
@@ -716,7 +717,7 @@ Write code that computes values of $y=\frac{(x-1)}{(x+1)}$ for $x=1,2,\cdots,10$
 #### Warning: unavoidable imprecision
 
 Note that comparing very similar numeric values can be tricky: rounding can happen, and some numbers cannot be represented exactly on a digital computer.
-By default, **R** displays 7~significant digits.
+By default, **R** displays 7 significant digits.
 This behavior can be modified with `options("digits")`.
 ```{r }
 x <- 1.999999; x; x-2
@@ -964,7 +965,7 @@ Why not?
 ### Matrix indexing
 
 Matrix indexing is like vector indexing except that you have to specify both the row and column, or range of rows and columns. 
-For example `z~<-~A[2,3]` sets `z` equal to 6, which is the (2\textsuperscript{nd} row, 3\textsuperscript{rd} column) entry of the matrix **A** that you recently created, and 
+For example `z <- A[2,3]` sets `z` equal to 6, which is the (2\textsuperscript{nd} row, 3\textsuperscript{rd} column) entry of the matrix **A** that you recently created, and 
 ```{r }
 A[2,2:3]; 
 B <- A[2:3,1:2]; B
@@ -1136,9 +1137,9 @@ Conveniently, these are all named using the same scheme:
 `qxxx(p, ...)` | quantile function (i.e., inverse of `pxxx`)
 `rxxx(n, ...)` | simulator
 
-In the above `xxx` stands for the abbreviated name of the specific distribution (the "**R** name" as given in \cref{tab:distribs}).
+In the above `xxx` stands for the abbreviated name of the specific distribution (the "**R** name" as given in following table).
 In each case, the `...` indicates that additional, distribution-specific, parameters are to be supplied.
-\Cref{tab:distribs} lists some of the more common distributions built in to **R**.
+The following table lists some of the more common distributions built in to **R**.
 A complete list of distributions provided by the base **stats** package can be viewed by executing `?Distributions`.
 
 Some of the probability distributions built in to **R**.
@@ -1182,7 +1183,7 @@ Be sure to explore both large and small values of the shape parameter.
 
 
 #### Exercise
-Use **Rstudio**'s `manipulate` facility to plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the beta distribution for several values of the first and second shape parameters.
+Use **RStudio**'s `manipulate` facility to plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the beta distribution for several values of the first and second shape parameters.
 Put in a vertical line to indicate the mean.
 Be sure to explore the full ranges of the parameters.
 
@@ -1205,8 +1206,8 @@ For example, a script file might
 
 1. Load some packages, or "source" another script file that creates some functions (more on functions later). 
 2. Read in data from a text file.
-2. Fit several statistical models to the data and compare them.
-1. Graph the results, and save the graph to disk for including in your paper. 
+3. Fit several statistical models to the data and compare them.
+4. Graph the results, and save the graph to disk for including in your paper. 
 
 Even for relatively simple tasks, script files are useful for building up a calculation step-by-step, making sure that each part works before adding on to it.
 They are also **essential** for making research reproducible.
@@ -1214,21 +1215,24 @@ They are also **essential** for making research reproducible.
 Tips for working with data and script files (sounding slightly scary but just trying to help you avoid common pitfalls):
 
 - To let **R** know where data and script files are located, you have a few choices:
-- change your working directory to wherever the file(s) are located before running **R**.
-- change your working directory within an **R** session to wherever the file(s) are located using the `setwd()` (**set** **w**orking **d**irectory) function, e.g. `setwd("c:/temp")`.
-- spell out the path to the file explicitly. 
-Use a single forward slash to separate folders (e.g., &#9420;&nbsp;`"c:/My~Documents/R/script.R"` or &#9421;&nbsp;`"/home/kingaa/projects/hurricanes"`): this works on all platforms.
+	(1) change your working directory to wherever the file(s) are located before running **R**.
+	(2) change your working directory within an **R** session to wherever the file(s) are located using the `setwd()` (**set** **w**orking **d**irectory) function, e.g. `setwd("c:/temp")`.
+	(3) spell out the path to the file explicitly.  
 The first option is far preferable, since it makes your codes portable:
 as long as you copy the whole directory, you can copy it whereever you like and **R** will find what it needs.
+
+- Use a single forward slash to separate folders (e.g., &#9420;&nbsp;`"c:/My~Documents/R/script.R"` or &#9421;&nbsp;`"/home/kingaa/projects/hurricanes"`): this works on all platforms.
 
 &#9420;
 If you have a shortcut defined for **R** on your desktop (or possibly in the Start menu) you can *permanently* change your default working directory by right-clicking on the shortcut icon, selecting `Properties`, and changing the starting directory to somewhere like (for example) `My~Documents/projectX`.
 
 - It's important that script files be preserved as *plain text* and data files also as plain text, using comma- or tab-separated format.
 There are three things that can go wrong here: 
+
 (1) if you use a web browser to download files, be careful that it doesn't automatically append some weird suffix to the files or translate them into something other than plain text.
 (2) if your web browser uses "file associations" (e.g., it thinks that all files ending in `.dat` are Excel files), make sure to save the file as plain text, and without any extra extensions; 
 (3) **never use Microsoft Word or other word-processors to edit your data and script files**; 
+
 MS Word will try very hard to get you to save them as Word (rather than text) files, which will screw them up!
 (4) If you send script files by e-mail, even if you are careful to send them as plain text, lines will occasionally get broken in different places, which can lead to confusion.
 Beware.
@@ -1256,15 +1260,13 @@ source("Intro1.R")
 
 Another important time-saver is loading data from a text file. 
 Grab copies of `Intro2.R` and `ChlorellaGrowth.csv` from the dropsite to see how this is done. 
-```{r }
+```{r}
 download.file(paste0(course.url,"Intro2.R"),destfile="Intro2.R",mode="w")
 download.file(paste0(course.url,"ChlorellaGrowth.csv"),destfile="ChlorellaGrowth.csv",mode="w")
 ``` 
 In `ChlorellaGrowth.csv` the two variables are entered as columns of a data matrix. 
 Then instead of typing these in by hand, the command
-```{r echo=F,results='hide'}
-<<fetch-chlorella-data>>  
-  ```{r eval=F}
+```{r}
 X <- read.csv("ChlorellaGrowth.csv",comment.char='#')
 ```
 reads the file (from the current directory) and puts the data values into the variable `X`.
@@ -1274,7 +1276,7 @@ Note also the `comment.char` option in the call to `read.csv`;
 this tells **R** to ignore lines that begin with a `#` and allows us to use self-documenting data files (a very good practice).
 
 Extract the variables from `X` with the commands
-```{r }
+```{r}
 Light <- X[,1]
 rmax <- X[,2]
 ``` 
@@ -1290,7 +1292,7 @@ You should end up with a graph that resembles the following.
 Light <- X$light; rmax <- X$rmax
 logLight <- log(Light)
 op <- par(cex=1.5,cex.main=0.9)
-plot(logLight,rmax,xlab="Log light intensity (uE/m2/s)",
+plot(logLight,rmax,xlab=expression("Log light intensity ("*mu*"E/m"^2*"/s)"),
      ylab="Maximum growth rate rmax (1/d)",pch=16); 
 title(main="Data from Fussmann et al. (2000) system");
 fit <- lm(rmax~logLight);

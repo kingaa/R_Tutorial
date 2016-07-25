@@ -26,7 +26,7 @@ default: $(FILES)
 	Rscript --vanilla -e "rmarkdown::render(\"$*.md\",output_format=\"html_document\")"
 
 %.R: %.Rmd
-	Rscript --vanilla -e "library(knitr); purl(\"$*.Rmd\",output=\"$*.R\")"
+	Rscript --vanilla -e "library(knitr); purl(\"$*.Rmd\",output=\"$*.R\",documentation=2)"
 
 %.tex: %.Rnw
 	$(RSCRIPT) -e "library(knitr); knit(\"$*.Rnw\")"
