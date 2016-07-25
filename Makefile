@@ -1,5 +1,3 @@
-PUBSITE = www
-
 REXE = R --vanilla
 RSCRIPT = Rscript --vanilla
 RCMD = $(REXE) CMD
@@ -11,11 +9,9 @@ RM = rm -f
 
 FILES = tutorial.html tutorial.pdf tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaGrowth.csv seedpred.dat
 
-publish: default
-	rsync -avz --delete-after --chmod=a+rX,go-w $(FILES) $(PUBSITE)
-	cp $(PUBSITE)/tutorial.html $(PUBSITE)/index.html
 
 default: $(FILES)
+	cp tutorial.html index.html
 
 %.html: %.Rmd
 	PATH=/usr/lib/rstudio/bin/pandoc:$$PATH \
