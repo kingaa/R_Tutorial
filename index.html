@@ -195,14 +195,14 @@ Need to include pseudo-RNG functions, etc.
 <h2>What is <strong>R</strong> ?</h2>
 <p><strong>R</strong> is a computing environment that combines</p>
 <ul>
-<li>a programming language called <strong>S</strong>, developed by John Chambers at Bell Labs, that implements the idea of <em>programming with data</em> <span class="citation">(Chambers 1998)</span>,</li>
+<li>a programming language called <strong>S</strong>, developed by John Chambers at Bell Labs, that implements the idea of <em>programming with data</em> <span class="citation">[1]</span>,</li>
 <li>an extensive set of functions for classical and modern statistical data analysis and modeling,</li>
 <li>powerful numerical analysis tools for linear algebra, differential equations, and stochastics,</li>
 <li>graphics functions for visualizing data and model output,</li>
 <li>a modular and extensible structure that supports a vast array of optional add-on packages, and</li>
 <li>extensive help and documentation facilities.</li>
 </ul>
-<p><strong>R</strong> is an <a href="https://en.wikipedia.org/wiki/Open-source_software">open source project</a>, available for <a href="https://www.r-project.org/">free download</a> <span class="citation">(R Core Team 2014)</span>. Originally a research project in statistical computing <span class="citation">(Ihaka and Gentleman 1996)</span>, it is now managed by a development team that includes a number of well-regarded statisticians, and is widely used by statistical researchers and working scientists as a platform for making new methods available to users.</p>
+<p><strong>R</strong> is an <a href="https://en.wikipedia.org/wiki/Open-source_software">open source project</a>, available for <a href="https://www.r-project.org/">free download</a> <span class="citation">[2]</span>. Originally a research project in statistical computing <span class="citation">[3]</span>, it is now managed by a development team that includes a number of well-regarded statisticians, and is widely used by statistical researchers and working scientists as a platform for making new methods available to users.</p>
 <p>There are a number of graphical front-ends for <strong>R</strong>. At present, the best of these appears to be <a href="http://www.rstudio.com"><strong>RStudio</strong></a>. Before learning about these, however, you should learn a little about <strong>R</strong> itself.</p>
 </div>
 <div id="getting-started-with-r" class="section level2">
@@ -402,7 +402,7 @@ C &lt;- (A+2*sqrt(A))/(A+5*sqrt(A)); C</code></pre>
 </div>
 <div id="a-first-interactive-session-descriptive-statistics" class="section level2">
 <h2>A first interactive session: descriptive statistics</h2>
-<p>Below are some data on the maximum growth rate <span class="math inline">\(r_{\text{max}}\)</span> of laboratory populations of the green alga <em>Chlorella vulgaris</em> as a function of light intensity (<span class="math inline">\(\mu\mathrm{E}~\mathrm{m}^{-2}~\mathrm{s}^{-1}\)</span>). These experiments were run during the system-design phase of the study reported by <span class="citation">Fussman et al. (2000)</span>.</p>
+<p>Below are some data on the maximum growth rate <span class="math inline">\(r_{\text{max}}\)</span> of laboratory populations of the green alga <em>Chlorella vulgaris</em> as a function of light intensity (<span class="math inline">\(\mu\mathrm{E}~\mathrm{m}^{-2}~\mathrm{s}^{-1}\)</span>). These experiments were run during the system-design phase of the study reported by <span class="citation">[4]</span>.</p>
 <table style="width:86%;">
 <colgroup>
 <col width="9%"></col>
@@ -523,7 +523,7 @@ anova(fit)</code></pre>
 </div>
 <div id="statistics-in-r" class="section level2">
 <h2>Statistics in <strong>R</strong></h2>
-<p>Some of the important functions and packages (collections of functions) for statistical modeling and data analysis are summarized in following table. Functions are named in <code>fixed-width font</code> and packages in <strong>bold face</strong>. The book <em>Modern Applied Statistics with S</em> <span class="citation">(Venables and Ripley 2002)</span> gives a good practical overview, and a list of available packages and their contents can be found at the main <strong>R</strong> website (<a href="http://cran.r-project.org" class="uri">http://cran.r-project.org</a>, and click on <code>Packages</code>).</p>
+<p>Some of the important functions and packages (collections of functions) for statistical modeling and data analysis are summarized in following table. Functions are named in <code>fixed-width font</code> and packages in <strong>bold face</strong>. The book <em>Modern Applied Statistics with S</em> <span class="citation">[5]</span> gives a good practical overview, and a list of available packages and their contents can be found at the main <strong>R</strong> website (<a href="http://cran.r-project.org" class="uri">http://cran.r-project.org</a>, and click on <code>Packages</code>).</p>
 <p>A few of the functions and packages in <strong>R</strong> for statistical modeling and data analysis are listed below. There are <em>many</em> more, but you will have to learn about them somewhere else.</p>
 <table style="width:72%;">
 <caption>Statistical modeling and data analysis functions and packages.</caption>
@@ -1128,7 +1128,7 @@ is.matrix(x)</code></pre>
 </div>
 <div id="factors" class="section level2">
 <h2>Factors</h2>
-<p>For dealing with measurements on the nominal and ordinal scales <span class="citation">(Stevens 1946)</span>, <strong>R</strong> provides vectors of type <em>factor</em>. A factor is a variable that can take one of a finite number of distinct <em>levels</em>. To construct a factor, we can apply the <code>factor</code> function to a vector of any class:</p>
+<p>For dealing with measurements on the nominal and ordinal scales <span class="citation">[6]</span>, <strong>R</strong> provides vectors of type <em>factor</em>. A factor is a variable that can take one of a finite number of distinct <em>levels</em>. To construct a factor, we can apply the <code>factor</code> function to a vector of any class:</p>
 <pre class="r"><code>x &lt;- rep(c(1,2),each=3); factor(x)</code></pre>
 <pre><code>## [1] 1 1 1 2 2 2
 ## Levels: 1 2</code></pre>
@@ -1504,7 +1504,7 @@ for (t in 1:length(T)) {
 </div>
 <div id="exercise-33" class="section level4">
 <h4>Exercise</h4>
-<p>Check that this works with different vectors <code>T</code>. What happens when <code>T</code> has length 1? What happens when <code>T</code> has length 0? Why? To avoid this trap, it’s preferable to use <code>seq_len</code>, <code>seq_along</code>, or <code>seq.int</code> instead of the <code>1:n</code> construction used above. This and many other <strong>R</strong> gotchas are described in the useful <a href="http://www.burns-stat.com/pages/Tutor/R_inferno.pdf"><em>R Inferno</em> <span class="citation">(Burns 2012)</span></a>.</p>
+<p>Check that this works with different vectors <code>T</code>. What happens when <code>T</code> has length 1? What happens when <code>T</code> has length 0? Why? To avoid this trap, it’s preferable to use <code>seq_len</code>, <code>seq_along</code>, or <code>seq.int</code> instead of the <code>1:n</code> construction used above. This and many other <strong>R</strong> gotchas are described in the useful <a href="http://www.burns-stat.com/pages/Tutor/R_inferno.pdf"><em>R Inferno</em> <span class="citation">[7]</span></a>.</p>
 </div>
 </div>
 <div id="while-loops" class="section level3">
@@ -1816,18 +1816,18 @@ f()</code></pre>
 <pre><code>## environment of f: &lt;environment: R_GlobalEnv&gt;
 ## global env: &lt;environment: R_GlobalEnv&gt;
 ## inside function f:
-## environment of g: &lt;environment: 0x3260df0&gt;
-## current env: &lt;environment: 0x3260df0&gt;
+## environment of g: &lt;environment: 0x47b79f8&gt;
+## current env: &lt;environment: 0x47b79f8&gt;
 ## parent env: &lt;environment: R_GlobalEnv&gt;
 ## inside function g:
-## environment of h: &lt;environment: 0x3244b78&gt;
-## current env: &lt;environment: 0x3244b78&gt;
-## parent env: &lt;environment: 0x3260df0&gt;
+## environment of h: &lt;environment: 0x47bde38&gt;
+## current env: &lt;environment: 0x47bde38&gt;
+## parent env: &lt;environment: 0x47b79f8&gt;
 ## grandparent env: &lt;environment: R_GlobalEnv&gt;
 ## inside function h:
-## current env: &lt;environment: 0x321e438&gt;
-## parent env: &lt;environment: 0x3244b78&gt;
-## grandparent env: &lt;environment: 0x3260df0&gt;
+## current env: &lt;environment: 0x47c3cf8&gt;
+## parent env: &lt;environment: 0x47bde38&gt;
+## grandparent env: &lt;environment: 0x47b79f8&gt;
 ## great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <p>Each variable referenced in the function’s body is bound, first, to a formal argument if possible. If a local variable of that name has previously been created (via one of the assignment operators <code>&lt;-</code>, <code>-&gt;</code>, or <code>=</code>, this is the variable that is affected by any subsequent assignments. If the variable is neither a formal parameter nor a local variable, then the parent environment of the function is searched for that variable. If the variable has not been found in the parent environment, then the grand-parent environment is searched, and so on.</p>
 <p>If the assignment operators <code>&lt;&lt;-</code> or <code>-&gt;&gt;</code> are used, a more extensive search for the referenced assignee is made. If the variable does not exist in the local environment, the parent environment is searched. If it does not exist in the parent environment, then the grand-parent environment is searched, and so on. Finally, if the variable cannot be found anywhere along the lineage of environments, a new global variable is created, with the assigned value.</p>
@@ -2107,7 +2107,7 @@ paste(y,collapse=&quot;&quot;)</code></pre>
 </div>
 <div id="vectorized-functions-vs-loops" class="section level2">
 <h2>Vectorized functions vs loops</h2>
-<p>As <span class="citation">Ligges and Fox (2008)</span> point out, the idea that one should avoid loops wherever possible in <strong>R</strong>, using instead vectorized functions like those in the <code>apply</code> family, is quite widespread in some quarters. The belief, which probably dates back to infelicities in early versions of <strong>S</strong> and <strong>Splus</strong> but is remarkably persistent, is that loops are very slow in <strong>R</strong>. Let’s have a critical look at this.</p>
+<p>As <span class="citation">[8]</span> point out, the idea that one should avoid loops wherever possible in <strong>R</strong>, using instead vectorized functions like those in the <code>apply</code> family, is quite widespread in some quarters. The belief, which probably dates back to infelicities in early versions of <strong>S</strong> and <strong>Splus</strong> but is remarkably persistent, is that loops are very slow in <strong>R</strong>. Let’s have a critical look at this.</p>
 <p>Consider the following loop code that can be vectorized:</p>
 <pre class="r"><code>x &lt;- runif(n=1e6,min=0,max=2*pi)
 y &lt;- numeric(length(x))
@@ -2123,11 +2123,11 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.296   0.000   1.295</code></pre>
+##   1.292   0.024   1.316</code></pre>
 <p>We can compare this with a simple call to <code>sin</code> (which is vectorized):</p>
 <pre class="r"><code>system.time(z &lt;- sin(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.044   0.000   0.045</code></pre>
+##   0.028   0.008   0.039</code></pre>
 <p>Clearly, calling <code>sin</code> directly is much faster. What about using <code>sapply</code>?</p>
 <div id="exercise-41" class="section level4">
 <h4>Exercise</h4>
@@ -2144,10 +2144,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.280   0.000   0.282</code></pre>
+##   0.264   0.000   0.264</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,f))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.196   0.000   0.196</code></pre>
+##   0.180   0.008   0.187</code></pre>
 <p>[Actually, in this case, <code>f</code> is vectorized automatically. Why is this?]</p>
 <pre class="r"><code>system.time(f(x))</code></pre>
 <pre><code>##    user  system elapsed 
@@ -2164,10 +2164,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.252   0.000   0.254</code></pre>
+##   0.232   0.000   0.231</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,g))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.148   0.000   0.148</code></pre>
+##   0.136   0.000   0.136</code></pre>
 </div>
 </div>
 <div id="acknowledgments" class="section level2">
@@ -2177,29 +2177,29 @@ system.time({
 <div id="references" class="section level2 unnumbered">
 <h2>References</h2>
 <div id="refs" class="references">
-<div id="ref-Burns2012">
-<p>Burns, P. 2012. The R inferno. 2nd editions. http://www.burns-stat.com/.</p>
-</div>
 <div id="ref-Chambers1998">
-<p>Chambers, J. M. 1998. Programming with data. Springer, New York.</p>
-</div>
-<div id="ref-Fussman2000">
-<p>Fussman, G. F., S. P. Ellner, K. W. Sherzer, and J. Nelson G. Hairston. 2000. Crossing the Hopf bifurcation in a live predator-prey system. Science 290:1358–60.</p>
-</div>
-<div id="ref-Ihaka1996">
-<p>Ihaka, R., and R. Gentleman. 1996. R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics 5:299–314.</p>
-</div>
-<div id="ref-Ligges2008">
-<p>Ligges, U., and J. Fox. 2008. R help desk : How can I avoid this loop or make it faster? R News 8:46–50.</p>
+<p>1. Chambers JM (1998) Programming with data. New York: Springer. Available: <a href="http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/" class="uri">http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/</a>.</p>
 </div>
 <div id="ref-R">
-<p>R Core Team. 2014. R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.</p>
+<p>2. R Core Team (2014) R: A language and environment for statistical computing. Vienna, Austria: R Foundation for Statistical Computing. Available: <a href="http://www.R-project.org/" class="uri">http://www.R-project.org/</a>.</p>
 </div>
-<div id="ref-Stevens1946">
-<p>Stevens, S. S. 1946. On the theory of scales of measurement. Science 103:677–680.</p>
+<div id="ref-Ihaka1996">
+<p>3. Ihaka R, Gentleman R (1996) R: A language for data analysis and graphics. Journal of Computational and Graphical Statistics 5: 299–314.</p>
+</div>
+<div id="ref-Fussman2000">
+<p>4. Fussman GF, Ellner SP, Sherzer KW, Nelson G. Hairston J (2000) Crossing the Hopf bifurcation in a live predator-prey system. Science 290: 1358–1360.</p>
 </div>
 <div id="ref-Venables2002">
-<p>Venables, W. N., and B. D. Ripley. 2002. Modern applied statistics with S. fourth edition. Springer, New York.</p>
+<p>5. Venables WN, Ripley BD (2002) Modern applied statistics with S. fourth edition. New York: Springer. Available: <a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="uri">http://www.stats.ox.ac.uk/pub/MASS4/</a>.</p>
+</div>
+<div id="ref-Stevens1946">
+<p>6. Stevens SS (1946) On the theory of scales of measurement. Science 103: 677–680. doi:<a href="https://doi.org/10.1126/science.103.2684.677">10.1126/science.103.2684.677</a>.</p>
+</div>
+<div id="ref-Burns2012">
+<p>7. Burns P (2012) The R Inferno. 2nd ed. http://www.burns-stat.com/. Available: <a href="http://www.burns-stat.com/pages/Tutor/R_inferno.pdf" class="uri">http://www.burns-stat.com/pages/Tutor/R_inferno.pdf</a>.</p>
+</div>
+<div id="ref-Ligges2008">
+<p>8. Ligges U, Fox J (2008) R help desk : How can I avoid this loop or make it faster? R News 8: 46–50. Available: <a href="http://www.r-project.org/doc/Rnews/Rnews_2008-1.pdf" class="uri">http://www.r-project.org/doc/Rnews/Rnews_2008-1.pdf</a>.</p>
 </div>
 </div>
 </div>

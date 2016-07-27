@@ -1,12 +1,12 @@
 ---
 title: "A Tutorial Introduction to R"
 author: "Aaron A. King, Stu Field, Ben Bolker, Steve Ellner"
-csl: ecology.csl
 output:
   html_document:
     toc: yes
     toc_depth: 3
 bibliography: tutorial.bib
+csl: plos.csl
 ---
 
 \newcommand\prob[1]{\mathbb{P}\left[{#1}\right]}
