@@ -1315,7 +1315,7 @@ dat
 #' 
 #' ----------------------------
 #' 
-#' ## Script files and data files
+#' ## Scripts and data files
 #' 
 #' Modeling and complicated data analysis are accomplished more efficiently using *scripts*, which are a series of  commands stored in a text file. 
 #' The Windows and MacOS versions of **R** both have basic script editors, but any text editor can be used, e.g. **emacs** (with ESS, "emacs speaks statistics").

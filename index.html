@@ -159,7 +159,7 @@ $(document).ready(function () {
 <li><a href="#data-frames">Data frames</a></li>
 </ul></li>
 <li><a href="#probability-distributions-in-r">Probability distributions in R</a></li>
-<li><a href="#script-files-and-data-files">Script files and data files</a></li>
+<li><a href="#scripts-and-data-files">Scripts and data files</a></li>
 <li><a href="#looping-in-r">Looping in <strong>R</strong></a><ul>
 <li><a href="#for-loops"><code>for</code> loops</a></li>
 <li><a href="#while-loops"><code>while</code> loops</a></li>
@@ -1475,8 +1475,8 @@ dat</code></pre>
 <hr />
 </div>
 </div>
-<div id="script-files-and-data-files" class="section level2">
-<h2>Script files and data files</h2>
+<div id="scripts-and-data-files" class="section level2">
+<h2>Scripts and data files</h2>
 <p>Modeling and complicated data analysis are accomplished more efficiently using <em>scripts</em>, which are a series of commands stored in a text file. The Windows and MacOS versions of <strong>R</strong> both have basic script editors, but any text editor can be used, e.g. <strong>emacs</strong> (with ESS, “emacs speaks statistics”). You <strong>should never</strong> use MS Word or other word processors!</p>
 <p>Most programs for working with models or analyzing data follow a simple pattern of program parts:</p>
 <ol style="list-style-type: decimal">
@@ -2241,11 +2241,11 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.040   0.008   1.046</code></pre>
+##   1.040   0.000   1.041</code></pre>
 <p>We can compare this with a simple call to <code>sin</code> (which is vectorized):</p>
 <pre class="r"><code>system.time(z &lt;- sin(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.036   0.000   0.038</code></pre>
+##   0.032   0.000   0.033</code></pre>
 <p>Clearly, calling <code>sin</code> directly is much faster. What about using <code>sapply</code>?</p>
 <hr />
 <div id="exercise-41" class="section level5">
@@ -2264,10 +2264,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.244   0.000   0.245</code></pre>
+##   0.236   0.000   0.237</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,f))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.172   0.000   0.172</code></pre>
+##   0.164   0.000   0.162</code></pre>
 <p>[Actually, in this case, <code>f</code> is vectorized automatically. Why is this?]</p>
 <pre class="r"><code>system.time(f(x))</code></pre>
 <pre><code>##    user  system elapsed 
@@ -2284,10 +2284,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.192   0.000   0.194</code></pre>
+##   0.200   0.000   0.197</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,g))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.124   0.000   0.123</code></pre>
+##   0.116   0.000   0.118</code></pre>
 </div>
 </div>
 <div id="acknowledgments" class="section level2">
