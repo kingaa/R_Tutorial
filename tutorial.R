@@ -4,7 +4,7 @@
 #' output:
 #'   html_document:
 #'     toc: yes
-#'     toc_depth: 3
+#'     toc_depth: 4
 #' bibliography: tutorial.bib
 #' csl: plos.csl
 #' ---
@@ -237,7 +237,7 @@ C <- A+2*sqrt(A)/A+5*sqrt(A)
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' 
 #' Using keyboard shortcuts wherever you can, use **R** to compute:
 #' 
@@ -316,7 +316,7 @@ C <- A+2*sqrt(A)/A+5*sqrt(A)
 #' 
 #' ----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Do an Apropos on `sin` to see what it does. 
 #' Now enter the command
 ## ----eval=FALSE----------------------------------------------------------
@@ -529,7 +529,9 @@ coef(fit)
 #' Don't worry about this;
 #' it means the package has been installed successfully, but the main help system index files couldn't be updated because of file permissions problems.
 #' 
-#' ## Vectors 
+#' ## Data structures in **R**
+#' 
+#' ### Vectors 
 #' 
 #' The most basic data-type in **R** is the vector.
 #' A vector is just a 1-dimensional array of values.
@@ -585,12 +587,12 @@ x+y
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' What do the `%%` and `%/%` operators do?
 #' 
 #' -----------------------------------
 #' 
-#' #### Warning: element recycling
+#' #### Element recycling
 #' 
 #' **R** has a very useful, but unusual and perhaps unexpected, behavior when two vector operands in a vectorized operation are of unequal lengths.
 #' It will effectively extend the shorter vector using element "re-cycling": 
@@ -605,12 +607,12 @@ y-x
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' What happens when the length of the longer vector is not a multiple of that of the shorter?
 #' 
 #' -----------------------------------
 #' 
-#' ### Functions for creating vectors
+#' #### Functions for creating vectors
 #' 
 #' A set of regularly spaced values can be created with the `seq` function, whose syntax is `x <- seq(from,to,by)` or `x <- seq(from,to)` or `x <- seq(from,to,length.out)`.
 #' The first form generates a vector `(from,from+by,from+2*by,...)` with the last entry not extending further than `to`;
@@ -623,12 +625,12 @@ y-x
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Use `seq` to create the vector `v=(1 5 9 13)`, and to create a vector going from 1 to 5 in increments of 0.2 . 
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' What happens when `to` is less than `from` in `seq`?
 #' What result does `3:1` give?
 #' This is one of the first "gotchas" **R** newbies run into.
@@ -678,7 +680,7 @@ rep(c(3,4),c(2,5))
 #' 
 #' -----------------------------------
 #' 
-#' ### Vector indexing
+#' #### Vector indexing
 #' 
 #' It is often necessary to extract a specific entry or other part of a vector. 
 #' This procedure is called *vector indexing*, and uses square brackets ([]):
@@ -698,7 +700,7 @@ v <- z[2:5]; v
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' If you enter `v <- z[seq(1,5,2)]`, what will happen? 
 #' Make sure you understand why.
 #' 
@@ -732,12 +734,12 @@ w
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Write a *one-line* command to extract a vector consisting of the second, first, and third elements of `z` *in that order*. 
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' What happens when I set the value of an element that doesn't exist?
 #' For example, try
 ## ----eval=F--------------------------------------------------------------
@@ -753,7 +755,7 @@ w
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Write code that computes values of $y=\frac{(x-1)}{(x+1)}$ for $x=1,2,\cdots,10$, and plots $y$ versus $x$ with the points plotted and connected by a line. 
 #' 
 #' -----------------------------------
@@ -780,14 +782,14 @@ x <- 1.99999999999999999; x; x-2
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' The sum of the geometric series $1 + r + r^2 + r^3 + ... + r^n$ approaches the limit $1/(1-r)$ for $r < 1$ as $n \rightarrow \infty$.
 #' Take $r=0.5$ and $n=10$, and write a **one-line** command that creates the vector $G = (r^0,r^1,r^2,...,r^n)$.
 #' Compare the sum (using `sum()`) of this vector to the limiting value $1/(1-r)$. Repeat for $n=50$.
 #' 
 #' -----------------------------------
 #' 
-#' ### Logical operations
+#' #### Logical operations
 #' 
 #' Some operations return a logical value (i.e., `TRUE` or `FALSE`). 
 #' For example, try:
@@ -876,7 +878,7 @@ b <- c(1,1,5,5)
 #' The shorter one (`|`, `&`) does element-by-element comparisons; 
 #' the longer one (`||`, `&&`) looks only at the first element in each vector. 
 #' 
-#' ### More on vector indexing 
+#' #### More on vector indexing 
 #' 
 #' We can also use *logical* vectors (lists of `TRUE` and `FALSE` values) to pick elements out of vectors.
 #' This is useful, for example, in subsetting data.
@@ -903,7 +905,7 @@ lowLightrmax
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' What would happen if instead of setting `lowLight` you replaced `Light` by saying `Light <- Light[Light<50]`?
 #' Why would that be the wrong thing to do in the above example?
 #' 
@@ -916,12 +918,14 @@ rmax[Light<50 | rmax <= 2.0]
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' `runif(n)` is a function that generates a vector of `n` random, uniformly distributed numbers between 0 and 1.
 #' Create a vector of 20 numbers, then find the subset of those numbers that is less than the mean.
 #' More on `runif` and related functions soon.
 #' 
-#' #### Exercise
+#' -----------------------------------
+#' 
+#' ##### Exercise
 #' Find the *positions* of the elements that are less than the mean of the vector you just created (e.g. if your vector were `(0.1 0.9 0.7 0.3)` the answer would be `(1 4)`).
 #' 
 #' -----------------------------------
@@ -943,14 +947,14 @@ x[c('second','first')] <- c(8,9); x
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Specify two ways to take only the elements in the odd positions (first, third, ...) of a vector of arbitrary length.
 #' 
 #' -----------------------------------
 #' 
-#' ## Matrices and arrays
+#' ### Matrices and arrays
 #' 
-#' ### Creating matrices
+#' #### Creating matrices
 #' 
 #' A matrix is a two-dimensional array of items.
 #' Most straightforwardly, we can create a matrix by specifying the number of rows and columns, and specifying the entries.
@@ -974,7 +978,7 @@ A <- matrix(1:9,nrow=3,ncol=3,byrow=TRUE); A
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Use a command of the form `X <- matrix(v,nrow=2,ncol=4)` where `v` is a data vector, to create the following matrix `X`:
 ## ----echo=F,comment=""---------------------------------------------------
 print(X <- matrix(rep(c(1,2),times=4),nrow=2))
@@ -988,7 +992,7 @@ print(X <- matrix(rep(c(1,2),times=4),nrow=2))
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Use `rnorm` and `matrix` to create a $5{\times}7$ matrix of Gaussian random numbers with mean 1 and standard deviation 2. 
 #' 
 #' -----------------------------------
@@ -1027,7 +1031,7 @@ print(X <- matrix(rep(c(1,2),times=4),nrow=2))
 #' 
 #' -----------------------------------
 #' 
-#' ### `cbind` and `rbind` 
+#' #### `cbind` and `rbind` 
 #' If their sizes match, vectors can be combined to form matrices, and matrices can be combined with vectors or matrices to form other matrices. 
 #' The functions that do this are `cbind` and `rbind`. 
 #' 
@@ -1047,13 +1051,13 @@ D <- rbind(1:3,4:6); D
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Verify that `rbind(C,D)` works, `cbind(C,C)` works, but `cbind(C,D)` doesn't. 
 #' Why not? 
 #' 
 #' -----------------------------------
 #' 
-#' ### Matrix indexing
+#' #### Matrix indexing
 #' 
 #' Matrix indexing is like vector indexing except that you have to specify both the row and column, or range of rows and columns. 
 #' For example `z <- A[2,3]` sets `z` equal to 6, which is the (2\textsuperscript{nd} row, 3\textsuperscript{rd} column) entry of the matrix **A** that you recently created, and 
@@ -1087,7 +1091,7 @@ A[1,] <- c(2,4,5); A
 which(A>=8,arr.ind=TRUE)
 
 #' 
-#' ### Arrays
+#' #### Arrays
 #' 
 #' The generalization of the matrix to more (or less) than 2 dimensions is the array.
 #' In fact, in **R** , a matrix is nothing other than a 2-dimensional array.
@@ -1111,7 +1115,7 @@ dim(y); dim(z)
 #' 
 #' -----------------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' What happens when we set the dimension attribute on a vector?
 #' For example:
 #' 
@@ -1127,7 +1131,7 @@ dim(y); dim(z)
 #' -----------------------------------
 #' 
 #' 
-#' ## Factors
+#' ### Factors
 #' 
 #' For dealing with measurements on the nominal and ordinal scales [@Stevens1946], **R** provides vectors of type *factor*.
 #' A factor is a variable that can take one of a finite number of distinct *levels*.
@@ -1162,24 +1166,22 @@ x[1:5] < x[18:22]
 #' 
 #' ----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Look up the documentation on the `sample` function used above.
 #' 
 #' ----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Can I make a matrix or an array out of a factor variable?
 #' 
 #' ----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' What is the internal representation of factors in **R** ?
 #' Try converting factors to integers using `as.integer`.
 #' Try converting an integer vector to a factor using `factor`.
 #' 
 #' ----------------------------
-#' 
-#' ## Other structures: Lists and data frames
 #' 
 #' ### Lists
 #' While vectors and matrices may seem familiar, lists may be new to you.
@@ -1226,7 +1228,7 @@ dat
 #' 
 #' ----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Download the `hurricanes.csv` file from the course website:
 #' http://kingaa.github.io/R_Tutorial/hurricanes.csv.
 #' Examine the resulting data frame by printing it and using the `str` command.
@@ -1288,25 +1290,25 @@ dat
 #' 
 #' ----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Write codes to plot the c.d.f.&nbsp;of the binomial distribution (`pbinom`).
 #' Verify the relationship between the p.d.f.&nbsp;(`dbinom`) and the c.d.f.
 #' 
 #' ----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the Poisson distribution for several values of the parameter $\lambda$.
 #' 
 #' ----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the gamma distribution for several values of the shape and scale (or rate) parameters.
 #' Put in a vertical line to indicate the mean.
 #' Be sure to explore both large and small values of the shape parameter.
 #' 
 #' ----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Plot the p.d.f.&nbsp;and c.d.f.&nbsp;of the beta distribution for several values of the first and second shape parameters.
 #' For each plot, put in a vertical line to indicate the mean.
 #' Be sure to explore the full ranges of the parameters.
@@ -1402,7 +1404,7 @@ rmax <- X[,2]
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' 
 #' Make a copy of `Intro2.R` under a new name, and modify the copy so that it does linear regression of algal growth rate on the natural log of light intensity, `LogLight=log(Light)`, and plots the data appropriately. 
 #' You should end up with a graph that resembles the following.
@@ -1423,7 +1425,7 @@ par(op)
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Run `Intro2.R`, then enter the command `plot(fit)` in the console and follow the directions in the console.
 #' Figure out what just happened by entering `?plot.lm` to bring up the help page for the function `plot.lm()` that carries out a `plot()` command for an object produced by `lm()`. 
 #' (This is one example of how **R** uses the fact that statistical analyses are stored as model objects. 
@@ -1439,12 +1441,12 @@ par(op)
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Create a plot of growth rate versus light intensity with the $x$-axis running from 0 to 120, and the $y$-axis running from 1 to 4. 
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Several graphs can be placed within a single figure by using the `par` function (short for "parameter") to adjust the layout of the plot. 
 #' For example the command 
 #' \hspace*{0.5in} `par(mfrow=c(m,n))` 
@@ -1458,13 +1460,13 @@ par(op)
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Use `?par` to read about other plot control parameters that can be set using `par()`.
 #' Then draw a $2 \times 2$ set of plots, each showing the line $y=5x+3$ with x running from 3 to 8, but with 4 different line styles and 4 different line colors. 
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Modify one of your scripts so that at the very end it saves the plot to disk. 
 #' You can accomplish this using the `dev.print()` function.
 #' Do `?dev.print` to read about this function. 
@@ -1524,7 +1526,7 @@ for (t in T) {
 plot(T,N)
 
 #' 
-#' #### Gotcha:
+#' ##### Gotcha:
 #' An alternative way to do the above might be something like
 ## ------------------------------------------------------------------------
 N <- numeric(length(T))
@@ -1536,7 +1538,7 @@ for (t in 1:length(T)) {
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Check that this works with different vectors `T`.
 #' What happens when `T` has length 1?
 #' What happens when `T` has length 0?  Why?
@@ -1582,7 +1584,7 @@ while (!conv) {
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Verify that the above works as intended.
 #' How many iterations are needed?
 #' 
@@ -1612,7 +1614,7 @@ for (k in seq_len(1000)) {
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Recompute the trajectory of the Beverton-Holt model using a `while` loop.
 #' Verify that your answer is exactly equivalent to the one above.
 #' 
@@ -1691,7 +1693,7 @@ hat; hattrick(5); hat
 #' However, the very idea of a function insists that we should never experience *unintentional* side effects.
 #' We'll see how **R** realizes this imperative below.
 #' 
-#' #### An aside 
+#' ##### An aside 
 #' If we want the function not to automatically print, we can wrap the return value in `invisible()`:
 ## ------------------------------------------------------------------------
 hattrick <- function (y) {
@@ -1778,7 +1780,7 @@ f(1); y
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Why hasn't `y` changed its value?
 #' 
 #' -----------------------------
@@ -1795,7 +1797,7 @@ f(1); y
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Why is the return value of `f` different?
 #' 
 #' -----------------------------
@@ -1815,7 +1817,7 @@ f(2); g(2)
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Be sure you understand what's happening at each line and why you get the results you see.
 #' 
 #' -----------------------------
@@ -1836,7 +1838,7 @@ f(1); y
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Which value of `y` was used?
 #' 
 #' -----------------------------
@@ -1896,7 +1898,7 @@ f(-2); y
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' In the above five code snippets, make sure you understand the differences.
 #' 
 #' -----------------------------
@@ -2131,7 +2133,7 @@ system.time(z <- sin(x))
 #' 
 #' -----------------------------
 #' 
-#' #### Exercise
+#' ##### Exercise
 #' Compare the time spent on the equivalent calculation, using `sapply`.
 #' What does this result tell you about where the computational cost is incurred?
 ## ----include=F-----------------------------------------------------------
