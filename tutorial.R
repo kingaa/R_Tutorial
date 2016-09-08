@@ -1229,7 +1229,7 @@ dat
 #' ----------------------------
 #' 
 #' ##### Exercise
-#' Download the `hurricanes.csv` file from the course website:
+#' Download the `hurricanes.csv` file from the tutorial website:
 #' http://kingaa.github.io/R_Tutorial/hurricanes.csv.
 #' Examine the resulting data frame by printing it and using the `str` command.
 #' Note the class type of each variable.
@@ -1285,8 +1285,6 @@ dat
 #' Table: The most commonly used built-in probability distributions.
 #' 
 #' For complete documentation, execute e.g., `?dbinom` in an **R** session.
-#' 
-#' ----------------------------
 #' 
 #' ----------------------------
 #' 

@@ -1281,7 +1281,7 @@ dat</code></pre>
 <hr />
 <div id="exercise-22" class="section level5">
 <h5>Exercise</h5>
-<p>Download the <code>hurricanes.csv</code> file from the course website: <a href="http://kingaa.github.io/R_Tutorial/hurricanes.csv" class="uri">http://kingaa.github.io/R_Tutorial/hurricanes.csv</a>. Examine the resulting data frame by printing it and using the <code>str</code> command. Note the class type of each variable.</p>
+<p>Download the <code>hurricanes.csv</code> file from the tutorial website: <a href="http://kingaa.github.io/R_Tutorial/hurricanes.csv" class="uri">http://kingaa.github.io/R_Tutorial/hurricanes.csv</a>. Examine the resulting data frame by printing it and using the <code>str</code> command. Note the class type of each variable.</p>
 <hr />
 </div>
 </div>
@@ -1452,7 +1452,6 @@ dat</code></pre>
 </tbody>
 </table>
 <p>For complete documentation, execute e.g., <code>?dbinom</code> in an <strong>R</strong> session.</p>
-<hr />
 <hr />
 <div id="exercise-23" class="section level5">
 <h5>Exercise</h5>
@@ -1934,18 +1933,18 @@ f()</code></pre>
 <pre><code>## environment of f: &lt;environment: R_GlobalEnv&gt;
 ## global env: &lt;environment: R_GlobalEnv&gt;
 ## inside function f:
-## environment of g: &lt;environment: 0x4c12db0&gt;
-## current env: &lt;environment: 0x4c12db0&gt;
+## environment of g: &lt;environment: 0x36ee2b8&gt;
+## current env: &lt;environment: 0x36ee2b8&gt;
 ## parent env: &lt;environment: R_GlobalEnv&gt;
 ## inside function g:
-## environment of h: &lt;environment: 0x4c167f8&gt;
-## current env: &lt;environment: 0x4c167f8&gt;
-## parent env: &lt;environment: 0x4c12db0&gt;
+## environment of h: &lt;environment: 0x36e67d0&gt;
+## current env: &lt;environment: 0x36e67d0&gt;
+## parent env: &lt;environment: 0x36ee2b8&gt;
 ## grandparent env: &lt;environment: R_GlobalEnv&gt;
 ## inside function h:
-## current env: &lt;environment: 0x4c1c010&gt;
-## parent env: &lt;environment: 0x4c167f8&gt;
-## grandparent env: &lt;environment: 0x4c12db0&gt;
+## current env: &lt;environment: 0x36df240&gt;
+## parent env: &lt;environment: 0x36e67d0&gt;
+## grandparent env: &lt;environment: 0x36ee2b8&gt;
 ## great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <p>Each variable referenced in the function’s body is bound, first, to a formal argument if possible. If a local variable of that name has previously been created (via one of the assignment operators <code>&lt;-</code>, <code>-&gt;</code>, or <code>=</code>, this is the variable that is affected by any subsequent assignments. If the variable is neither a formal parameter nor a local variable, then the parent environment of the function is searched for that variable. If the variable has not been found in the parent environment, then the grand-parent environment is searched, and so on.</p>
 <p>If the assignment operators <code>&lt;&lt;-</code> or <code>-&gt;&gt;</code> are used, a more extensive search for the referenced assignee is made. If the variable does not exist in the local environment, the parent environment is searched. If it does not exist in the parent environment, then the grand-parent environment is searched, and so on. Finally, if the variable cannot be found anywhere along the lineage of environments, a new global variable is created, with the assigned value.</p>
@@ -2241,11 +2240,11 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.040   0.000   1.041</code></pre>
+##   1.236   0.016   1.253</code></pre>
 <p>We can compare this with a simple call to <code>sin</code> (which is vectorized):</p>
 <pre class="r"><code>system.time(z &lt;- sin(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.032   0.000   0.033</code></pre>
+##   0.036   0.004   0.040</code></pre>
 <p>Clearly, calling <code>sin</code> directly is much faster. What about using <code>sapply</code>?</p>
 <hr />
 <div id="exercise-41" class="section level5">
@@ -2264,10 +2263,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.236   0.000   0.237</code></pre>
+##   0.344   0.000   0.347</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,f))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.164   0.000   0.162</code></pre>
+##   0.216   0.004   0.222</code></pre>
 <p>[Actually, in this case, <code>f</code> is vectorized automatically. Why is this?]</p>
 <pre class="r"><code>system.time(f(x))</code></pre>
 <pre><code>##    user  system elapsed 
@@ -2284,10 +2283,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.200   0.000   0.197</code></pre>
+##   0.216   0.000   0.215</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,g))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.116   0.000   0.118</code></pre>
+##   0.136   0.004   0.142</code></pre>
 </div>
 </div>
 <div id="acknowledgments" class="section level2">
