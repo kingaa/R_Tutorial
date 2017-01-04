@@ -3,6 +3,7 @@
 #' author: "Aaron A. King, Stu Field, Ben Bolker, Steve Ellner"
 #' output:
 #'   html_document:
+#'     number_sections: yes
 #'     toc: yes
 #'     toc_depth: 4
 #' bibliography: tutorial.bib
@@ -35,7 +36,7 @@ options(stringsAsFactors=FALSE)
 #' Need to include pseudo-RNG functions, etc.
 #' -->
 #' 
-#' ## How to use this document
+#' # How to use this document
 #' 
 #' These notes contain many sample calculations. 
 #' It is important to do these yourself---**type them in at your keyboard and see what happens on your screen**---to get the feel of working in **R**. 
@@ -48,7 +49,7 @@ options(stringsAsFactors=FALSE)
 #' 
 #' Throughout this document, Windows-specific items are marked with a &#9420;&nbsp;and *nix (linux/unix/MacOSX)-specific items with a &#9421;.
 #' 
-#' ## What is **R** ?
+#' # What is **R** ?
 #' **R** is a computing environment that combines 
 #' 
 #' - a programming language called **S**, developed by John Chambers at Bell Labs, that implements the idea of *programming with data* [@Chambers1998],
@@ -65,9 +66,9 @@ options(stringsAsFactors=FALSE)
 #' At present, the best of these appears to be [**RStudio**](http://www.rstudio.com).
 #' Before learning about these, however, you should learn a little about **R** itself.
 #' 
-#' ## Getting started with **R** 
+#' # Getting started with **R** 
 #' 
-#' ### Installing **R** on your computer
+#' ## Installing **R** on your computer
 #' 
 #' The main source for **R** is the [Comprehensive R Archive Network (CRAN)](http://cran.r-project.org). 
 #' You can get the source code and compile it yourself, but you may prefer at this point to download and install a precompiled version. 
@@ -94,13 +95,13 @@ options(stringsAsFactors=FALSE)
 #' Most packages are available pre-compiled for MacOS X and Windows;
 #' under Linux, **R** will download and compile the source code for you.
 #' 
-#' ### Starting **R** 
+#' ## Starting **R** 
 #' 
 #' &#9421;&nbsp;Execute `R` on the command line.
 #' 
 #' &#9420;&nbsp;Click on the icon on your desktop, or in the `Start` menu (if you allowed the Setup program to make either or both of these).
 #' 
-#' ### Stopping **R** 
+#' ## Stopping **R** 
 #' 
 #' > *When entering, always look for the exit.*  ---Lebanese proverb
 #' 
@@ -122,7 +123,7 @@ options(stringsAsFactors=FALSE)
 #' 
 #' Should an **R** command seem to be stuck or take longer than you're willing to wait, click on the stop sign on the menu bar or hit the `Esc` key (&#9420;), or `Ctrl-c` (&#9421;).
 #' 
-#' ## Interactive calculations
+#' # Interactive calculations
 #' 
 #' &#9420;&nbsp;When you start **R**, a console window is opened.
 #' The console has a few basic menus at the top; check them out on your own. 
@@ -257,7 +258,7 @@ C <- A+2*sqrt(A)/A+5*sqrt(A)
 #' -----------------------------------
 #' 
 #' 
-#' ## The help system
+#' # The help system
 #' 
 #' **R** has a help system, although it is generally better for reminding you about syntax or details, and for giving cross-references, than for answering basic "how do I ...?" questions.
 #' 
@@ -307,12 +308,6 @@ C <- A+2*sqrt(A)/A+5*sqrt(A)
 #' > So when I see an interesting spoor or paw print, I take a stroll down that trail and see where it leads.
 #' > Not the most efficient way of learning the language, no doubt, but a pleasant and interesting entertainment rather than a chore.
 #' 
-#' #### Other help resources
-#' 
-#' - **R** reference card: http://cran.r-project.org/doc/contrib/Short-refcard.pdf
-#' - Contributed documentation at CRAN: http://cran.us.r-project.org/other-docs.html
-#' - **R** ecology ("environmetrics") task view: http://cran.r-project.org/web/views/Environmetrics.html
-#' 
 #' 
 #' ----------------------------------
 #' 
@@ -355,12 +350,12 @@ C <- A+2*sqrt(A)/A+5*sqrt(A)
 #' ----------------------------------
 #' 
 #' 
-#' ## A first interactive session
+#' # A first interactive session
 #' 
-#' ### Descriptive statistics
+#' ## Descriptive statistics
 #' 
 #' Below are some data on the maximum growth rate $r_{\text{max}}$ of laboratory populations of the green alga *Chlorella vulgaris* as a function of light intensity ($\mu\mathrm{E}~\mathrm{m}^{-2}~\mathrm{s}^{-1}$).
-#' These experiments were run during the system-design phase of the study reported by @Fussman2000.
+#' These experiments were run during the system-design phase of the study reported by Fussman et al. [@Fussman2000].
 #' 
 #' | 
 #' ------|------------------------------------------------------
@@ -413,7 +408,7 @@ rmax <- c(1.73,1.65,2.02,1.89,2.61,1.36,2.37,2.08,2.69,2.32,3.67)
 #' You can also do `plot(Light,rmax)`.
 #' Based on what you see, does it seem reasonable to hypothesize a linear relationship between these variables?
 #' 
-#' ### Linear regression
+#' ## Linear regression
 #' 
 #' To perform linear regression we create a linear model using the `lm()` function:
 ## ------------------------------------------------------------------------
@@ -470,7 +465,7 @@ coef(fit)
 ## anova(fit)
 
 #' 
-#' ## Statistics in **R** 
+#' # Statistics in **R** 
 #' 
 #' Some of the important functions and packages (collections of functions) for statistical modeling and data analysis are summarized in following table.
 #' Functions are named in `fixed-width font` and packages in **bold face**.
@@ -499,7 +494,7 @@ coef(fit)
 #' 
 #' -------------------------------
 #' 
-#' ## The **R** package system
+#' # The **R** package system
 #' 
 #' **R** has many extra packages that provide extra functions.
 #' You may be able to install new packages from a menu within **R**. 
@@ -529,9 +524,9 @@ coef(fit)
 #' Don't worry about this;
 #' it means the package has been installed successfully, but the main help system index files couldn't be updated because of file permissions problems.
 #' 
-#' ## Data structures in **R**
+#' # Data structures in **R**
 #' 
-#' ### Vectors 
+#' ## Vectors 
 #' 
 #' The most basic data-type in **R** is the vector.
 #' A vector is just a 1-dimensional array of values.
@@ -592,7 +587,7 @@ x+y
 #' 
 #' -----------------------------------
 #' 
-#' #### Element recycling
+#' ### Element recycling
 #' 
 #' **R** has a very useful, but unusual and perhaps unexpected, behavior when two vector operands in a vectorized operation are of unequal lengths.
 #' It will effectively extend the shorter vector using element "re-cycling": 
@@ -612,7 +607,7 @@ y-x
 #' 
 #' -----------------------------------
 #' 
-#' #### Functions for creating vectors
+#' ### Functions for creating vectors
 #' 
 #' A set of regularly spaced values can be created with the `seq` function, whose syntax is `x <- seq(from,to,by)` or `x <- seq(from,to)` or `x <- seq(from,to,length.out)`.
 #' The first form generates a vector `(from,from+by,from+2*by,...)` with the last entry not extending further than `to`;
@@ -680,7 +675,7 @@ rep(c(3,4),c(2,5))
 #' 
 #' -----------------------------------
 #' 
-#' #### Vector indexing
+#' ### Vector indexing
 #' 
 #' It is often necessary to extract a specific entry or other part of a vector. 
 #' This procedure is called *vector indexing*, and uses square brackets ([]):
@@ -760,7 +755,7 @@ w
 #' 
 #' -----------------------------------
 #' 
-#' #### Warning: unavoidable imprecision
+#' ##### Warning: unavoidable imprecision
 #' 
 #' Note that comparing very similar numeric values can be tricky:
 #' rounding can happen, and some numbers cannot be represented exactly on a digital computer.
@@ -789,7 +784,7 @@ x <- 1.99999999999999999; x; x-2
 #' 
 #' -----------------------------------
 #' 
-#' #### Logical operations
+#' ### Logical operations
 #' 
 #' Some operations return a logical value (i.e., `TRUE` or `FALSE`). 
 #' For example, try:
@@ -878,7 +873,7 @@ b <- c(1,1,5,5)
 #' The shorter one (`|`, `&`) does element-by-element comparisons; 
 #' the longer one (`||`, `&&`) looks only at the first element in each vector. 
 #' 
-#' #### More on vector indexing 
+#' ### More on vector indexing 
 #' 
 #' We can also use *logical* vectors (lists of `TRUE` and `FALSE` values) to pick elements out of vectors.
 #' This is useful, for example, in subsetting data.
@@ -952,9 +947,9 @@ x[c('second','first')] <- c(8,9); x
 #' 
 #' -----------------------------------
 #' 
-#' ### Matrices and arrays
+#' ## Matrices and arrays
 #' 
-#' #### Creating matrices
+#' ### Creating matrices
 #' 
 #' A matrix is a two-dimensional array of items.
 #' Most straightforwardly, we can create a matrix by specifying the number of rows and columns, and specifying the entries.
@@ -1031,7 +1026,7 @@ print(X <- matrix(rep(c(1,2),times=4),nrow=2))
 #' 
 #' -----------------------------------
 #' 
-#' #### `cbind` and `rbind` 
+#' ### `cbind` and `rbind` 
 #' If their sizes match, vectors can be combined to form matrices, and matrices can be combined with vectors or matrices to form other matrices. 
 #' The functions that do this are `cbind` and `rbind`. 
 #' 
@@ -1057,10 +1052,10 @@ D <- rbind(1:3,4:6); D
 #' 
 #' -----------------------------------
 #' 
-#' #### Matrix indexing
+#' ### Matrix indexing
 #' 
 #' Matrix indexing is like vector indexing except that you have to specify both the row and column, or range of rows and columns. 
-#' For example `z <- A[2,3]` sets `z` equal to 6, which is the (2\textsuperscript{nd} row, 3\textsuperscript{rd} column) entry of the matrix **A** that you recently created, and 
+#' For example `z <- A[2,3]` sets `z` equal to 6, which is the (2^nd^ row, 3^rd^ column) entry of the matrix **A** that you recently created, and 
 ## ------------------------------------------------------------------------
 A[2,2:3]; 
 B <- A[2:3,1:2]; B
@@ -1091,7 +1086,7 @@ A[1,] <- c(2,4,5); A
 which(A>=8,arr.ind=TRUE)
 
 #' 
-#' #### Arrays
+#' ## Arrays
 #' 
 #' The generalization of the matrix to more (or less) than 2 dimensions is the array.
 #' In fact, in **R** , a matrix is nothing other than a 2-dimensional array.
@@ -1131,7 +1126,7 @@ dim(y); dim(z)
 #' -----------------------------------
 #' 
 #' 
-#' ### Factors
+#' ## Factors
 #' 
 #' For dealing with measurements on the nominal and ordinal scales [@Stevens1946], **R** provides vectors of type *factor*.
 #' A factor is a variable that can take one of a finite number of distinct *levels*.
@@ -1183,7 +1178,7 @@ x[1:5] < x[18:22]
 #' 
 #' ----------------------------
 #' 
-#' ### Lists
+#' ## Lists
 #' While vectors and matrices may seem familiar, lists may be new to you.
 #' Vectors and matrices have to contain elements that are all the same type: 
 #' lists in **R** can contain anything---vectors, matrices, other lists, arbitrary objects.
@@ -1200,7 +1195,7 @@ L[c("B","C")]
 
 #' 
 #' 
-#' ### Data frames
+#' ## Data frames
 #' 
 #' Vectors, matrices, and lists of one sort or another are found in just about every programming language.
 #' The *data frame* structure is (or was last time I checked) unique to **R** , and is central to many of **R** 's useful data-analysis features.
@@ -1236,7 +1231,7 @@ dat
 #' 
 #' ----------------------------
 #' 
-#' ## Probability distributions in R
+#' # Probability distributions in R
 #' 
 #' **R** contains a great deal of distilled knowledge about probability distributions.
 #' In particular, for each of a large class of important distributions, methods to compute probability distribution functions (p.d.f., i.e., density or mass functions), cumulative distribution functions (c.d.f.), and quantile functions are available, as are methods for simulating these distributions (i.e., drawing random deviates with the desired distribution).
@@ -1313,7 +1308,7 @@ dat
 #' 
 #' ----------------------------
 #' 
-#' ## Scripts and data files
+#' # Scripts and data files
 #' 
 #' Modeling and complicated data analysis are accomplished more efficiently using *scripts*, which are a series of  commands stored in a text file. 
 #' The Windows and MacOS versions of **R** both have basic script editors, but any text editor can be used, e.g. **emacs** (with ESS, "emacs speaks statistics").
@@ -1474,14 +1469,14 @@ par(op)
 #' 
 #' -----------------------------
 #' 
-#' ## Looping in **R** 
+#' # Looping in **R** 
 #' 
 #' Very frequently, a computation involves iterating some procedure across a range of cases, and every computer language I've ever come across has one or more facilities for producing such *loops*.
 #' **R** is no exception, though judging by their code, many **R** programmers look down their noses at loops.
 #' The fact remains that, at some point in life, one simply has to write a `for` loop.
 #' Here, we'll look at the looping constructs available in **R**.
 #' 
-#' ### `for` loops
+#' ## `for` loops
 #' 
 #' Execute the following code.
 ## ----results='hide'------------------------------------------------------
@@ -1548,7 +1543,7 @@ for (t in 1:length(T)) {
 #' 
 #' 
 #' 
-#' ### `while` loops
+#' ## `while` loops
 #' 
 #' A second looping construct is the `while` loop.
 #' Using `while`, we can compute the Golden Ratio as before:
@@ -1620,7 +1615,7 @@ for (k in seq_len(1000)) {
 #' -----------------------------
 #' 
 #' 
-#' ### `repeat` loops
+#' ## `repeat` loops
 #' 
 #' A third looping construct in **R** involves the `repeat` keyword.
 #' For example,
@@ -1638,9 +1633,9 @@ repeat {
 #' 
 #' For more information on looping and other control-flow constructs, execute `?Control`.
 #' 
-#' ## Functions and environments
+#' # Functions and environments
 #' 
-#' ### Definitions and examples
+#' ## Definitions and examples
 #' 
 #' An extremely useful feature in **R** is the ability to write arbitrary *functions*.
 #' A function, in this context, is an algorithm that performs a specific computation that depends on inputs (the function's *arguments*) and produces some output (the function's *value*) and/or has some *side effects*.
@@ -1716,9 +1711,11 @@ body(hattrick)
 environment(hattrick)
 
 #' 
-#' ### Function scope
+#' ## Function scope
 #' 
-#' \footnote{This section draws heavily, and sometimes verbatim, on {\S}10.7 of the *Introduction to **R** * manual [@RIntro].}As noted above, a paramount consideration in the implementation of functions in any programming language is that unintentional side effects should never occur.
+#' **Note:** This section draws heavily, and sometimes verbatim, on &sect;10.7 of the *Introduction to **R** * manual [@RIntro].
+#' 
+#' As noted above, a paramount consideration in the implementation of functions in any programming language is that unintentional side effects should never occur.
 #' In particular, I should be free to write a function that creates temporary variables as an aid to its computations, and be able to rest assured that no variables I create temporarily will interfere with any other variables I've defined anywhere else.
 #' To accomplish this, **R** has a specific set of *scoping rules*.
 #' 
@@ -1763,7 +1760,7 @@ f(5)
 
 #' The relevant value of `z` is the one in the environment where `g` was *defined*, not the one in the environment wherein it is *called*.
 #' 
-#' ### Nested functions and environments
+#' ## Nested functions and environments
 #' 
 #' In each of the following examples, make sure you understand exactly what has happened.
 #' 
@@ -1958,13 +1955,13 @@ f()
 #' If it does not exist in the parent environment, then the grand-parent environment is searched, and so on.
 #' Finally, if the variable cannot be found anywhere along the lineage of environments, a new global variable is created, with the assigned value.
 #' 
-#' ## The `apply` family of functions
+#' # The `apply` family of functions
 #' 
 #' As mentioned above, there are circumstances under which looping constructs are really necessary.
 #' Very often, however, we wish to perform some operation across all the elements of a vector, array, or dataset.
 #' In such cases, it is faster and more elegant (to the **R** afficiando's eye) to use the `apply` family of functions.
 #' 
-#' ### List apply: `lapply`
+#' ## List apply: `lapply`
 #' 
 #' `lapply` applies a function to each element of a list or vector, returning a list.
 ## ------------------------------------------------------------------------
@@ -1977,7 +1974,7 @@ y <- c("teenage","mutant","ninja","turtle",
 lapply(y,nchar)
 
 #' 
-#' ### Sloppy list apply: `sapply`
+#' ## Sloppy list apply: `sapply`
 #' 
 #' `sapply` isn't content to always return a list:
 #' it attempts to simplify the results into a non-list vector if possible.
@@ -1991,7 +1988,7 @@ y <- c("pizza","monster","jigsaw","puddle",
 sapply(y,nchar)
 
 #' 
-#' ### Multiple-list apply: `mapply`
+#' ## Multiple-list apply: `mapply`
 #' 
 #' `mapply` is a multiple-argument version of `sapply`:
 ## ------------------------------------------------------------------------
@@ -2005,7 +2002,7 @@ mapply(paste,x,y[2:3])
 mapply(paste,x[c(1,3)],y)
 
 #' 
-#' ### Array apply: `apply`
+#' ## Array apply: `apply`
 #' 
 #' `apply` is very powerful and a bit more complex.
 #' It allows an arbitrary function to applied to each slice of an array, where the slices can be defined in all possible ways.
@@ -2047,7 +2044,7 @@ apply(A,c(1,2),function (x, y) sum(x>y),y=8)
 apply(A,c(1,2),function (x, y) sum(x>y),y=-1)
 
 #' 
-#' ### Table apply: `tapply`
+#' ## Table apply: `tapply`
 #' 
 #' `tapply` is, in a way, an extension of `table`.
 #' The syntax is `tapply(X,INDEX,FUN,...)`,
@@ -2074,7 +2071,7 @@ x <- subset(seeds,available>0)
 with(x, tapply(tcum,list(dist,station),max,na.rm=TRUE))
 
 #' 
-#' ### sapply with expected result: `vapply`
+#' ## sapply with expected result: `vapply`
 #' 
 #' When we could use `sapply` and we know exactly what the size and class of the value of the function will be, it is sometimes faster to use `vapply`.
 #' The syntax is like that of `sapply`: `vapply(X,FUN,FUN.VALUE,...)`, where `X` and `FUN` are as in `sapply`, but we specify the size and class of the value of `FUN` via the `FUN.VALUE` argument.
@@ -2099,9 +2096,9 @@ paste(y,collapse="")
 #' <!-- %% Bank-account example? -->
 #' 
 #' 
-#' ## Vectorized functions vs loops
+#' # Vectorized functions vs loops
 #' 
-#' As @Ligges2008 point out, the idea that one should avoid loops wherever possible in **R**, using instead vectorized functions like those in the `apply` family, is quite widespread in some quarters.
+#' As Ligges & Fox [@Ligges2008] point out, the idea that one should avoid loops wherever possible in **R**, using instead vectorized functions like those in the `apply` family, is quite widespread in some quarters.
 #' The belief, which probably dates back to infelicities in early versions of **S** and **Splus** but is remarkably persistent, is that loops are very slow in **R**.
 #' Let's have a critical look at this.
 #' 
@@ -2179,7 +2176,7 @@ system.time({
 system.time(res2 <- sapply(x,g))
 
 #' 
-#' ## Acknowledgments
+#' # Acknowledgments
 #' 
 #' These notes are based in part on materials used in the series of NSF-funded workshops taught in association with the Ecology and Evolution of Infectious Diseases conference.
 #' Instructors there included Ben Bolker, Ottar Bj&oslash;rnstad, Steve Ellner, and Stu Field.
@@ -2187,5 +2184,4 @@ system.time(res2 <- sapply(x,g))
 #' The document also draws on the documentation supplied with **R**, including the *Introduction to **R*** manual.
 #' Versions of this document have been used in courses taught by BB and AAK at Florida and Michigan, at workshops run under the auspices of the International Centre for Theoretical Physics in Trieste, and elsewhere.
 #' 
-#' ## References
-#' 
+#' # References
