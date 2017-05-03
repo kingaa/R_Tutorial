@@ -7,7 +7,7 @@ MAKEIDX = makeindex
 CP = cp
 RM = rm -f
 
-FILES = tutorial.html tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaGrowth.csv seedpred.dat
+FILES = tutorial.html tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaGrowth.csv seedpred.dat munging.html munging.R viz.html viz.R
 
 default: $(FILES)
 	cp tutorial.html index.html

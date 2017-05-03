@@ -7,7 +7,7 @@
 #'     toc: yes
 #'     toc_depth: 4
 #' bibliography: tutorial.bib
-#' csl: plos.csl
+#' csl: ecology.csl
 #' ---
 #' 
 #' \newcommand\prob[1]{\mathbb{P}\left[{#1}\right]}
@@ -1713,7 +1713,7 @@ environment(hattrick)
 #' 
 #' ## Function scope
 #' 
-#' **Note:** This section draws heavily, and sometimes verbatim, on &sect;10.7 of the *Introduction to **R** * manual [@RIntro].
+#' **Note:** This section draws heavily, and sometimes verbatim, on &sect;10.7 of the *Introduction to **R** * manual [@Rintro].
 #' 
 #' As noted above, a paramount consideration in the implementation of functions in any programming language is that unintentional side effects should never occur.
 #' In particular, I should be free to write a function that creates temporary variables as an aid to its computations, and be able to rest assured that no variables I create temporarily will interfere with any other variables I've defined anywhere else.
