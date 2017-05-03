@@ -1922,18 +1922,18 @@ f()</code></pre>
 <pre><code>## environment of f: &lt;environment: R_GlobalEnv&gt;
 ## global env: &lt;environment: R_GlobalEnv&gt;
 ## inside function f:
-## environment of g: &lt;environment: 0x19148e8&gt;
-## current env: &lt;environment: 0x19148e8&gt;
+## environment of g: &lt;environment: 0x4384f38&gt;
+## current env: &lt;environment: 0x4384f38&gt;
 ## parent env: &lt;environment: R_GlobalEnv&gt;
 ## inside function g:
-## environment of h: &lt;environment: 0xa52870&gt;
-## current env: &lt;environment: 0xa52870&gt;
-## parent env: &lt;environment: 0x19148e8&gt;
+## environment of h: &lt;environment: 0x4388bb0&gt;
+## current env: &lt;environment: 0x4388bb0&gt;
+## parent env: &lt;environment: 0x4384f38&gt;
 ## grandparent env: &lt;environment: R_GlobalEnv&gt;
 ## inside function h:
-## current env: &lt;environment: 0xa48428&gt;
-## parent env: &lt;environment: 0xa52870&gt;
-## grandparent env: &lt;environment: 0x19148e8&gt;
+## current env: &lt;environment: 0x438d380&gt;
+## parent env: &lt;environment: 0x4388bb0&gt;
+## grandparent env: &lt;environment: 0x4384f38&gt;
 ## great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <p>Each variable referenced in the function’s body is bound, first, to a formal argument if possible. If a local variable of that name has previously been created (via one of the assignment operators <code>&lt;-</code>, <code>-&gt;</code>, or <code>=</code>, this is the variable that is affected by any subsequent assignments. If the variable is neither a formal parameter nor a local variable, then the parent environment of the function is searched for that variable. If the variable has not been found in the parent environment, then the grand-parent environment is searched, and so on.</p>
 <p>If the assignment operators <code>&lt;&lt;-</code> or <code>-&gt;&gt;</code> are used, a more extensive search for the referenced assignee is made. If the variable does not exist in the local environment, the parent environment is searched. If it does not exist in the parent environment, then the grand-parent environment is searched, and so on. Finally, if the variable cannot be found anywhere along the lineage of environments, a new global variable is created, with the assigned value.</p>
@@ -2229,11 +2229,11 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   1.024   0.000   1.020</code></pre>
+##   0.984   0.000   0.983</code></pre>
 <p>We can compare this with a simple call to <code>sin</code> (which is vectorized):</p>
 <pre class="r"><code>system.time(z &lt;- sin(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.032   0.000   0.033</code></pre>
+##   0.032   0.000   0.034</code></pre>
 <p>Clearly, calling <code>sin</code> directly is much faster. What about using <code>sapply</code>?</p>
 <hr />
 <div id="exercise-41" class="section level5">
@@ -2252,14 +2252,14 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.228   0.000   0.229</code></pre>
+##   0.220   0.000   0.217</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,f))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.148   0.000   0.148</code></pre>
+##   0.148   0.000   0.150</code></pre>
 <p>[Actually, in this case, <code>f</code> is vectorized automatically. Why is this?]</p>
 <pre class="r"><code>system.time(f(x))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.000   0.000   0.001</code></pre>
+##       0       0       0</code></pre>
 <p>Another example: in this case function <code>g</code> is not vectorized.</p>
 <pre class="r"><code>g &lt;- function (x) {
   if ((x[1] &gt; 30) &amp;&amp; (x[1] &lt; 5000)) 1 else 0
@@ -2272,10 +2272,10 @@ system.time({
   }
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.188   0.000   0.186</code></pre>
+##   0.192   0.000   0.191</code></pre>
 <pre class="r"><code>system.time(res2 &lt;- sapply(x,g))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.112   0.000   0.113</code></pre>
+##   0.116   0.000   0.117</code></pre>
 </div>
 </div>
 <div id="acknowledgments" class="section level1">

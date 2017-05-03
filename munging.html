@@ -210,14 +210,9 @@ x &lt;- data.frame(a=letters[1:10],b=runif(10),c=sample(LETTERS[1:3],10,replace=
 arrange(x,a,b,c)
 arrange(x,b,c,a)
 arrange(x,c,b,a)</code></pre>
-<pre class="r"><code>read.csv(&quot;http://kingaa.github.io/R_Tutorial/energy_production.csv&quot;,comment=&quot;#&quot;) -&gt; energy</code></pre>
-<pre><code>## Warning in file(file, &quot;rt&quot;): cannot open URL 'http://kingaa.github.io/
-## R_Tutorial/energy_production.csv': HTTP status was '404 Not Found'</code></pre>
-<pre><code>## Error in file(file, &quot;rt&quot;): cannot open the connection</code></pre>
-<pre class="r"><code>arrange(energy,region,source,year)</code></pre>
-<pre><code>## Error in is.data.frame(df): object 'energy' not found</code></pre>
-<pre class="r"><code>arrange(energy,-TJ,year)</code></pre>
-<pre><code>## Error in is.data.frame(df): object 'energy' not found</code></pre>
+<pre class="r"><code>read.csv(&quot;http://kingaa.github.io/R_Tutorial/energy_production.csv&quot;,comment=&quot;#&quot;) -&gt; energy
+arrange(energy,region,source,year)
+arrange(energy,-TJ,year)</code></pre>
 </div>
 <div id="count" class="section level4">
 <h4><code>count</code></h4>
