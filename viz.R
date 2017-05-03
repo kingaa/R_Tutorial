@@ -237,7 +237,6 @@ ggplot(data=x,mapping=aes(x=year,y=TJ,fill=source1))+
 #' 
 #' --------------------------
 #' 
-#' ## [Back to course homepage](../)
 #' ## [**R** codes for this document](http://raw.githubusercontent.com/kingaa/R_Tutorial/master/viz.R)
 #' 
 #' --------------------------

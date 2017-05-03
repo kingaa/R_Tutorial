@@ -304,7 +304,6 @@ energy %>%
 #' 
 #' --------------------------
 #' 
-#' ## [Back to course homepage](../)
 #' ## [**R** codes for this document](http://raw.githubusercontent.com/kingaa/R_Tutorial/master/munging.R)
 #' 
 #' --------------------------

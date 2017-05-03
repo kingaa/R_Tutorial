@@ -263,7 +263,6 @@ Ask a question regarding one of the datasets shown here and devise a visualizati
 
 --------------------------
 
-## [Back to course homepage](../)
 ## [**R** codes for this document](http://raw.githubusercontent.com/kingaa/R_Tutorial/master/viz.R)
 
 --------------------------
