@@ -137,21 +137,21 @@ $(document).ready(function () {
 <li><a href="#exercise">Exercise</a></li>
 </ul></li>
 <li><a href="#back-to-course-homepage"><a href="../">Back to course homepage</a></a></li>
-<li><a href="#r-codes-for-this-document"><a href="http://raw.githubusercontent.com/kingaa/clim-dis/master/hadley/viz.R"><strong>R</strong> codes for this document</a></a></li>
+<li><a href="#r-codes-for-this-document"><a href="http://raw.githubusercontent.com/kingaa/R_Tutorial/master/viz.R"><strong>R</strong> codes for this document</a></a></li>
 </ul>
 </div>
 
 <div id="how-to-use-this-document." class="section level2">
 <h2>How to use this document.</h2>
 <p>This is an extremely condensed introduction to <strong>R</strong>’s base graphics and—more importantly—the powerful data-visualization package <strong>ggplot2</strong>, developed by Hadley Wickham. Run the codes shown and study the outputs to learn about these tools. When questions are posed, do your best to answer them.</p>
-<p>For your convenience, <a href="http://raw.githubusercontent.com/kingaa/clim-dis/master/hadley/viz.R">the <strong>R</strong> codes for this document are provided in an <strong>R</strong> script</a> which you can download, edit, and run.</p>
+<p>For your convenience, <a href="http://raw.githubusercontent.com/kingaa/R_Tutorial/master/viz.R">the <strong>R</strong> codes for this document are provided in an <strong>R</strong> script</a> which you can download, edit, and run.</p>
 </div>
 <div id="getting-started-rs-base-graphics" class="section level2">
 <h2>Getting started: <strong>R</strong>’s base graphics</h2>
 <div id="transgenic-mosquito-experiment" class="section level3">
 <h3>Transgenic mosquito experiment</h3>
 <p>Let’s load the data on transgenic mosquito survival time.</p>
-<pre class="r"><code>dat &lt;- read.csv(&quot;http://kingaa.github.io/clim-dis/hadley/mosquitoes.csv&quot;)</code></pre>
+<pre class="r"><code>dat &lt;- read.csv(&quot;http://kingaa.github.io/R_Tutorial/mosquitoes.csv&quot;)</code></pre>
 <p>Let’s compare the average lifespan of transgenic vs wildtype mosquitoes from this experiment. The following split the data into two subsets, one for each genetic type.</p>
 <pre class="r"><code>wt &lt;- subset(dat,type==&quot;wildtype&quot;,select=lifespan)
 tg &lt;- subset(dat,type==&quot;transgenic&quot;,select=-type)</code></pre>
@@ -181,7 +181,7 @@ plot(mammals)</code></pre>
 </div>
 <div id="oil-production" class="section level3">
 <h3>Oil production</h3>
-<pre class="r"><code>read.csv(&quot;http://kingaa.github.io/clim-dis/hadley/oil_production.csv&quot;,
+<pre class="r"><code>read.csv(&quot;http://kingaa.github.io/R_Tutorial/oil_production.csv&quot;,
          comment.char=&quot;#&quot;) -&gt; oil
 head(oil)
 summary(oil)
@@ -222,7 +222,7 @@ plot(wideOil$year,wideOil$total,type='l')</code></pre>
 <h2>Examples</h2>
 <div id="energy-production" class="section level3">
 <h3>Energy production</h3>
-<pre class="r"><code>read.csv(&quot;http://kingaa.github.io/clim-dis/hadley/energy_production.csv&quot;,
+<pre class="r"><code>read.csv(&quot;http://kingaa.github.io/R_Tutorial/energy_production.csv&quot;,
          comment.char=&quot;#&quot;) -&gt; energy
 
 library(ggplot2)
@@ -289,7 +289,7 @@ ggplot(data=x,mapping=aes(x=year,y=TJ,fill=source1))+
 <h2><a href="../">Back to course homepage</a></h2>
 </div>
 <div id="r-codes-for-this-document" class="section level2">
-<h2><a href="http://raw.githubusercontent.com/kingaa/clim-dis/master/hadley/viz.R"><strong>R</strong> codes for this document</a></h2>
+<h2><a href="http://raw.githubusercontent.com/kingaa/R_Tutorial/master/viz.R"><strong>R</strong> codes for this document</a></h2>
 <hr />
 </div>
 
