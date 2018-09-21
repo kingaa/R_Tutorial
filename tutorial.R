@@ -1911,7 +1911,7 @@ f <- function () {
     h <- function () {
       cat("inside function h:\n")
       cat("current env: ")
-      print(sys.frame(sys.nframe()))
+      print(environment())
       cat("parent env: ")
       print(parent.frame(1))
       cat("grandparent env: ")
@@ -1924,7 +1924,7 @@ f <- function () {
     cat("environment of h: ")
     print(environment(h))
     cat("current env: ")
-    print(sys.frame(sys.nframe()))
+    print(environment())
     cat("parent env: ")
     print(parent.frame(1))
     cat("grandparent env: ")
@@ -1935,13 +1935,13 @@ f <- function () {
   cat("environment of g: ")
   print(environment(g))
   cat("current env: ")
-  print(sys.frame(sys.nframe()))
+  print(environment())
   cat("parent env: ")
   print(parent.frame(1))
   g()
 }
 cat("environment of f: "); print(environment(f))
-cat("global env: "); print(sys.frame(sys.nframe()))
+cat("global env: "); print(environment())
 f()
 
 #' 
