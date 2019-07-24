@@ -25,6 +25,7 @@
 #' Comments, suggestions, criticism, corrections are most welcome.
 #' Please submit these via the [issues page](https://github.com/kingaa/R_Tutorial/issues).
 #' 
+
 ## ----prelims,include=FALSE,purl=TRUE,cache=FALSE-------------------------
 options(stringsAsFactors=FALSE)
 
@@ -2038,7 +2039,8 @@ apply(A,3,sum)
 ## ------------------------------------------------------------------------
 apply(A,c(2,3),function (x) sd(x)/sqrt(length(x)))
 
-#' Additional arguments are passed to the function:
+#' If any additional arguments are given to `apply`, these are passed to the function.
+#' For example, make sure you understand what is happening in the lines:
 ## ------------------------------------------------------------------------
 apply(A,c(1,2),function (x, y) sum(x>y),y=8)
 apply(A,c(1,2),function (x, y) sum(x>y),y=-1)
