@@ -1,8 +1,17 @@
+## .folder {
+
+## 	color: #3333ff;
+
+##     font-weight: bold;
+
+## }
+
+
 set.seed(594709947L)
 library(ggplot2)
 theme_set(theme_bw())
 
-dat <- read.csv("http://kingaa.github.io/R_Tutorial/data/mosquitoes.csv")
+dat <- read.csv("https://kingaa.github.io/R_Tutorial/data/mosquitoes.csv")
 
 wt <- subset(dat,type=="wildtype",select=lifespan)
 tg <- subset(dat,type=="transgenic",select=-type)
@@ -27,7 +36,7 @@ plot(mammals$body,mammals$brain,log='xy')
 plot(brain~body,data=mammals,log='xy')
 
 read.csv(
-  "http://kingaa.github.io/R_Tutorial/data/oil_production.csv",
+  "https://kingaa.github.io/R_Tutorial/data/oil_production.csv",
   comment.char="#"
 ) -> oil
 head(oil)
@@ -45,7 +54,7 @@ wideOil$total <- apply(wideOil[,-1],1,sum)
 plot(wideOil$year,wideOil$total,type='l')
 
 read.csv(
-  "http://kingaa.github.io/R_Tutorial/data/energy_production.csv",
+  "https://kingaa.github.io/R_Tutorial/data/energy_production.csv",
   comment.char="#"
 ) -> energy
 

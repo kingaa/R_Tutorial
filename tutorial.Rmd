@@ -9,7 +9,6 @@ output:
       collapsed: TRUE
       smooth_scroll: TRUE
     highlight: haddock
-    code_folding: show
     number_sections: FALSE
     df_print: paged
     includes:
@@ -35,15 +34,17 @@ Please submit these via the [issues page](https://github.com/kingaa/R_Tutorial/i
 
 -----------------------
 
+```{css echo=FALSE}
+.folder {
+	color: #3333ff; 
+    font-weight: bold;
+}
+```
+
 ```{r knitr-opts,include=FALSE,purl=FALSE}
 prefix <- "tutorial"
 source("_includes/setup.R",local=knitr::knit_global())
 ```
-
-<!--
-NOTES:
-Need to include pseudo-RNG functions, etc.
--->
 
 # How to use this document
 
@@ -53,7 +54,7 @@ It is important to do these yourself---**type them in at your keyboard and see w
 **Exercises** in the middle of a section should be done immediately when you get to them, and make sure you have them right before moving on. 
 
 Many other similar introductions are scattered around the web;
-a partial list is in the "contributed documentation" section on the R web site (http://cran.r-project.org/other-docs.html). 
+a partial list is in the "contributed documentation" section on the R web site (https://cran.r-project.org/other-docs.html). 
 This particular version is limited (it has similar coverage to the standard [*Introduction to* ***R*** manual](https://cran.r-project.org/doc/manuals/r-release/R-intro.html) and targets biologists who are neither programmers nor statisticians (yet).
 
 Throughout this document, Windows-specific items are marked with a &#9420;&nbsp;and *nix (linux/unix/MacOSX)-specific items with a &#9421;.
@@ -72,17 +73,17 @@ Throughout this document, Windows-specific items are marked with a &#9420;&nbsp;
 Originally a research project in statistical computing [@Ihaka1996], it is now managed by a development team that includes a number of well-regarded statisticians, and is widely used by statistical researchers and working scientists as a platform for making new methods available to users.
 
 There are a number of graphical front-ends for **R**.
-At present, the best of these appears to be [**RStudio**](http://www.rstudio.com).
+At present, the best of these appears to be [**RStudio**](https://www.rstudio.com).
 Before learning about these, however, you should learn a little about **R** itself.
 
 # Getting started with **R** 
 
 ## Installing **R** on your computer
 
-The main source for **R** is the [Comprehensive R Archive Network (CRAN)](http://cran.r-project.org). 
+The main source for **R** is the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org). 
 You can get the source code and compile it yourself, but you may prefer at this point to download and install a precompiled version. 
 You can download precompiled binaries for most major platforms from any CRAN mirror.
-To do so, go to http://cran.r-project.org/mirrors.html and find a mirror site that is geographically somewhat near you.
+To do so, go to https://cran.r-project.org/mirrors.html and find a mirror site that is geographically somewhat near you.
 Find the appropriate page for your operating system, and read and follow the installation instructions.
 **Be sure to install the latest version.**
 
@@ -225,7 +226,8 @@ C <- A+2*sqrt(A)/A+5*sqrt(A)
 ``` 
 is not the same as the one above;
 rather, it is equivalent to 
-```{r eval=FALSE}
+```{r}
+#| eval: false
 C <- A + 2*(sqrt(A)/A) + 5*sqrt(A)
 ``` 
 The default order of operations is:
@@ -334,22 +336,20 @@ If you have a net connection, try `RSiteSearch("sin")` from the command line or 
 
 ----------------------------------
 
-----------------------------------
-
-**R** command             | function
------------------         | ------------------------------
-`abs()`                   | absolute value, $|x|$
-`cos()`, `sin()`, `tan()` | cosine, sine, tangent
-`acos()`, `asin()`, `atan()` | arc-cosine, arc-sine, arc-tangent
-`exp(x)`     | exponential function, $e^x$
-`log(x)`     | natural (base-$e$) logarithm, $\log{x}=\ln{x}$
-`log10(x)`   | base-10 logarithm, $\log_{10}{x}$
-`sqrt(x)`    | square root, $\sqrt{x}$
-`atan2(y,x)` | $\arctan(y/x)$
-`sum()`      | sum of the entries in a vector
-`diff()`     | first differences
-`cumsum()`   | cumulative sum
-`gamma(x)`   | the Gamma function, $\Gamma(x)$
+| **R** command                | function                                       |
+|:-----------------------------|:-----------------------------------------------|
+| `abs()`                      | absolute value, &#124;x&#124;                  |
+| `cos()`, `sin()`, `tan()`    | cosine, sine, tangent                          |
+| `acos()`, `asin()`, `atan()` | arc-cosine, arc-sine, arc-tangent              |
+| `exp(x)`                     | exponential function, $e^x$                    |
+| `log(x)`                     | natural (base-$e$) logarithm, $\log{x}=\ln{x}$ |
+| `log10(x)`                   | base-10 logarithm, $\log_{10}{x}$              |
+| `sqrt(x)`                    | square root, $\sqrt{x}$                        |
+| `atan2(y,x)`                 | $\arctan(y/x)$                                 |
+| `sum()`                      | sum of the entries in a vector                 |
+| `diff()`                     | first differences                              |
+| `cumsum()`                   | cumulative sum                                 |
+| `gamma(x)`                   | the Gamma function, $\Gamma(x)$                |
 
 Table: Some of the built-in mathematical functions in **R**.
 
@@ -410,7 +410,7 @@ Table: Some simple descriptive statistics in **R**
 ---------------------------
 
 To see how the algal rate of increase varies with light intensity, type
-```{r chlorella-plot,eval=FALSE}
+```{r chlorella-plot}
 plot(rmax~Light)
 ``` 
 to plot `rmax` ($y$) against `Light` ($x$).
@@ -478,26 +478,25 @@ anova(fit)
 
 Some of the important functions and packages (collections of functions) for statistical modeling and data analysis are summarized in following table.
 Functions are named in `fixed-width font` and packages in **bold face**.
-The book *Modern Applied Statistics with S* [@Venables2002] gives a good practical overview, and a list of available packages and their contents can be found at the main **R** website (http://cran.r-project.org, and click on `Packages`). 
+The book *Modern Applied Statistics with S* [@Venables2002] gives a good practical overview, and a list of available packages and their contents can be found at the main **R** website (https://cran.r-project.org, and click on `Packages`). 
 
 A few of the functions and packages in **R** for statistical modeling and data analysis are listed below.
 There are *many* more, but you will have to learn about them somewhere else.
 
 -------------------------------
 
-&nbsp;   | &nbsp;
---------------------------|------------------------
-`aov`, `anova`            | Analysis of variance or deviance
-`lm`                      | Linear models (regression, ANOVA, ANCOVA) 
-`glm`                     | Generalized linear models (e.g. logistic, Poisson regression) 
-`gam`                     | Generalized additive models (in package **mgcv**) 
-`nls`                     | Nonlinear models via least-squares
-`lme`, `nlme`             | Linear and nonlinear mixed-effects models (repeated measures, block effects, spatial models): in package **nlme** 
-`princomp`, `manova`, `lda`, `cancor`  | Multivariate analysis (see also packages **vegan**, **ade4**)
-**boot**                    | Package: bootstrapping functions 
-**splines**                 | Package: nonparametric regression (more in packages **fields**, **KernSmooth**, **logspline**, **sm** and others)
-**survival**                | Package: survival analysis 
-**tree**, **rpart**         | Package: tree-based regression
+| &nbsp;                                | &nbsp;                                                                                                            |
+|:--------------------------------------|:------------------------------------------------------------------------------------------------------------------|
+| `aov`, `anova`                        | Analysis of variance or deviance                                                                                  |
+| `lm`                                  | Linear models (regression, ANOVA, ANCOVA)                                                                         |
+| `glm`                                 | Generalized linear models (e.g. logistic, Poisson regression)                                                     |
+| `gam`                                 | Generalized additive models (in package **mgcv**)                                                                 |
+| `nls`                                 | Nonlinear models via least-squares                                                                                |
+| `lme`, `nlme`                         | Linear and nonlinear mixed-effects models (repeated measures, block effects, spatial models): in package **nlme** |
+| `princomp`, `manova`, `lda`, `cancor` | Multivariate analysis (see also packages **vegan**, **ade4**)                                                     |
+| **boot**                              | Package: bootstrapping functions                                                                                  |
+| **splines**                           | Package: nonparametric regression (more in packages **fields**, **KernSmooth**, **logspline**, **sm** and others) |
+| **survival**                          | Package: survival analysis                                                                                        |
 
 Table: Statistical modeling and data analysis functions and packages.
 
@@ -664,16 +663,16 @@ The value 3 was repeated 2 times, followed by the value 4 repeated 5 times.
 
 -----------------------------------
 
-|
-----------------------------|-----------------------------------
-`seq(from,to,by=1)`         | Vector of evenly spaced values (default increment = 1) 
-`seq(from,to,length.out)`   | Vector of evenly spaced values, specified length 
-`c(u,v,...) `               | Combine a set of numbers and/or vectors into a single vector 
-`rep(a,b)`                  | Create vector by repeating elements of `a` `b` times each
-`hist(v)`                   | Histogram plot of value in v 
-`mean(v),var(v),sd(v)`      | Estimate of population mean, variance, standard deviation based on data values in `v` 
-`cov(v,w)`                  | Covariance between two vectors 
-`cor(v,w)`                  | Correlation between two vectors 
+| &nbsp;                    | &nbsp;                                                                                 |
+|:--------------------------|:---------------------------------------------------------------------------------------|
+| `seq(from,to,by=1)`       | Vector of evenly spaced values (default increment = 1)                                 |
+| `seq(from,to,length.out)` | Vector of evenly spaced values, specified length                                       |
+| `c(u,v,...) `             | Combine a set of numbers and/or vectors into a single vector                           |
+| `rep(a,b)`                | Create vector by repeating elements of `a` `b` times each                              |
+| `hist(v)`                 | Histogram plot of value in v                                                           |
+| `mean(v),var(v),sd(v)`    | Estimate of population mean, variance, standard deviation based on data values in `v`  |
+| `cov(v,w)`                | Covariance between two vectors                                                         |
+| `cor(v,w)`                | Correlation between two vectors                                                        |
 
 Table: Some important **R** functions for creating and working with vectors.
 
@@ -745,7 +744,7 @@ Write a *one-line* command to extract a vector consisting of the second, first, 
 ##### Exercise
 What happens when I set the value of an element that doesn't exist?
 For example, try
-```{r eval=F}
+```{r eval=FALSE}
 z[9] <- 11
 ```   
 
@@ -811,16 +810,16 @@ Use `a< -1` or `a<(-1)` to make this comparison.
 
 -----------------------------------
 
-**R** code | comparison
----------|-----------------------------------
-`x < y`  | $x$ strictly less than $y$
-`x > y`  | $x$ strictly greater than $y$
-`x <= y` | $x$ less than or equal to $y$
-`x >= y` | $x$ greater than or equal to $y$
-`x == y` | $x$ equal to $y$
-`x != y` | $x$ *not* equal to $y$
-`identical(x,y)` | $x$ completely identical to $y$
-`all.equal(x,y)` | $x$ pretty much equal to $y$
+| **R** code       | comparison                       |
+|:-----------------|:---------------------------------|
+| `x < y`          | $x$ strictly less than $y$       |
+| `x > y`          | $x$ strictly greater than $y$    |
+| `x <= y`         | $x$ less than or equal to $y$    |
+| `x >= y`         | $x$ greater than or equal to $y$ |
+| `x == y`         | $x$ equal to $y$                 |
+| `x != y`         | $x$ *not* equal to $y$           |
+| `identical(x,y)` | $x$ completely identical to $y$  |
+| `all.equal(x,y)` | $x$ pretty much equal to $y$     |
 
 Table: Some comparison operators in **R**. Use `?Comparison` to learn more.
 
@@ -853,14 +852,14 @@ The most important of these are tabulated here.
 
 -----------------------------------
 
-operator  | meaning
-----------|--------------
-`!`       |   logical NOT
-`&`       |   logical AND, elementwise
-`&&`      |  logical AND, first element only
-`|`       |   logical OR, elementwise 
-`||`      |  logical OR, first element only 
-`xor(x,y)`| exclusive OR, elementwise
+| operator       | meaning                         |
+|:---------------|:--------------------------------|
+| `!`            | logical NOT                     |
+| `&`            | logical AND, elementwise        |
+| `&&`           | logical AND, first element only |
+| `&#124;`       | logical OR, elementwise         |
+| `&#124;&#124;` | logical OR, first element only  |
+| `xor(x,y)`     | exclusive OR, elementwise       |
 
 Table: Logical operators.
 
@@ -888,7 +887,7 @@ This is useful, for example, in subsetting data.
 
 As a simple example, we might want to focus on just the low-light values of $r_{\text{max}}$ in the *Chlorella* example:
 ```{r fetch-chlorella-data,include=FALSE}
-course.url <- "http://kingaa.github.io/R_Tutorial/"
+course.url <- "https://kingaa.github.io/R_Tutorial/"
 X <- read.csv(paste0(course.url,"data/ChlorellaGrowth.csv"),comment.char='#')
 Light <- X[,1]
 rmax <- X[,2];
@@ -974,7 +973,7 @@ A <- matrix(1:9,nrow=3,ncol=3,byrow=TRUE); A
 
 **R** will re-cycle through entries in the data vector, if need be, to fill a matrix of the specified size. 
 So for example 
-```{r eval=F}
+```{r eval=FALSE}
 matrix(1,nrow=50,ncol=50)
 ``` 
 creates a $50{\times}50$ matrix, every entry of which is $1$.
@@ -1006,7 +1005,7 @@ So for example `diag(1,5)` creates the $5{\times}5$ *identity matrix*, which has
 
 Finally, one can use the `data.entry` function. 
 This function can only edit existing matrices, but for example (try this now!)
-```{r eval=F}
+```{r eval=FALSE}
 A <- matrix(0,3,4)
 data.entry(A)
 ``` 
@@ -1015,17 +1014,18 @@ You can further modify `A` with the same primitive interface, using `fix`.
 
 -----------------------------------
 
-**R** code                | purpose
---------------------------|---------------------------------------------
-`matrix(v,nrow=m,ncol=n)` | $m \times n$ matrix using the values in `v` 
-`t(A)`                    | transpose (exchange rows and columns) of matrix `A` 
-`dim(X)`                  | dimensions of matrix X. `dim(X)[1]`=\# rows, `dim(X)[2]`=\# columns 
-`data.entry(A)`           | call up a spreadsheet-like interface to edit the values in `A` 
-`diag(v,n)`               | diagonal $n \times n$ matrix with $v$ on diagonal, 0 elsewhere (`v` is 1 by default, so `diag(n)` gives an $n \times n$ identity matrix)
-`cbind(a,b,c,...)`        | combine compatible objects by attaching them along columns 
-`rbind(a,b,c,...)`        | combine compatible objects by attaching them along rows 
-`as.matrix(x)`            | convert an object of some other type to a matrix, if possible 
-`outer(v,w)`              | "outer product" of vectors `v`, `w`: the matrix whose $(i,j)$-th element is `v[i]*w[j]` 
+| **R** code                | purpose                                                                                                                                  |
+|:--------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|
+|                           |                                                                                                                                          |
+| `matrix(v,nrow=m,ncol=n)` | $m \times n$ matrix using the values in `v`                                                                                              |
+| `t(A)`                    | transpose (exchange rows and columns) of matrix `A`                                                                                      |
+| `dim(X)`                  | dimensions of matrix X. `dim(X)[1]`=\# rows, `dim(X)[2]`=\# columns                                                                      |
+| `data.entry(A)`           | call up a spreadsheet-like interface to edit the values in `A`                                                                           |
+| `diag(v,n)`               | diagonal $n \times n$ matrix with $v$ on diagonal, 0 elsewhere (`v` is 1 by default, so `diag(n)` gives an $n \times n$ identity matrix) |
+| `cbind(a,b,c,...)`        | combine compatible objects by attaching them along columns                                                                               |
+| `rbind(a,b,c,...)`        | combine compatible objects by attaching them along rows                                                                                  |
+| `as.matrix(x)`            | convert an object of some other type to a matrix, if possible                                                                            |
+| `outer(v,w)`              | "outer product" of vectors `v`, `w`: the matrix whose $(i,j)$-th element is `v[i]*w[j]`                                                  |
 
 Table: Some important functions for creating and working with matrices.
 
@@ -1122,7 +1122,7 @@ dim(y); dim(z)
 What happens when we set the dimension attribute on a vector?
 For example:
 
-```{r eval=F}
+```{r eval=FALSE}
 x <- seq(1,27)
 dim(x) <- c(3,9)
 is.array(x)
@@ -1154,7 +1154,7 @@ In particular, the factors created with the `factor` command are un-ordered: the
 
 To represent variables measured on the ordinal scale, **R** provides *ordered factors*, constructed via the `ordered` function.
 An ordered factor is just like an un-ordered factor except that the order of the levels matters:
-```{r echo=F}
+```{r echo=FALSE}
 set.seed(349585885L)
 ``` 
 ```{r }
@@ -1224,7 +1224,7 @@ You can turn a data frame into a matrix (using `as.matrix()`, but only if all va
 
 When data are read into **R** from an external file using one of the `read.xxx` commands (`read.csv`, `read.table`, `read.xls`, etc.), the object that is created is a data frame.
 ```{r }
-data.url <- "http://kingaa.github.io/R_Tutorial/data/ChlorellaGrowth.csv"
+data.url <- "https://kingaa.github.io/R_Tutorial/data/ChlorellaGrowth.csv"
 dat <- read.csv(data.url,comment.char='#')
 dat
 ``` 
@@ -1233,7 +1233,7 @@ dat
 
 ##### Exercise
 Download the `hurricanes.csv` file from the tutorial website:
-http://kingaa.github.io/R_Tutorial/hurricanes.csv.
+https://kingaa.github.io/R_Tutorial/hurricanes.csv.
 Examine the resulting data frame by printing it and using the `str` command.
 Note the class type of each variable.
 
@@ -1247,12 +1247,12 @@ Conveniently, these are all named using the same scheme, as shown in the followi
 
 ----------------------------
 
-&nbsp;   | &nbsp;
--------------------|----------------------------------
-`dxxx(x, ...)` | probability distribution function
-`pxxx(q, ...)` | cumulative distribution function
-`qxxx(p, ...)` | quantile function (i.e., inverse of `pxxx`)
-`rxxx(n, ...)` | simulator
+| &nbsp;         | &nbsp;                                      |
+|:---------------|:--------------------------------------------|
+| `dxxx(x, ...)` | probability distribution function           |
+| `pxxx(q, ...)` | cumulative distribution function            |
+| `qxxx(p, ...)` | quantile function (i.e., inverse of `pxxx`) |
+| `rxxx(n, ...)` | simulator                                   |
 
 Table: Functions for working with probability distributions.
 
@@ -1263,27 +1263,27 @@ A complete list of distributions provided by the base **stats** package can be v
 
 ----------------------------
 
-Distribution | **R** name | Parameters | Range
--------------|------------|------------|---------
-Discrete distributions|||
-Binomial | `binom` | size, prob | $0,1,\dots,\mathrm{size}$
-Bernoulli | `binom` (`size=1`) | prob | $0,1$
-Poisson | `pois` | lambda | $0,1,\dots,\infty$
-Negative binomial | `nbinom` | size, (prob or mu) | $0,1,\dots,\infty$
-Geometric | `geom` | rate | $0,1,\dots,\infty$
-Hypergeometric | `hyper` | m, n, k | $0,1,\dots,m$
-Multinomial | `multinom` | size, prob | $\{(x_1,\dots,x_m): \sum\!x_i=\mathrm{size}\}$
-Continuous distributions | &nbsp; | &nbsp; | &nbsp;
-Uniform | `unif` | min, max | $[\mathrm{min},\mathrm{max}]$
-Normal | `norm` | mean, sd | $(-\infty,\infty)$
-Gamma | `gamma` | shape, (scale or rate) | $[0,\infty)$
-Exponential | `exp` | mu | $[0,\infty)$
-Beta | `beta` | shape1, shape2 | $[0,1]$
-Lognormal | `lnorm` | meanlog, sdlog | $[0,\infty)$
-Cauchy | `cauchy` | location, scale | $(\infty,\infty)$
-$\chi^2$ | `chisq` | df | $[0,\infty)$
-Student's T | `t` | df | $[0,\infty)$
-Weibull | `weibull` | shape, scale | $[0,\infty)$
+| Distribution             | **R** name         | Parameters             | Range                                          |
+|:-------------------------|:-------------------|:-----------------------|:-----------------------------------------------|
+| Discrete distributions   |                    |                        |                                                |
+| Binomial                 | `binom`            | size, prob             | $0,1,\dots,\mathrm{size}$                      |
+| Bernoulli                | `binom` (`size=1`) | prob                   | $0,1$                                          |
+| Poisson                  | `pois`             | lambda                 | $0,1,\dots,\infty$                             |
+| Negative binomial        | `nbinom`           | size, (prob or mu)     | $0,1,\dots,\infty$                             |
+| Geometric                | `geom`             | rate                   | $0,1,\dots,\infty$                             |
+| Hypergeometric           | `hyper`            | m, n, k                | $0,1,\dots,m$                                  |
+| Multinomial              | `multinom`         | size, prob             | $\{(x_1,\dots,x_m): \sum\!x_i=\mathrm{size}\}$ |
+| Continuous distributions | &nbsp;             | &nbsp;                 | &nbsp;                                         |
+| Uniform                  | `unif`             | min, max               | $[\mathrm{min},\mathrm{max}]$                  |
+| Normal                   | `norm`             | mean, sd               | $(-\infty,\infty)$                             |
+| Gamma                    | `gamma`            | shape, (scale or rate) | $[0,\infty)$                                   |
+| Exponential              | `exp`              | mu                     | $[0,\infty)$                                   |
+| Beta                     | `beta`             | shape1, shape2         | $[0,1]$                                        |
+| Lognormal                | `lnorm`            | meanlog, sdlog         | $[0,\infty)$                                   |
+| Cauchy                   | `cauchy`           | location, scale        | $(\infty,\infty)$                              |
+| $\chi^2$                 | `chisq`            | df                     | $[0,\infty)$                                   |
+| Student's T              | `t`                | df                     | $[0,\infty)$                                   |
+| Weibull                  | `weibull`          | shape, scale           | $[0,\infty)$                                   |
 
 Table: The most commonly used built-in probability distributions.
 
@@ -1367,7 +1367,7 @@ As a first example, the file `Intro1.R` has the commands from the interactive re
 Download `Intro1.R` and save it to your computer:
 
 ```{r }
-course.url <- "http://kingaa.github.io/R_Tutorial/"
+course.url <- "https://kingaa.github.io/R_Tutorial/"
 download.file(paste0(course.url,"Intro1.R"),destfile="Intro1.R",mode="w")
 ``` 
 Open **your copy** of `Intro1.R`. 
@@ -1411,7 +1411,11 @@ From there on out it's the same as before, with some additions that set the axis
 Make a copy of `Intro2.R` under a new name, and modify the copy so that it does linear regression of algal growth rate on the natural log of light intensity, `LogLight=log(Light)`, and plots the data appropriately. 
 You should end up with a graph that resembles the following.
 
-```{r echo=FALSE,results='hide',fig.width=8,fig.height=6}
+```{r}
+#| echo: false
+#| results: hide
+#| fig.dim: c(8,8)
+#| out.width: 90%
 Light <- X$light; rmax <- X$rmax
 logLight <- log(Light)
 op <- par(cex=1.5,cex.main=0.9)
@@ -1545,7 +1549,7 @@ Check that this works with different vectors `T`.
 What happens when `T` has length 1?
 What happens when `T` has length 0?  Why?
 To avoid this trap, it's preferable to use `seq_len`, `seq_along`, or `seq.int` instead of the `1:n` construction used above.
-This and many other **R** gotchas are described in the useful [*R Inferno* [@Burns2012]](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf).
+This and many other **R** gotchas are described in the useful [*R Inferno* [@Burns2012]](https://www.burns-stat.com/pages/Tutor/R_inferno.pdf).
 
 -----------------------------
 
@@ -1743,7 +1747,7 @@ This is called *lexical scope*.
 Thus if we execute
 ```{r echo=FALSE,results='hide'}
 rm(z)
-```{r eval=F}
+```{r eval=FALSE}
 f(3)
 ``` 
 we get an error, because no object named `z` can be found.
@@ -2074,7 +2078,7 @@ tapply(x,b,sum)
 The following uses the seed predation data described by @Bolker2008.
 
 ```{r }
-datafile <- "http://kingaa.github.io/R_Tutorial/data/seedpred.dat"
+datafile <- "https://kingaa.github.io/R_Tutorial/data/seedpred.dat"
 seeds <- read.table(datafile,header=TRUE,
                     colClasses=c(station='factor',dist='factor',date='Date'))
 x <- subset(seeds,available>0)
@@ -2120,7 +2124,7 @@ for (k in seq_along(x)) {
 }
 ``` 
 To time this, we can wrap the vectorizable parts in a call to `system.time`:
-```{r cache=F}
+```{r cache=FALSE}
 x <- runif(n=1e6,min=0,max=2*pi)
 system.time({
   y <- numeric(length(x))
@@ -2130,7 +2134,7 @@ system.time({
 })
 ``` 
 We can compare this with a simple call to `sin` (which is vectorized):
-```{r cache=F}
+```{r cache=FALSE}
 system.time(z <- sin(x))
 ``` 
 Clearly, calling `sin` directly is much faster.
@@ -2141,7 +2145,7 @@ What about using `sapply`?
 ##### Exercise
 Compare the time spent on the equivalent calculation, using `sapply`.
 What does this result tell you about where the computational cost is incurred?
-```{r include=F}
+```{r include=FALSE}
 system.time(w <- sapply(x,sin))
 ``` 
 
@@ -2151,7 +2155,7 @@ The above example is very simple in that there is a builtin function (`sin` in t
 In such a case, it is clearly preferable to use it.
 Frequently, however, no such builtin function exists, i.e., we have a custom function of our own we want to apply to a set of data.
 Let's compare the relative speeds of loops and `sapply` in this case.
-```{r cache=F}
+```{r cache=FALSE}
 x <- seq.int(from=20,to=1e6,by=10)
 f <- function (x) {
   (((x+1)*x+1)*x+1)*x+1
@@ -2166,12 +2170,12 @@ system.time(res2 <- sapply(x,f))
 ```
 [Actually, in this case, `f` is vectorized automatically.
 Why is this?]
-```{r cache=F}
+```{r cache=FALSE}
 system.time(f(x))
 ``` 
 
 Another example: in this case function `g` is not vectorized.
-```{r cache=F}
+```{r cache=FALSE}
 g <- function (x) {
   if ((x[1] > 30) && (x[1] < 5000)) 1 else 0
 }

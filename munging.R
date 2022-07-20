@@ -1,3 +1,13 @@
+## .folder {
+
+## 	color: #3333ff;
+
+##     font-weight: bold;
+
+## }
+
+
+
 library(reshape2)
 
 x <- data.frame(a=letters[1:10],b=1:10,
@@ -20,7 +30,7 @@ arrange(x,a,b,c)
 arrange(x,b,c,a)
 arrange(x,c,b,a)
 
-read.csv("http://kingaa.github.io/R_Tutorial/data/energy_production.csv",comment="#") -> energy
+read.csv("https://kingaa.github.io/R_Tutorial/data/energy_production.csv",comment="#") -> energy
 arrange(energy,region,source,year)
 arrange(energy,-TJ,year)
 

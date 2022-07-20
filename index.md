@@ -14,7 +14,7 @@ output:
 | &nbsp;                                                     | &nbsp;                                   |
 |:-----------------------------------------------------------|:-----------------------------------------|
 | Tutorial Introduction to **R**                             | [HTML](tutorial.html)                    |
-| Data munging with **plyr**, **reshape2**, and **magrittr** | [HTML](munging.htlm)&nbsp;[R](munging.R) |
+| Data munging with **plyr**, **reshape2**, and **magrittr** | [HTML](munging.html)&nbsp;[R](munging.R) |
 | Data visualization                                         | [HTML](viz.html)&nbsp;[R](viz.R)         |
 
 ----------------------

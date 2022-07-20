@@ -1269,83 +1269,6 @@ window.buildTabsets = function(tocID) {
 };
 
 </script>
-<script>
-window.initializeCodeFolding = function(show) {
-
-  // handlers for show-all and hide all
-  $("#rmd-show-all-code").click(function() {
-    $('div.r-code-collapse').each(function() {
-      $(this).collapse('show');
-    });
-  });
-  $("#rmd-hide-all-code").click(function() {
-    $('div.r-code-collapse').each(function() {
-      $(this).collapse('hide');
-    });
-  });
-
-  // index for unique code element ids
-  var currentIndex = 1;
-
-  // select all R code blocks
-  var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia, pre.foldable');
-  rCodeBlocks.each(function() {
-    // skip if the block has fold-none class
-    if ($(this).hasClass('fold-none')) return;
-
-    // create a collapsable div to wrap the code in
-    var div = $('<div class="collapse r-code-collapse"></div>');
-    var showThis = (show || $(this).hasClass('fold-show')) && !$(this).hasClass('fold-hide');
-    var id = 'rcode-643E0F36' + currentIndex++;
-    div.attr('id', id);
-    $(this).before(div);
-    $(this).detach().appendTo(div);
-
-    // add a show code button right above
-    var showCodeText = $('<span>' + (showThis ? 'Hide' : 'Code') + '</span>');
-    var showCodeButton = $('<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm code-folding-btn pull-right float-right"></button>');
-    showCodeButton.append(showCodeText);
-    showCodeButton
-        .attr('data-toggle', 'collapse')
-        .attr('data-bs-toggle', 'collapse') // BS5
-        .attr('data-target', '#' + id)
-        .attr('data-bs-target', '#' + id)   // BS5
-        .attr('aria-expanded', showThis)
-        .attr('aria-controls', id);
-
-    var buttonRow = $('<div class="row"></div>');
-    var buttonCol = $('<div class="col-md-12"></div>');
-
-    buttonCol.append(showCodeButton);
-    buttonRow.append(buttonCol);
-
-    div.before(buttonRow);
-
-    // show the div if necessary
-    if (showThis) div.collapse('show');
-
-    // update state of button on show/hide
-    //   * Change text
-    //   * add a class for intermediate states styling
-    div.on('hide.bs.collapse', function () {
-      showCodeText.text('Code');
-      showCodeButton.addClass('btn-collapsing');
-    });
-    div.on('hidden.bs.collapse', function () {
-      showCodeButton.removeClass('btn-collapsing');
-    });
-    div.on('show.bs.collapse', function () {
-      showCodeText.text('Hide');
-      showCodeButton.addClass('btn-expanding');
-    });
-    div.on('shown.bs.collapse', function () {
-      showCodeButton.removeClass('btn-expanding');
-    });
-
-  });
-
-}
-</script>
 <style type="text/css">.pagedtable {
 overflow: auto;
 padding-left: 8px;
@@ -2695,15 +2618,6 @@ code span.va { } /* Variable */
 code span.vs { color: #008080; } /* VerbatimString */
 code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
-.sourceCode .row {
-  width: 100%;
-}
-.sourceCode {
-  overflow-x: auto;
-}
-.code-folding-btn {
-  margin-right: -30px;
-}
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -2821,9 +2735,6 @@ pre code {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -2913,14 +2824,6 @@ div.tocify {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
-
 
 
 <h1 class="title toc-ignore">Data munging with <strong>plyr</strong>, <strong>reshape2</strong>, and <strong>magrittr</strong></h1>
@@ -2933,6 +2836,12 @@ div.tocify {
 <hr />
 <p>Comments, suggestions, criticism, corrections are most welcome. Please submit these via the <a href="https://github.com/kingaa/R_Tutorial/issues">issues page</a>.</p>
 <hr />
+<style type="text/css">
+.folder {
+    color: #3333ff; 
+    font-weight: bold;
+}
+</style>
 <div id="how-to-use-this-document." class="section level2">
 <h2>How to use this document.</h2>
 <p>This is an extremely condensed introduction to the powerful data-munging tools developed by Hadley Wickham and contained in the packages <strong>plyr</strong>, <strong>reshape2</strong>, and <strong>magrittr</strong>. Run the codes shown and study the outputs to learn about these tools. For your convenience, the <a href="./munging.R"><strong>R</strong> codes for this document are provided in a script</a> which you can download, edit, and run.</p>
@@ -2948,125 +2857,158 @@ div.tocify {
 <a class="sourceLine" id="cb1-3" title="3">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],<span class="dt">b=</span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
 <a class="sourceLine" id="cb1-4" title="4">                <span class="dt">c=</span><span class="kw">sample</span>(LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>],<span class="dv">10</span>,<span class="dt">replace=</span><span class="ot">TRUE</span>),<span class="dt">d=</span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="dt">replace=</span><span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb1-5" title="5">x</a></code></pre></div>
-<pre><code> a  b c  d
- a  1 B  6
- b  2 C  9
- c  3 C 10
- d  4 C  2
- e  5 C  5
- f  6 C  2
- g  7 B  6
- h  8 C  3
- i  9 A  9
- j 10 A  6</code></pre>
+<details>
+<p><summary class="folder">output</summary></p>
+<pre><code> a  b c d
+ a  1 A 7
+ b  2 A 3
+ c  3 C 5
+ d  4 B 9
+ e  5 A 7
+ f  6 A 8
+ g  7 C 9
+ h  8 B 9
+ i  9 B 2
+ j 10 B 1</code></pre>
+</details>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">melt</span>(x,<span class="dt">id.vars=</span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a  b variable value
- a  1        c     B
- b  2        c     C
+ a  1        c     A
+ b  2        c     A
  c  3        c     C
- d  4        c     C
- e  5        c     C
- f  6        c     C
- g  7        c     B
- h  8        c     C
- i  9        c     A
- j 10        c     A
- a  1        d     6
- b  2        d     9
- c  3        d    10
- d  4        d     2
- e  5        d     5
- f  6        d     2
- g  7        d     6
- h  8        d     3
- i  9        d     9
- j 10        d     6</code></pre>
+ d  4        c     B
+ e  5        c     A
+ f  6        c     A
+ g  7        c     C
+ h  8        c     B
+ i  9        c     B
+ j 10        c     B
+ a  1        d     7
+ b  2        d     3
+ c  3        d     5
+ d  4        d     9
+ e  5        d     7
+ f  6        d     8
+ g  7        d     9
+ h  8        d     9
+ i  9        d     2
+ j 10        d     1</code></pre>
+</details>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">melt</span>(x,<span class="dt">measure.vars=</span><span class="kw">c</span>(<span class="st">&quot;c&quot;</span>,<span class="st">&quot;d&quot;</span>)) -&gt;<span class="st"> </span>y; y</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a  b variable value
- a  1        c     B
- b  2        c     C
+ a  1        c     A
+ b  2        c     A
  c  3        c     C
- d  4        c     C
- e  5        c     C
- f  6        c     C
- g  7        c     B
- h  8        c     C
- i  9        c     A
- j 10        c     A
- a  1        d     6
- b  2        d     9
- c  3        d    10
- d  4        d     2
- e  5        d     5
- f  6        d     2
- g  7        d     6
- h  8        d     3
- i  9        d     9
- j 10        d     6</code></pre>
+ d  4        c     B
+ e  5        c     A
+ f  6        c     A
+ g  7        c     C
+ h  8        c     B
+ i  9        c     B
+ j 10        c     B
+ a  1        d     7
+ b  2        d     3
+ c  3        d     5
+ d  4        d     9
+ e  5        d     7
+ f  6        d     8
+ g  7        d     9
+ h  8        d     9
+ i  9        d     2
+ j 10        d     1</code></pre>
+</details>
 </div>
 <div id="casting" class="section level3">
 <h3>Casting</h3>
 <p>Casting turns a long data frame into a wide one. A single column (called the <em>value</em> column) is separated into multiple columns according to the specification given. Use <code>dcast</code> or <code>acast</code> according to whether you want the result as a data frame or an array.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">dcast</span>(y,a<span class="op">+</span>b<span class="op">~</span>variable) -&gt;<span class="st"> </span>d1; d1</a></code></pre></div>
-<pre><code> a  b c  d
- a  1 B  6
- b  2 C  9
- c  3 C 10
- d  4 C  2
- e  5 C  5
- f  6 C  2
- g  7 B  6
- h  8 C  3
- i  9 A  9
- j 10 A  6</code></pre>
+<details>
+<p><summary class="folder">output</summary></p>
+<pre><code> a  b c d
+ a  1 A 7
+ b  2 A 3
+ c  3 C 5
+ d  4 B 9
+ e  5 A 7
+ f  6 A 8
+ g  7 C 9
+ h  8 B 9
+ i  9 B 2
+ j 10 B 1</code></pre>
+</details>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">class</span>(d1)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>[1] &quot;data.frame&quot;</code></pre>
+</details>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">acast</span>(y,b<span class="op">~</span>variable) -&gt;<span class="st"> </span>a1; a1</a></code></pre></div>
-<pre><code>   c   d   
-1  &quot;B&quot; &quot;6&quot; 
-2  &quot;C&quot; &quot;9&quot; 
-3  &quot;C&quot; &quot;10&quot;
-4  &quot;C&quot; &quot;2&quot; 
-5  &quot;C&quot; &quot;5&quot; 
-6  &quot;C&quot; &quot;2&quot; 
-7  &quot;B&quot; &quot;6&quot; 
-8  &quot;C&quot; &quot;3&quot; 
-9  &quot;A&quot; &quot;9&quot; 
-10 &quot;A&quot; &quot;6&quot; </code></pre>
+<details>
+<p><summary class="folder">output</summary></p>
+<pre><code>   c   d  
+1  &quot;A&quot; &quot;7&quot;
+2  &quot;A&quot; &quot;3&quot;
+3  &quot;C&quot; &quot;5&quot;
+4  &quot;B&quot; &quot;9&quot;
+5  &quot;A&quot; &quot;7&quot;
+6  &quot;A&quot; &quot;8&quot;
+7  &quot;C&quot; &quot;9&quot;
+8  &quot;B&quot; &quot;9&quot;
+9  &quot;B&quot; &quot;2&quot;
+10 &quot;B&quot; &quot;1&quot;</code></pre>
+</details>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">class</span>(a1); <span class="kw">dim</span>(a1)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>[1] &quot;matrix&quot; &quot;array&quot; </code></pre>
+</details>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>[1] 10  2</code></pre>
+</details>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">acast</span>(y,a<span class="op">~</span>b<span class="op">~</span>variable) -&gt;<span class="st"> </span>a2; a2</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>, , c
 
   1   2   3   4   5   6   7   8   9   10 
-a &quot;B&quot; NA  NA  NA  NA  NA  NA  NA  NA  NA 
-b NA  &quot;C&quot; NA  NA  NA  NA  NA  NA  NA  NA 
+a &quot;A&quot; NA  NA  NA  NA  NA  NA  NA  NA  NA 
+b NA  &quot;A&quot; NA  NA  NA  NA  NA  NA  NA  NA 
 c NA  NA  &quot;C&quot; NA  NA  NA  NA  NA  NA  NA 
-d NA  NA  NA  &quot;C&quot; NA  NA  NA  NA  NA  NA 
-e NA  NA  NA  NA  &quot;C&quot; NA  NA  NA  NA  NA 
-f NA  NA  NA  NA  NA  &quot;C&quot; NA  NA  NA  NA 
-g NA  NA  NA  NA  NA  NA  &quot;B&quot; NA  NA  NA 
-h NA  NA  NA  NA  NA  NA  NA  &quot;C&quot; NA  NA 
-i NA  NA  NA  NA  NA  NA  NA  NA  &quot;A&quot; NA 
-j NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;A&quot;
+d NA  NA  NA  &quot;B&quot; NA  NA  NA  NA  NA  NA 
+e NA  NA  NA  NA  &quot;A&quot; NA  NA  NA  NA  NA 
+f NA  NA  NA  NA  NA  &quot;A&quot; NA  NA  NA  NA 
+g NA  NA  NA  NA  NA  NA  &quot;C&quot; NA  NA  NA 
+h NA  NA  NA  NA  NA  NA  NA  &quot;B&quot; NA  NA 
+i NA  NA  NA  NA  NA  NA  NA  NA  &quot;B&quot; NA 
+j NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;B&quot;
 
 , , d
 
-  1   2   3    4   5   6   7   8   9   10 
-a &quot;6&quot; NA  NA   NA  NA  NA  NA  NA  NA  NA 
-b NA  &quot;9&quot; NA   NA  NA  NA  NA  NA  NA  NA 
-c NA  NA  &quot;10&quot; NA  NA  NA  NA  NA  NA  NA 
-d NA  NA  NA   &quot;2&quot; NA  NA  NA  NA  NA  NA 
-e NA  NA  NA   NA  &quot;5&quot; NA  NA  NA  NA  NA 
-f NA  NA  NA   NA  NA  &quot;2&quot; NA  NA  NA  NA 
-g NA  NA  NA   NA  NA  NA  &quot;6&quot; NA  NA  NA 
-h NA  NA  NA   NA  NA  NA  NA  &quot;3&quot; NA  NA 
-i NA  NA  NA   NA  NA  NA  NA  NA  &quot;9&quot; NA 
-j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
+  1   2   3   4   5   6   7   8   9   10 
+a &quot;7&quot; NA  NA  NA  NA  NA  NA  NA  NA  NA 
+b NA  &quot;3&quot; NA  NA  NA  NA  NA  NA  NA  NA 
+c NA  NA  &quot;5&quot; NA  NA  NA  NA  NA  NA  NA 
+d NA  NA  NA  &quot;9&quot; NA  NA  NA  NA  NA  NA 
+e NA  NA  NA  NA  &quot;7&quot; NA  NA  NA  NA  NA 
+f NA  NA  NA  NA  NA  &quot;8&quot; NA  NA  NA  NA 
+g NA  NA  NA  NA  NA  NA  &quot;9&quot; NA  NA  NA 
+h NA  NA  NA  NA  NA  NA  NA  &quot;9&quot; NA  NA 
+i NA  NA  NA  NA  NA  NA  NA  NA  &quot;2&quot; NA 
+j NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;1&quot;</code></pre>
+</details>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">class</span>(a2); <span class="kw">dim</span>(a2)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>[1] &quot;array&quot;</code></pre>
+</details>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>[1] 10 10  2</code></pre>
+</details>
 </div>
 </div>
 <div id="split-apply-combine-with-plyr" class="section level2">
@@ -3083,43 +3025,54 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
 <a class="sourceLine" id="cb21-2" title="2"></a>
 <a class="sourceLine" id="cb21-3" title="3">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],<span class="dt">b=</span><span class="kw">runif</span>(<span class="dv">10</span>),<span class="dt">c=</span><span class="kw">sample</span>(LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>],<span class="dv">10</span>,<span class="dt">replace=</span><span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb21-4" title="4"><span class="kw">arrange</span>(x,a,b,c)</a></code></pre></div>
-<pre><code> a          b c
- a 0.25702868 B
- b 0.81111563 B
- c 0.53323867 C
- d 0.68636983 C
- e 0.37760600 B
- f 0.89092368 B
- g 0.84379468 A
- h 0.60612728 A
- i 0.06950871 C
- j 0.75578593 A</code></pre>
+<details>
+<p><summary class="folder">output</summary></p>
+<pre><code> a         b c
+ a 0.7317583 B
+ b 0.1728542 A
+ c 0.6756275 C
+ d 0.6691341 C
+ e 0.8148688 B
+ f 0.4392648 C
+ g 0.6353468 B
+ h 0.4637779 B
+ i 0.5187001 A
+ j 0.7801043 C</code></pre>
+</details>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">arrange</span>(x,b,c,a)</a></code></pre></div>
-<pre><code> a          b c
- i 0.06950871 C
- a 0.25702868 B
- e 0.37760600 B
- c 0.53323867 C
- h 0.60612728 A
- d 0.68636983 C
- j 0.75578593 A
- b 0.81111563 B
- g 0.84379468 A
- f 0.89092368 B</code></pre>
+<details>
+<p><summary class="folder">output</summary></p>
+<pre><code> a         b c
+ b 0.1728542 A
+ f 0.4392648 C
+ h 0.4637779 B
+ i 0.5187001 A
+ g 0.6353468 B
+ d 0.6691341 C
+ c 0.6756275 C
+ a 0.7317583 B
+ j 0.7801043 C
+ e 0.8148688 B</code></pre>
+</details>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">arrange</span>(x,c,b,a)</a></code></pre></div>
-<pre><code> a          b c
- h 0.60612728 A
- j 0.75578593 A
- g 0.84379468 A
- a 0.25702868 B
- e 0.37760600 B
- b 0.81111563 B
- f 0.89092368 B
- i 0.06950871 C
- c 0.53323867 C
- d 0.68636983 C</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">read.csv</span>(<span class="st">&quot;http://kingaa.github.io/R_Tutorial/data/energy_production.csv&quot;</span>,<span class="dt">comment=</span><span class="st">&quot;#&quot;</span>) -&gt;<span class="st"> </span>energy</a>
+<details>
+<p><summary class="folder">output</summary></p>
+<pre><code> a         b c
+ b 0.1728542 A
+ i 0.5187001 A
+ h 0.4637779 B
+ g 0.6353468 B
+ a 0.7317583 B
+ e 0.8148688 B
+ f 0.4392648 C
+ d 0.6691341 C
+ c 0.6756275 C
+ j 0.7801043 C</code></pre>
+</details>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">read.csv</span>(<span class="st">&quot;https://kingaa.github.io/R_Tutorial/data/energy_production.csv&quot;</span>,<span class="dt">comment=</span><span class="st">&quot;#&quot;</span>) -&gt;<span class="st"> </span>energy</a>
 <a class="sourceLine" id="cb27-2" title="2"><span class="kw">arrange</span>(energy,region,source,year)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> year           source                    region
  1900             Coal                    Africa
  1901             Coal                    Africa
@@ -10088,7 +10041,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
    2180984.0
    2365121.4
    2562705.2</code></pre>
+</details>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">arrange</span>(energy,<span class="op">-</span>TJ,year)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> year           source                    region
  2011             Coal          Asia and Oceania
  2013             Coal          Asia and Oceania
@@ -17057,40 +17013,52 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
          3.6
          3.6
          3.6</code></pre>
+</details>
 </div>
 <div id="count" class="section level4">
 <h4><code>count</code></h4>
 <p><code>count(x)</code> counts the combinations that occur and returns a data frame.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">count</span>(x,<span class="op">~</span>c)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> c freq
- A    3
+ A    2
  B    4
- C    3</code></pre>
+ C    4</code></pre>
+</details>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">count</span>(x,<span class="op">~</span>a<span class="op">+</span>c)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a c freq
  a B    1
- b B    1
+ b A    1
  c C    1
  d C    1
  e B    1
- f B    1
- g A    1
- h A    1
- i C    1
- j A    1</code></pre>
+ f C    1
+ g B    1
+ h B    1
+ i A    1
+ j C    1</code></pre>
+</details>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">count</span>(x,<span class="dt">vars=</span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;c&#39;</span>))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a c freq
  a B    1
- b B    1
+ b A    1
  c C    1
  d C    1
  e B    1
- f B    1
- g A    1
- h A    1
- i C    1
- j A    1</code></pre>
+ f C    1
+ g B    1
+ h B    1
+ i A    1
+ j C    1</code></pre>
+</details>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">count</span>(energy,<span class="op">~</span>source<span class="op">+</span>region)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>           source                    region freq
              Coal                    Africa  115
              Coal          Asia and Oceania  115
@@ -17134,7 +17102,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  Other Renewables                    Europe   99
  Other Renewables               Middle East   25
  Other Renewables             North America   55</code></pre>
+</details>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">count</span>(energy,<span class="op">~</span>source<span class="op">+</span>TJ)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>           source          TJ freq
              Coal       644.8    1
              Coal      2022.2    1
@@ -20580,84 +20551,114 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  Other Renewables   2365121.4    1
  Other Renewables   2487293.2    1
  Other Renewables   2562705.2    1</code></pre>
+</details>
 </div>
 <div id="summarise-and-summarize" class="section level4">
 <h4><code>summarise</code> and <code>summarize</code></h4>
 <p>Given a data frame, <code>summarise</code> (synonym <code>summarize</code>), produces a new data frame.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">summarize</span>(x,<span class="dt">mean=</span><span class="kw">mean</span>(b),<span class="dt">sd=</span><span class="kw">sd</span>(b),<span class="dt">top=</span>c[<span class="dv">1</span>])</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>      mean        sd top
- 0.5831499 0.2729542   B</code></pre>
+ 0.5901437 0.1944219   B</code></pre>
+</details>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">summarize</span>(energy,<span class="dt">tot=</span><span class="kw">sum</span>(TJ),<span class="dt">n=</span><span class="kw">length</span>(TJ))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>         tot    n
  20055245724 3483</code></pre>
+</details>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">summarize</span>(energy,<span class="kw">range</span>(year))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> range(year)
         1900
         2014</code></pre>
+</details>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">summarize</span>(energy,<span class="kw">min</span>(year),<span class="kw">max</span>(year),<span class="dt">interval=</span><span class="kw">diff</span>(<span class="kw">range</span>(year)))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> min(year) max(year) interval
       1900      2014      114</code></pre>
+</details>
 </div>
 <div id="mutate" class="section level4">
 <h4><code>mutate</code></h4>
 <p>Given a data frame, <code>mutate</code> modifies, adds, or removes variables.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">x &lt;-<span class="st"> </span><span class="kw">mutate</span>(x,<span class="dt">d=</span><span class="dv">2</span><span class="op">*</span>b,<span class="dt">c=</span><span class="kw">tolower</span>(c),<span class="dt">e=</span>b<span class="op">+</span>d,<span class="dt">a=</span><span class="ot">NULL</span>); x</a></code></pre></div>
-<pre><code>          b c         d         e
- 0.25702868 b 0.5140574 0.7710861
- 0.81111563 b 1.6222313 2.4333469
- 0.53323867 c 1.0664773 1.5997160
- 0.68636983 c 1.3727397 2.0591095
- 0.37760600 b 0.7552120 1.1328180
- 0.89092368 b 1.7818474 2.6727711
- 0.84379468 a 1.6875894 2.5313841
- 0.60612728 a 1.2122546 1.8183818
- 0.06950871 c 0.1390174 0.2085261
- 0.75578593 a 1.5115719 2.2673578</code></pre>
+<details>
+<p><summary class="folder">output</summary></p>
+<pre><code>         b c         d         e
+ 0.7317583 b 1.4635166 2.1952749
+ 0.1728542 a 0.3457083 0.5185625
+ 0.6756275 c 1.3512549 2.0268824
+ 0.6691341 c 1.3382682 2.0074023
+ 0.8148688 b 1.6297376 2.4446065
+ 0.4392648 c 0.8785295 1.3177943
+ 0.6353468 b 1.2706937 1.9060405
+ 0.4637779 b 0.9275558 1.3913337
+ 0.5187001 a 1.0374003 1.5561004
+ 0.7801043 c 1.5602086 2.3403130</code></pre>
+</details>
 </div>
 <div id="subset" class="section level4">
 <h4><code>subset</code></h4>
 <p><code>subset</code> doesn’t belong to <strong>plyr</strong>, but would if it didn’t already exist in the <strong>base</strong> package. This function allows you to choose a subset of rows and/or columns. The <code>subset</code> argument specifies a logical condition: those rows that satisfy it are chosen. The <code>select</code> argument picks out which columns to keep or throw away.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">subset</span>(x,d<span class="op">&gt;</span><span class="fl">1.2</span>)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>         b c        d        e
- 0.8111156 b 1.622231 2.433347
- 0.6863698 c 1.372740 2.059110
- 0.8909237 b 1.781847 2.672771
- 0.8437947 a 1.687589 2.531384
- 0.6061273 a 1.212255 1.818382
- 0.7557859 a 1.511572 2.267358</code></pre>
+ 0.7317583 b 1.463517 2.195275
+ 0.6756275 c 1.351255 2.026882
+ 0.6691341 c 1.338268 2.007402
+ 0.8148688 b 1.629738 2.444606
+ 0.6353468 b 1.270694 1.906041
+ 0.7801043 c 1.560209 2.340313</code></pre>
+</details>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1"><span class="kw">subset</span>(x,<span class="dt">select=</span><span class="kw">c</span>(b,c))</a></code></pre></div>
-<pre><code>          b c
- 0.25702868 b
- 0.81111563 b
- 0.53323867 c
- 0.68636983 c
- 0.37760600 b
- 0.89092368 b
- 0.84379468 a
- 0.60612728 a
- 0.06950871 c
- 0.75578593 a</code></pre>
+<details>
+<p><summary class="folder">output</summary></p>
+<pre><code>         b c
+ 0.7317583 b
+ 0.1728542 a
+ 0.6756275 c
+ 0.6691341 c
+ 0.8148688 b
+ 0.4392648 c
+ 0.6353468 b
+ 0.4637779 b
+ 0.5187001 a
+ 0.7801043 c</code></pre>
+</details>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw">subset</span>(x,<span class="dt">select=</span><span class="op">-</span><span class="kw">c</span>(d))</a></code></pre></div>
-<pre><code>          b c         e
- 0.25702868 b 0.7710861
- 0.81111563 b 2.4333469
- 0.53323867 c 1.5997160
- 0.68636983 c 2.0591095
- 0.37760600 b 1.1328180
- 0.89092368 b 2.6727711
- 0.84379468 a 2.5313841
- 0.60612728 a 1.8183818
- 0.06950871 c 0.2085261
- 0.75578593 a 2.2673578</code></pre>
+<details>
+<p><summary class="folder">output</summary></p>
+<pre><code>         b c         e
+ 0.7317583 b 2.1952749
+ 0.1728542 a 0.5185625
+ 0.6756275 c 2.0268824
+ 0.6691341 c 2.0074023
+ 0.8148688 b 2.4446065
+ 0.4392648 c 1.3177943
+ 0.6353468 b 1.9060405
+ 0.4637779 b 1.3913337
+ 0.5187001 a 1.5561004
+ 0.7801043 c 2.3403130</code></pre>
+</details>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw">subset</span>(x,d<span class="op">&gt;</span><span class="fl">1.2</span>,<span class="dt">select=</span><span class="op">-</span>e)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>         b c        d
- 0.8111156 b 1.622231
- 0.6863698 c 1.372740
- 0.8909237 b 1.781847
- 0.8437947 a 1.687589
- 0.6061273 a 1.212255
- 0.7557859 a 1.511572</code></pre>
+ 0.7317583 b 1.463517
+ 0.6756275 c 1.351255
+ 0.6691341 c 1.338268
+ 0.8148688 b 1.629738
+ 0.6353468 b 1.270694
+ 0.7801043 c 1.560209</code></pre>
+</details>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">subset</span>(energy,year<span class="op">&gt;</span><span class="dv">2010</span>,<span class="dt">select=</span><span class="kw">c</span>(source,TJ))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>           source          TJ
              Coal 105601012.6
              Coal 102319365.3
@@ -20827,7 +20828,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  Other Renewables   2180984.0
  Other Renewables   2365121.4
  Other Renewables   2562705.2</code></pre>
+</details>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw">subset</span>(energy,year<span class="op">&gt;</span><span class="dv">2010</span><span class="op">&amp;</span>source<span class="op">%in%</span><span class="kw">c</span>(<span class="st">&quot;Nuclear&quot;</span>,<span class="st">&quot;Oil&quot;</span>),<span class="dt">select=</span><span class="op">-</span>source)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> year                    region         TJ
  2011          Asia and Oceania  5014652.9
  2012          Asia and Oceania  3568374.7
@@ -20885,6 +20889,7 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  2012             North America 38024848.5
  2013             North America 41029379.4
  2014             North America 44928220.6</code></pre>
+</details>
 </div>
 <div id="merge-and-join" class="section level4">
 <h4><code>merge</code> and <code>join</code></h4>
@@ -20892,6 +20897,8 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">x &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">a=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">b=</span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb63-2" title="2">y &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">a=</span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dt">b=</span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dt">c=</span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;F&quot;</span>,<span class="st">&quot;G&quot;</span>)))</a>
 <a class="sourceLine" id="cb63-3" title="3">m1 &lt;-<span class="st"> </span><span class="kw">merge</span>(x,y); m1</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a b c
  1 1 F
  1 1 G
@@ -20913,7 +20920,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  2 4 F
  2 5 F
  2 5 G</code></pre>
+</details>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">m2 &lt;-<span class="st"> </span><span class="kw">merge</span>(x,y,<span class="dt">by=</span><span class="st">&#39;a&#39;</span>); m2</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a b.x b.y c
  1   1   1 F
  1   1   2 F
@@ -21015,7 +21025,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  2   4   3 G
  2   4   4 G
  2   4   5 G</code></pre>
+</details>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">m3 &lt;-<span class="st"> </span><span class="kw">merge</span>(x,y,<span class="dt">all=</span><span class="ot">TRUE</span>); m3</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a b    c
  1 1    F
  1 1    G
@@ -21042,7 +21055,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  3 3 &lt;NA&gt;
  3 4 &lt;NA&gt;
  3 5 &lt;NA&gt;</code></pre>
+</details>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">m4 &lt;-<span class="st"> </span><span class="kw">merge</span>(x,y,<span class="dt">by=</span><span class="st">&#39;a&#39;</span>,<span class="dt">all=</span><span class="ot">TRUE</span>); m4</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a b.x b.y    c
  1   1   1    F
  1   1   2    F
@@ -21149,8 +21165,11 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  3   1  NA &lt;NA&gt;
  3   4  NA &lt;NA&gt;
  3   5  NA &lt;NA&gt;</code></pre>
+</details>
 <p><code>join</code> is more general implementing the <em>database join operations</em>. It can perform a <em>left join</em>, a <em>right join</em>, an <em>inner join</em>, or a <em>full join</em>. Read the documentation (<code>?join</code>) for explanations.</p>
 <div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw">join</span>(x,y,<span class="dt">by=</span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>),<span class="dt">type=</span><span class="st">&#39;left&#39;</span>)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a b    c
  1 1    F
  1 1    G
@@ -21177,7 +21196,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  2 5    F
  2 5    G
  3 5 &lt;NA&gt;</code></pre>
+</details>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw">join</span>(x,y,<span class="dt">by=</span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>),<span class="dt">type=</span><span class="st">&#39;right&#39;</span>)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a b c
  1 1 F
  2 1 F
@@ -21199,7 +21221,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  2 4 G
  1 5 G
  2 5 G</code></pre>
+</details>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1"><span class="kw">join</span>(x,y,<span class="dt">by=</span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>),<span class="dt">type=</span><span class="st">&#39;inner&#39;</span>)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a b c
  1 1 F
  1 1 G
@@ -21221,7 +21246,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  1 5 G
  2 5 F
  2 5 G</code></pre>
+</details>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"><span class="kw">join</span>(x,y,<span class="dt">by=</span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>),<span class="dt">type=</span><span class="st">&#39;full&#39;</span>)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a b    c
  1 1    F
  1 1    G
@@ -21248,7 +21276,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  2 5    F
  2 5    G
  3 5 &lt;NA&gt;</code></pre>
+</details>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1"><span class="kw">join</span>(x,y,<span class="dt">by=</span><span class="st">&#39;a&#39;</span>,<span class="dt">type=</span><span class="st">&#39;full&#39;</span>)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a b    c
  1 1    F
  1 1    F
@@ -21355,7 +21386,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  2 5    G
  2 5    G
  3 5 &lt;NA&gt;</code></pre>
+</details>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="kw">join</span>(x,y,<span class="dt">by=</span><span class="st">&#39;a&#39;</span>,<span class="dt">type=</span><span class="st">&#39;inner&#39;</span>)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> a b b c
  1 1 1 F
  1 1 2 F
@@ -21457,6 +21491,7 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
  2 5 3 G
  2 5 4 G
  2 5 5 G</code></pre>
+</details>
 </div>
 </div>
 <div id="the--ply-functions" class="section level3">
@@ -21466,6 +21501,8 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
 <h4><code>ddply</code></h4>
 <p>This is probably the most useful of the lot. It splits a data frame according to some criterion, conveniently expressed as a formula involving the variables of the data frame, applies a specified function, and combines the results back into a data frame. It is best to use a function that returns a data frame, but if the function returns something else, <code>ddply</code> will attempt to coerce the value into a data frame. Here are some examples:</p>
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">x &lt;-<span class="st"> </span><span class="kw">ddply</span>(energy,<span class="op">~</span>region<span class="op">+</span>source,subset,TJ<span class="op">==</span><span class="kw">max</span>(TJ)); x</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> year           source                    region
  2014             Coal                    Africa
  2012              Gas                    Africa
@@ -21552,7 +21589,10 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
    9897819.1
   44928220.6
    2562705.2</code></pre>
+</details>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1">x &lt;-<span class="st"> </span><span class="kw">ddply</span>(energy,<span class="op">~</span>region<span class="op">+</span>source,summarize,<span class="dt">TJ=</span><span class="kw">mean</span>(TJ)); x</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>                    region           source           TJ
                     Africa             Coal  1940046.670
                     Africa              Gas  2488813.571
@@ -21596,12 +21636,15 @@ j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
              North America          Nuclear  4979916.857
              North America              Oil 17070191.820
              North America Other Renewables   458769.145</code></pre>
+</details>
 <p>Notice that only combinations of the variables that exist are included in the result by default.</p>
 </div>
 <div id="daply" class="section level4">
 <h4><code>daply</code></h4>
 <p>This one is very similar, except that (as the name implies), the result is returned as an array:</p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1"><span class="kw">daply</span>(energy,<span class="op">~</span>region,<span class="cf">function</span>(df) <span class="kw">sum</span>(df<span class="op">$</span>TJ))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>                   Africa          Asia and Oceania 
                1138461562                3494041922 
 Central and South America                   Eurasia 
@@ -21610,7 +21653,10 @@ Central and South America                   Eurasia
                2884539997                2521865068 
             North America 
                5879740905 </code></pre>
+</details>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1"><span class="kw">daply</span>(energy,<span class="op">~</span>region<span class="op">+</span>source,<span class="cf">function</span>(df) <span class="kw">sum</span>(df<span class="op">$</span>TJ))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>                           source
 region                            Coal        Gas     Hydro
   Africa                     223105367  171728136  10057148
@@ -21638,11 +21684,14 @@ region                      Other Renewables
   Europe                          20154871.2
   Middle East                        19777.7
   North America                   25232303.0</code></pre>
+</details>
 </div>
 <div id="dlply" class="section level4">
 <h4><code>dlply</code></h4>
 <p>This splits the data according to the given specifications, applies the function, and returns each result (as its name implies) as a distinct element of a list.</p>
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1"><span class="kw">dlply</span>(energy,<span class="op">~</span>region,summarize,<span class="dt">TJ=</span><span class="kw">sum</span>(TJ))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>$Africa
           TJ
 1 1138461562
@@ -21682,12 +21731,15 @@ attr(,&quot;split_labels&quot;)
 5                    Europe
 6               Middle East
 7             North America</code></pre>
+</details>
 </div>
 <div id="adply-aaply-alply" class="section level4">
 <h4><code>adply</code>, <code>aaply</code>, <code>alply</code></h4>
 <p>These take arrays and, like the <strong>base</strong> function <code>apply</code>, divide the array up into slices along specified directions. They then apply a function to each slice and return the results in the desired form (if possible). As an example, we first create an array from <code>dat</code>, then act on it with each of these.</p>
 <div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1"><span class="kw">mutate</span>(energy,<span class="dt">time=</span>year<span class="op">-</span><span class="kw">min</span>(year)) -&gt;<span class="st"> </span>dat</a>
 <a class="sourceLine" id="cb93-2" title="2"><span class="kw">daply</span>(dat,<span class="op">~</span>source<span class="op">+</span>region,<span class="cf">function</span>(df) <span class="kw">min</span>(df<span class="op">$</span>time)) -&gt;<span class="st"> </span>A; A</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>                  region
 source             Africa Asia and Oceania
   Coal                  0                0
@@ -21712,11 +21764,15 @@ source             Middle East North America
   Nuclear                  111            57
   Oil                        6             0
   Other Renewables          90            60</code></pre>
+</details>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1"><span class="kw">aaply</span>(A,<span class="dv">1</span>,max)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>            Coal              Gas            Hydro 
               39               55               37 
          Nuclear              Oil Other Renewables 
              111               11               90 </code></pre>
+</details>
 </div>
 <div id="exercise" class="section level4">
 <h4>Exercise</h4>
@@ -21745,6 +21801,8 @@ source             Middle East North America
 <h4><code>rename</code>, <code>revalue</code>, <code>mapvalues</code></h4>
 <p><code>rename</code> helps one to change the (column) names of a data frame.</p>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1">x &lt;-<span class="st"> </span><span class="kw">rename</span>(energy,<span class="kw">c</span>(<span class="dt">TJ=</span><span class="st">&#39;energy&#39;</span>,<span class="dt">year=</span><span class="st">&quot;time&quot;</span>)); <span class="kw">head</span>(x)</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> time source           region   energy
  1900   Coal Asia and Oceania 542522.6
  1901   Coal Asia and Oceania 612609.6
@@ -21752,10 +21810,13 @@ source             Middle East North America
  1903   Coal Asia and Oceania 694323.1
  1904   Coal Asia and Oceania 731250.6
  1905   Coal Asia and Oceania 780040.2</code></pre>
+</details>
 <p><code>revalue</code> allows you to change one or more of the levels of a factor without worrying about how the factors are coded.</p>
 <p><code>mapvalues</code> does the same, but works on vectors of any type.</p>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" title="1"><span class="kw">mutate</span>(energy,<span class="dt">region=</span><span class="kw">revalue</span>(region,<span class="kw">c</span>(<span class="st">`</span><span class="dt">Asia and Oceania</span><span class="st">`</span>=<span class="st">&quot;Asia&quot;</span>,</a>
 <a class="sourceLine" id="cb99-2" title="2">                                      <span class="st">`</span><span class="dt">Central and South America</span><span class="st">`</span>=<span class="st">&quot;Latin.America&quot;</span>))); </a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> year           source        region          TJ
  1900             Coal          Asia    542522.6
  1901             Coal          Asia    612609.6
@@ -25240,8 +25301,11 @@ source             Middle East North America
  2012 Other Renewables North America   2180984.0
  2013 Other Renewables North America   2365121.4
  2014 Other Renewables North America   2562705.2</code></pre>
+</details>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" title="1"><span class="kw">mutate</span>(energy,<span class="dt">source=</span><span class="kw">mapvalues</span>(source,<span class="dt">from=</span><span class="kw">c</span>(<span class="st">&quot;Coal&quot;</span>,<span class="st">&quot;Gas&quot;</span>,<span class="st">&quot;Oil&quot;</span>),</a>
 <a class="sourceLine" id="cb101-2" title="2">                               <span class="dt">to=</span><span class="kw">c</span>(<span class="st">&quot;Carbon&quot;</span>,<span class="st">&quot;Carbon&quot;</span>,<span class="st">&quot;Carbon&quot;</span>)))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code> year           source                    region
  1900           Carbon          Asia and Oceania
  1901           Carbon          Asia and Oceania
@@ -32210,6 +32274,7 @@ source             Middle East North America
    2180984.0
    2365121.4
    2562705.2</code></pre>
+</details>
 </div>
 </div>
 </div>
@@ -32235,6 +32300,8 @@ René Magritte, <em>La Trahison des Images</em></p>
 <a class="sourceLine" id="cb107-4" title="4"><span class="st">  </span><span class="kw">subset</span>(year<span class="op">&gt;=</span><span class="dv">1990</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb107-5" title="5"><span class="st">  </span><span class="kw">ddply</span>(<span class="op">~</span>source<span class="op">+</span>year,summarize,<span class="dt">TJ=</span><span class="kw">sum</span>(TJ)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb107-6" title="6"><span class="st">  </span><span class="kw">ddply</span>(<span class="op">~</span>source,summarize,<span class="dt">TJ=</span><span class="kw">mean</span>(TJ))</a></code></pre></div>
+<details>
+<p><summary class="folder">output</summary></p>
 <pre><code>           source        TJ
              Coal 107151777
               Gas 102269452
@@ -32242,6 +32309,7 @@ René Magritte, <em>La Trahison des Images</em></p>
           Nuclear  25933418
               Oil 163423834
  Other Renewables   2703648</code></pre>
+</details>
 <hr />
 <p>Produced with <strong>R</strong> version 4.2.1.</p>
 <p>The <a href="./munging.R"><strong>R</strong> codes for this document are provided in a script</a> which you can download, edit, and run.</p>
@@ -32307,11 +32375,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 <script>
 $(document).ready(function ()  {

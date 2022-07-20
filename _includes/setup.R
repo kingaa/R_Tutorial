@@ -13,7 +13,7 @@ opts_chunk$set(
   dpi=300,
   error=FALSE,
   fig.align='center',
-  fig.height=4,fig.width=6.83,
+  fig.dim=c(6.83,4),
   fig.lp="fig:",
   fig.path=paste("tmp","figure",as.character(prefix),"",sep="/"),
   fig.pos="h!",
@@ -38,13 +38,24 @@ options(
   pomp_archive_dir="results"
 )
 
-library(ggplot2)
-theme_set(theme_bw())
+hooks <- knitr::knit_hooks$get()
 
-knit_hooks$set(
-  document = function (x) {
-    sub('\\usepackage[]{color}','\\usepackage{xcolor}',x,fixed=TRUE)
+hook_foldable <- function (type) {
+  force(type)
+  function(x, options) {
+    res <- hooks[[type]](x, options)
+    if (isFALSE(options[[paste0("fold.", type)]])) return(res)
+    paste0(
+      "<details><summary class=\"folder\">", type, "</summary>\n\n",
+      res,
+      "\n\n</details>"
+    )
   }
+}
+
+knitr::knit_hooks$set(
+  output = hook_foldable("output"),
+  plot = hook_foldable("plot")
 )
 
 registerS3method(

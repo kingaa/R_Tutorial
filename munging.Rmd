@@ -1,6 +1,6 @@
 ---
-title: "Data munging with **plyr**, **reshape2**, and **magrittr**"
-author: "Aaron A. King"
+title: Data munging with **plyr**, **reshape2**, and **magrittr**
+author: Aaron A. King
 output:
   html_document:
     toc: yes
@@ -9,7 +9,6 @@ output:
       collapsed: TRUE
       smooth_scroll: TRUE
     highlight: haddock
-    code_folding: show
     number_sections: FALSE
     df_print: paged
     includes:
@@ -41,6 +40,12 @@ Please submit these via the [issues page](https://github.com/kingaa/R_Tutorial/i
 
 -----------------------
 
+```{css echo=FALSE}
+.folder {
+	color: #3333ff; 
+    font-weight: bold;
+}
+```
 ```{r knitr-opts,include=FALSE,purl=FALSE}
 prefix <- "munge"
 source("_includes/setup.R",local=knitr::knit_global())
@@ -113,7 +118,7 @@ arrange(x,c,b,a)
 ```
 
 ```{r}
-read.csv("http://kingaa.github.io/R_Tutorial/data/energy_production.csv",comment="#") -> energy
+read.csv("https://kingaa.github.io/R_Tutorial/data/energy_production.csv",comment="#") -> energy
 arrange(energy,region,source,year)
 arrange(energy,-TJ,year)
 ```

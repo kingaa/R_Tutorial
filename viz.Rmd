@@ -9,7 +9,6 @@ output:
       collapsed: TRUE
       smooth_scroll: TRUE
     highlight: haddock
-    code_folding: show
     number_sections: FALSE
     df_print: paged
     includes:
@@ -41,6 +40,12 @@ Please submit these via the [issues page](https://github.com/kingaa/R_Tutorial/i
 
 -----------------------
 
+```{css echo=FALSE}
+.folder {
+	color: #3333ff; 
+    font-weight: bold;
+}
+```
 ```{r knitr-opts,include=FALSE,purl=FALSE}
 prefix <- "viz"
 source("_includes/setup.R",local=knitr::knit_global())
@@ -66,7 +71,7 @@ For your convenience, [the **R** codes for this document are provided in an **R*
 Let's load the data on transgenic mosquito survival time.
 
 ```{r}
-dat <- read.csv("http://kingaa.github.io/R_Tutorial/data/mosquitoes.csv")
+dat <- read.csv("https://kingaa.github.io/R_Tutorial/data/mosquitoes.csv")
 ```
 
 Let's compare the average lifespan of transgenic vs wildtype mosquitoes from this experiment.
@@ -115,7 +120,7 @@ plot(brain~body,data=mammals,log='xy')
 
 ```{r}
 read.csv(
-  "http://kingaa.github.io/R_Tutorial/data/oil_production.csv",
+  "https://kingaa.github.io/R_Tutorial/data/oil_production.csv",
   comment.char="#"
 ) -> oil
 head(oil)
@@ -150,8 +155,8 @@ This is implemented in the **ggplot2** package.
 
 ### References
 
-- [ggplot2.org](http://ggplot2.org)
-- [ggplot2 documentation](http://docs.ggplot2.org/)
+- [ggplot2.tidyverse.org](https://ggplot2.tidyverse.org/)
+- [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/)
 
 
 ## Examples
@@ -160,7 +165,7 @@ This is implemented in the **ggplot2** package.
 
 ```{r}
 read.csv(
-  "http://kingaa.github.io/R_Tutorial/data/energy_production.csv",
+  "https://kingaa.github.io/R_Tutorial/data/energy_production.csv",
   comment.char="#"
 ) -> energy
 
