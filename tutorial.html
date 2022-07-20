@@ -2955,7 +2955,7 @@ Need to include pseudo-RNG functions, etc.
 <li>a modular and extensible structure that supports a vast array of optional add-on packages, and</li>
 <li>extensive help and documentation facilities.</li>
 </ul>
-<p><strong>R</strong> is an <a href="https://en.wikipedia.org/wiki/Open-source_software">open source software project</a>, available for <a href="https://www.r-project.org/">free download</a> <span class="citation">(R Core Team 2014b)</span>. Originally a research project in statistical computing <span class="citation">(Ihaka and Gentleman 1996)</span>, it is now managed by a development team that includes a number of well-regarded statisticians, and is widely used by statistical researchers and working scientists as a platform for making new methods available to users.</p>
+<p><strong>R</strong> is an <a href="https://en.wikipedia.org/wiki/Open-source_software">open source software project</a>, available for <a href="https://www.r-project.org/">free download</a> <span class="citation">(Team 2014b)</span>. Originally a research project in statistical computing <span class="citation">(Ihaka and Gentleman 1996)</span>, it is now managed by a development team that includes a number of well-regarded statisticians, and is widely used by statistical researchers and working scientists as a platform for making new methods available to users.</p>
 <p>There are a number of graphical front-ends for <strong>R</strong>. At present, the best of these appears to be <a href="http://www.rstudio.com"><strong>RStudio</strong></a>. Before learning about these, however, you should learn a little about <strong>R</strong> itself.</p>
 </div>
 <div id="getting-started-with-r" class="section level1">
@@ -4478,7 +4478,7 @@ N_{t+1} = \frac{a\,N_t}{1+b\,N_t}.
 </div>
 <div id="function-scope" class="section level2">
 <h2>Function scope</h2>
-<p><strong>Note:</strong> This section draws heavily, and sometimes verbatim, on §10.7 of the <em>Introduction to <strong>R</strong> </em> manual <span class="citation">(R Core Team 2014a)</span>.</p>
+<p><strong>Note:</strong> This section draws heavily, and sometimes verbatim, on §10.7 of the <em>Introduction to <strong>R</strong> </em> manual <span class="citation">(Team 2014a)</span>.</p>
 <p>As noted above, a paramount consideration in the implementation of functions in any programming language is that unintentional side effects should never occur. In particular, I should be free to write a function that creates temporary variables as an aid to its computations, and be able to rest assured that no variables I create temporarily will interfere with any other variables I’ve defined anywhere else. To accomplish this, <strong>R</strong> has a specific set of <em>scoping rules</em>.</p>
 <p>Consider the function</p>
 <div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" title="1">f &lt;-<span class="st"> </span><span class="cf">function</span> (x) {</a>
@@ -4674,18 +4674,18 @@ N_{t+1} = \frac{a\,N_t}{1+b\,N_t}.
 <pre><code>environment of f: &lt;environment: R_GlobalEnv&gt;
 global env: &lt;environment: R_GlobalEnv&gt;
 inside function f:
-environment of g: &lt;environment: 0x56392b63bf40&gt;
-current env: &lt;environment: 0x56392b63bf40&gt;
+environment of g: &lt;environment: 0x55b0b2ec1c38&gt;
+current env: &lt;environment: 0x55b0b2ec1c38&gt;
 parent env: &lt;environment: R_GlobalEnv&gt;
 inside function g:
-environment of h: &lt;environment: 0x56392c3fe728&gt;
-current env: &lt;environment: 0x56392c3fe728&gt;
-parent env: &lt;environment: 0x56392b63bf40&gt;
+environment of h: &lt;environment: 0x55b0b3c7e228&gt;
+current env: &lt;environment: 0x55b0b3c7e228&gt;
+parent env: &lt;environment: 0x55b0b2ec1c38&gt;
 grandparent env: &lt;environment: R_GlobalEnv&gt;
 inside function h:
-current env: &lt;environment: 0x56392c408300&gt;
-parent env: &lt;environment: 0x56392c3fe728&gt;
-grandparent env: &lt;environment: 0x56392b63bf40&gt;
+current env: &lt;environment: 0x55b0b3c90e40&gt;
+parent env: &lt;environment: 0x55b0b3c7e228&gt;
+grandparent env: &lt;environment: 0x55b0b2ec1c38&gt;
 great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <p>Each variable referenced in the function’s body is bound, first, to a formal argument if possible. If a local variable of that name has previously been created (via one of the assignment operators <code>&lt;-</code>, <code>-&gt;</code>, or <code>=</code>, this is the variable that is affected by any subsequent assignments. If the variable is neither a formal parameter nor a local variable, then the parent environment of the function is searched for that variable. If the variable has not been found in the parent environment, then the grand-parent environment is searched, and so on.</p>
 <p>If the assignment operators <code>&lt;&lt;-</code> or <code>-&gt;&gt;</code> are used, a more extensive search for the referenced assignee is made. If the variable does not exist in the local environment, the parent environment is searched. If it does not exist in the parent environment, then the grand-parent environment is searched, and so on. Finally, if the variable cannot be found anywhere along the lineage of environments, a new global variable is created, with the assigned value.</p>
@@ -4923,6 +4923,7 @@ great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb288-1" title="1"><span class="kw">tapply</span>(x,b,sum)</a></code></pre></div>
 <pre><code> a  b  c  d  e  f  g  h  i  j 
  6 15 24 33 42 51 60 69 78 87 </code></pre>
+<p>The following uses the seed predation data described by <span class="citation">Bolker (2008)</span>.</p>
 <div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb290-1" title="1">datafile &lt;-<span class="st"> &quot;http://kingaa.github.io/R_Tutorial/data/seedpred.dat&quot;</span></a>
 <a class="sourceLine" id="cb290-2" title="2">seeds &lt;-<span class="st"> </span><span class="kw">read.table</span>(datafile,<span class="dt">header=</span><span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb290-3" title="3">                    <span class="dt">colClasses=</span><span class="kw">c</span>(<span class="dt">station=</span><span class="st">&#39;factor&#39;</span>,<span class="dt">dist=</span><span class="st">&#39;factor&#39;</span>,<span class="dt">date=</span><span class="st">&#39;Date&#39;</span>))</a>
@@ -4995,11 +4996,11 @@ great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <a class="sourceLine" id="cb296-6" title="6">  }</a>
 <a class="sourceLine" id="cb296-7" title="7">})</a></code></pre></div>
 <pre><code>   user  system elapsed 
-  0.085   0.004   0.089 </code></pre>
+  0.085   0.000   0.086 </code></pre>
 <p>We can compare this with a simple call to <code>sin</code> (which is vectorized):</p>
 <div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb298-1" title="1"><span class="kw">system.time</span>(z &lt;-<span class="st"> </span><span class="kw">sin</span>(x))</a></code></pre></div>
 <pre><code>   user  system elapsed 
-  0.022   0.000   0.022 </code></pre>
+  0.017   0.004   0.021 </code></pre>
 <p>Clearly, calling <code>sin</code> directly is much faster. What about using <code>sapply</code>?</p>
 <hr />
 <div id="exercise-41" class="section level5">
@@ -5018,14 +5019,14 @@ great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <a class="sourceLine" id="cb300-9" title="9">  }</a>
 <a class="sourceLine" id="cb300-10" title="10">})</a></code></pre></div>
 <pre><code>   user  system elapsed 
-  0.068   0.000   0.068 </code></pre>
+  0.065   0.000   0.066 </code></pre>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" title="1"><span class="kw">system.time</span>(res2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(x,f))</a></code></pre></div>
 <pre><code>   user  system elapsed 
-  0.069   0.000   0.070 </code></pre>
+  0.062   0.001   0.062 </code></pre>
 <p>[Actually, in this case, <code>f</code> is vectorized automatically. Why is this?]</p>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb304-1" title="1"><span class="kw">system.time</span>(<span class="kw">f</span>(x))</a></code></pre></div>
 <pre><code>   user  system elapsed 
-      0       0       0 </code></pre>
+  0.001   0.000   0.001 </code></pre>
 <p>Another example: in this case function <code>g</code> is not vectorized.</p>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb306-1" title="1">g &lt;-<span class="st"> </span><span class="cf">function</span> (x) {</a>
 <a class="sourceLine" id="cb306-2" title="2">  <span class="cf">if</span> ((x[<span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">30</span>) <span class="op">&amp;&amp;</span><span class="st"> </span>(x[<span class="dv">1</span>] <span class="op">&lt;</span><span class="st"> </span><span class="dv">5000</span>)) <span class="dv">1</span> <span class="cf">else</span> <span class="dv">0</span></a>
@@ -5038,10 +5039,10 @@ great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <a class="sourceLine" id="cb306-9" title="9">  }</a>
 <a class="sourceLine" id="cb306-10" title="10">})</a></code></pre></div>
 <pre><code>   user  system elapsed 
-  0.066   0.000   0.066 </code></pre>
+  0.064   0.000   0.064 </code></pre>
 <div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb308-1" title="1"><span class="kw">system.time</span>(res2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(x,g))</a></code></pre></div>
 <pre><code>   user  system elapsed 
-  0.068   0.000   0.068 </code></pre>
+  0.064   0.000   0.064 </code></pre>
 </div>
 </div>
 <div id="acknowledgments" class="section level1">
@@ -5051,6 +5052,9 @@ great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 <div id="refs" class="references">
+<div id="ref-Bolker2008">
+<p>Bolker BM (2008). <em>Ecological Models and Data in R</em>. Princeton University Press. Retrieved from <a href="http://ms.mcmaster.ca/~bolker/emdbook/">http://ms.mcmaster.ca/~bolker/emdbook/</a></p>
+</div>
 <div id="ref-Burns2012">
 <p>Burns P (2012). <em>The R Inferno</em> 2nd ed. http://www.burns-stat.com/. Retrieved from <a href="http://www.burns-stat.com/pages/Tutor/R_inferno.pdf">http://www.burns-stat.com/pages/Tutor/R_inferno.pdf</a></p>
 </div>
@@ -5066,14 +5070,14 @@ great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <div id="ref-Ligges2008">
 <p>Ligges U, Fox J (2008). “R Help Desk : How Can I Avoid This Loop or Make It Faster?” <em>R News</em>, <strong>8</strong>(1), 46–50. Retrieved from <a href="http://www.r-project.org/doc/Rnews/Rnews_2008-1.pdf">http://www.r-project.org/doc/Rnews/Rnews_2008-1.pdf</a></p>
 </div>
-<div id="ref-Rintro">
-<p>R Core Team (2014a). <em>An Introduction to R</em>. Retrieved from <a href="http://cran.r-project.org/doc/manuals/r-release/R-intro.html">http://cran.r-project.org/doc/manuals/r-release/R-intro.html</a></p>
-</div>
-<div id="ref-R">
-<p>R Core Team (2014b). <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing, Vienna, Austria. Retrieved from <a href="http://www.R-project.org/">http://www.R-project.org/</a></p>
-</div>
 <div id="ref-Stevens1946">
 <p>Stevens SS (1946). “On the Theory of Scales of Measurement.” <em>Science</em>, <strong>103</strong>(2684), 677–680. <a href="https://doi.org/10.1126/science.103.2684.677">https://doi.org/10.1126/science.103.2684.677</a>.</p>
+</div>
+<div id="ref-Rintro">
+<p>Team RC (2014a). <em>An Introduction to R</em>. Retrieved from <a href="http://cran.r-project.org/doc/manuals/r-release/R-intro.html">http://cran.r-project.org/doc/manuals/r-release/R-intro.html</a></p>
+</div>
+<div id="ref-R">
+<p>Team RC (2014b). <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing, Vienna, Austria. Retrieved from <a href="http://www.R-project.org/">http://www.R-project.org/</a></p>
 </div>
 <div id="ref-Venables2002">
 <p>Venables WN, Ripley BD (2002). <em>Modern Applied Statistics with S. Fourth Edition</em>. Springer, New York. Retrieved from <a href="http://www.stats.ox.ac.uk/pub/MASS4/">http://www.stats.ox.ac.uk/pub/MASS4/</a></p>

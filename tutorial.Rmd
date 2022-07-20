@@ -2071,6 +2071,8 @@ data.frame(x,b)
 tapply(x,b,sum)
 ``` 
 
+The following uses the seed predation data described by @Bolker2008.
+
 ```{r }
 datafile <- "http://kingaa.github.io/R_Tutorial/data/seedpred.dat"
 seeds <- read.table(datafile,header=TRUE,

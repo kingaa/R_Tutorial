@@ -2948,91 +2948,91 @@ div.tocify {
 <a class="sourceLine" id="cb1-3" title="3">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],<span class="dt">b=</span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
 <a class="sourceLine" id="cb1-4" title="4">                <span class="dt">c=</span><span class="kw">sample</span>(LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>],<span class="dv">10</span>,<span class="dt">replace=</span><span class="ot">TRUE</span>),<span class="dt">d=</span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="dt">replace=</span><span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb1-5" title="5">x</a></code></pre></div>
-<pre><code> a  b c d
- a  1 A 3
- b  2 B 4
- c  3 B 6
- d  4 A 6
- e  5 A 5
- f  6 C 1
- g  7 A 4
- h  8 C 3
- i  9 C 9
- j 10 B 3</code></pre>
+<pre><code> a  b c  d
+ a  1 B  6
+ b  2 C  9
+ c  3 C 10
+ d  4 C  2
+ e  5 C  5
+ f  6 C  2
+ g  7 B  6
+ h  8 C  3
+ i  9 A  9
+ j 10 A  6</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">melt</span>(x,<span class="dt">id.vars=</span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>))</a></code></pre></div>
 <pre><code> a  b variable value
- a  1        c     A
- b  2        c     B
- c  3        c     B
- d  4        c     A
- e  5        c     A
+ a  1        c     B
+ b  2        c     C
+ c  3        c     C
+ d  4        c     C
+ e  5        c     C
  f  6        c     C
- g  7        c     A
+ g  7        c     B
  h  8        c     C
- i  9        c     C
- j 10        c     B
- a  1        d     3
- b  2        d     4
- c  3        d     6
- d  4        d     6
+ i  9        c     A
+ j 10        c     A
+ a  1        d     6
+ b  2        d     9
+ c  3        d    10
+ d  4        d     2
  e  5        d     5
- f  6        d     1
- g  7        d     4
+ f  6        d     2
+ g  7        d     6
  h  8        d     3
  i  9        d     9
- j 10        d     3</code></pre>
+ j 10        d     6</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">melt</span>(x,<span class="dt">measure.vars=</span><span class="kw">c</span>(<span class="st">&quot;c&quot;</span>,<span class="st">&quot;d&quot;</span>)) -&gt;<span class="st"> </span>y; y</a></code></pre></div>
 <pre><code> a  b variable value
- a  1        c     A
- b  2        c     B
- c  3        c     B
- d  4        c     A
- e  5        c     A
+ a  1        c     B
+ b  2        c     C
+ c  3        c     C
+ d  4        c     C
+ e  5        c     C
  f  6        c     C
- g  7        c     A
+ g  7        c     B
  h  8        c     C
- i  9        c     C
- j 10        c     B
- a  1        d     3
- b  2        d     4
- c  3        d     6
- d  4        d     6
+ i  9        c     A
+ j 10        c     A
+ a  1        d     6
+ b  2        d     9
+ c  3        d    10
+ d  4        d     2
  e  5        d     5
- f  6        d     1
- g  7        d     4
+ f  6        d     2
+ g  7        d     6
  h  8        d     3
  i  9        d     9
- j 10        d     3</code></pre>
+ j 10        d     6</code></pre>
 </div>
 <div id="casting" class="section level3">
 <h3>Casting</h3>
 <p>Casting turns a long data frame into a wide one. A single column (called the <em>value</em> column) is separated into multiple columns according to the specification given. Use <code>dcast</code> or <code>acast</code> according to whether you want the result as a data frame or an array.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">dcast</span>(y,a<span class="op">+</span>b<span class="op">~</span>variable) -&gt;<span class="st"> </span>d1; d1</a></code></pre></div>
-<pre><code> a  b c d
- a  1 A 3
- b  2 B 4
- c  3 B 6
- d  4 A 6
- e  5 A 5
- f  6 C 1
- g  7 A 4
- h  8 C 3
- i  9 C 9
- j 10 B 3</code></pre>
+<pre><code> a  b c  d
+ a  1 B  6
+ b  2 C  9
+ c  3 C 10
+ d  4 C  2
+ e  5 C  5
+ f  6 C  2
+ g  7 B  6
+ h  8 C  3
+ i  9 A  9
+ j 10 A  6</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">class</span>(d1)</a></code></pre></div>
 <pre><code>[1] &quot;data.frame&quot;</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">acast</span>(y,b<span class="op">~</span>variable) -&gt;<span class="st"> </span>a1; a1</a></code></pre></div>
-<pre><code>   c   d  
-1  &quot;A&quot; &quot;3&quot;
-2  &quot;B&quot; &quot;4&quot;
-3  &quot;B&quot; &quot;6&quot;
-4  &quot;A&quot; &quot;6&quot;
-5  &quot;A&quot; &quot;5&quot;
-6  &quot;C&quot; &quot;1&quot;
-7  &quot;A&quot; &quot;4&quot;
-8  &quot;C&quot; &quot;3&quot;
-9  &quot;C&quot; &quot;9&quot;
-10 &quot;B&quot; &quot;3&quot;</code></pre>
+<pre><code>   c   d   
+1  &quot;B&quot; &quot;6&quot; 
+2  &quot;C&quot; &quot;9&quot; 
+3  &quot;C&quot; &quot;10&quot;
+4  &quot;C&quot; &quot;2&quot; 
+5  &quot;C&quot; &quot;5&quot; 
+6  &quot;C&quot; &quot;2&quot; 
+7  &quot;B&quot; &quot;6&quot; 
+8  &quot;C&quot; &quot;3&quot; 
+9  &quot;A&quot; &quot;9&quot; 
+10 &quot;A&quot; &quot;6&quot; </code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">class</span>(a1); <span class="kw">dim</span>(a1)</a></code></pre></div>
 <pre><code>[1] &quot;matrix&quot; &quot;array&quot; </code></pre>
 <pre><code>[1] 10  2</code></pre>
@@ -3040,30 +3040,30 @@ div.tocify {
 <pre><code>, , c
 
   1   2   3   4   5   6   7   8   9   10 
-a &quot;A&quot; NA  NA  NA  NA  NA  NA  NA  NA  NA 
-b NA  &quot;B&quot; NA  NA  NA  NA  NA  NA  NA  NA 
-c NA  NA  &quot;B&quot; NA  NA  NA  NA  NA  NA  NA 
-d NA  NA  NA  &quot;A&quot; NA  NA  NA  NA  NA  NA 
-e NA  NA  NA  NA  &quot;A&quot; NA  NA  NA  NA  NA 
+a &quot;B&quot; NA  NA  NA  NA  NA  NA  NA  NA  NA 
+b NA  &quot;C&quot; NA  NA  NA  NA  NA  NA  NA  NA 
+c NA  NA  &quot;C&quot; NA  NA  NA  NA  NA  NA  NA 
+d NA  NA  NA  &quot;C&quot; NA  NA  NA  NA  NA  NA 
+e NA  NA  NA  NA  &quot;C&quot; NA  NA  NA  NA  NA 
 f NA  NA  NA  NA  NA  &quot;C&quot; NA  NA  NA  NA 
-g NA  NA  NA  NA  NA  NA  &quot;A&quot; NA  NA  NA 
+g NA  NA  NA  NA  NA  NA  &quot;B&quot; NA  NA  NA 
 h NA  NA  NA  NA  NA  NA  NA  &quot;C&quot; NA  NA 
-i NA  NA  NA  NA  NA  NA  NA  NA  &quot;C&quot; NA 
-j NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;B&quot;
+i NA  NA  NA  NA  NA  NA  NA  NA  &quot;A&quot; NA 
+j NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;A&quot;
 
 , , d
 
-  1   2   3   4   5   6   7   8   9   10 
-a &quot;3&quot; NA  NA  NA  NA  NA  NA  NA  NA  NA 
-b NA  &quot;4&quot; NA  NA  NA  NA  NA  NA  NA  NA 
-c NA  NA  &quot;6&quot; NA  NA  NA  NA  NA  NA  NA 
-d NA  NA  NA  &quot;6&quot; NA  NA  NA  NA  NA  NA 
-e NA  NA  NA  NA  &quot;5&quot; NA  NA  NA  NA  NA 
-f NA  NA  NA  NA  NA  &quot;1&quot; NA  NA  NA  NA 
-g NA  NA  NA  NA  NA  NA  &quot;4&quot; NA  NA  NA 
-h NA  NA  NA  NA  NA  NA  NA  &quot;3&quot; NA  NA 
-i NA  NA  NA  NA  NA  NA  NA  NA  &quot;9&quot; NA 
-j NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;3&quot;</code></pre>
+  1   2   3    4   5   6   7   8   9   10 
+a &quot;6&quot; NA  NA   NA  NA  NA  NA  NA  NA  NA 
+b NA  &quot;9&quot; NA   NA  NA  NA  NA  NA  NA  NA 
+c NA  NA  &quot;10&quot; NA  NA  NA  NA  NA  NA  NA 
+d NA  NA  NA   &quot;2&quot; NA  NA  NA  NA  NA  NA 
+e NA  NA  NA   NA  &quot;5&quot; NA  NA  NA  NA  NA 
+f NA  NA  NA   NA  NA  &quot;2&quot; NA  NA  NA  NA 
+g NA  NA  NA   NA  NA  NA  &quot;6&quot; NA  NA  NA 
+h NA  NA  NA   NA  NA  NA  NA  &quot;3&quot; NA  NA 
+i NA  NA  NA   NA  NA  NA  NA  NA  &quot;9&quot; NA 
+j NA  NA  NA   NA  NA  NA  NA  NA  NA  &quot;6&quot;</code></pre>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">class</span>(a2); <span class="kw">dim</span>(a2)</a></code></pre></div>
 <pre><code>[1] &quot;array&quot;</code></pre>
 <pre><code>[1] 10 10  2</code></pre>
@@ -3084,40 +3084,40 @@ j NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;3&quot;</code></pre>
 <a class="sourceLine" id="cb21-3" title="3">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],<span class="dt">b=</span><span class="kw">runif</span>(<span class="dv">10</span>),<span class="dt">c=</span><span class="kw">sample</span>(LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>],<span class="dv">10</span>,<span class="dt">replace=</span><span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb21-4" title="4"><span class="kw">arrange</span>(x,a,b,c)</a></code></pre></div>
 <pre><code> a          b c
- a 0.81373913 B
- b 0.08738195 C
- c 0.15617679 A
- d 0.53672133 A
- e 0.17019536 B
- f 0.37101719 B
- g 0.42999118 A
- h 0.71583254 A
- i 0.58290927 A
- j 0.39804364 B</code></pre>
+ a 0.25702868 B
+ b 0.81111563 B
+ c 0.53323867 C
+ d 0.68636983 C
+ e 0.37760600 B
+ f 0.89092368 B
+ g 0.84379468 A
+ h 0.60612728 A
+ i 0.06950871 C
+ j 0.75578593 A</code></pre>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">arrange</span>(x,b,c,a)</a></code></pre></div>
 <pre><code> a          b c
- b 0.08738195 C
- c 0.15617679 A
- e 0.17019536 B
- f 0.37101719 B
- j 0.39804364 B
- g 0.42999118 A
- d 0.53672133 A
- i 0.58290927 A
- h 0.71583254 A
- a 0.81373913 B</code></pre>
+ i 0.06950871 C
+ a 0.25702868 B
+ e 0.37760600 B
+ c 0.53323867 C
+ h 0.60612728 A
+ d 0.68636983 C
+ j 0.75578593 A
+ b 0.81111563 B
+ g 0.84379468 A
+ f 0.89092368 B</code></pre>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">arrange</span>(x,c,b,a)</a></code></pre></div>
 <pre><code> a          b c
- c 0.15617679 A
- g 0.42999118 A
- d 0.53672133 A
- i 0.58290927 A
- h 0.71583254 A
- e 0.17019536 B
- f 0.37101719 B
- j 0.39804364 B
- a 0.81373913 B
- b 0.08738195 C</code></pre>
+ h 0.60612728 A
+ j 0.75578593 A
+ g 0.84379468 A
+ a 0.25702868 B
+ e 0.37760600 B
+ b 0.81111563 B
+ f 0.89092368 B
+ i 0.06950871 C
+ c 0.53323867 C
+ d 0.68636983 C</code></pre>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">read.csv</span>(<span class="st">&quot;http://kingaa.github.io/R_Tutorial/data/energy_production.csv&quot;</span>,<span class="dt">comment=</span><span class="st">&quot;#&quot;</span>) -&gt;<span class="st"> </span>energy</a>
 <a class="sourceLine" id="cb27-2" title="2"><span class="kw">arrange</span>(energy,region,source,year)</a></code></pre></div>
 <pre><code> year           source                    region
@@ -17063,33 +17063,33 @@ j NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;3&quot;</code></pre>
 <p><code>count(x)</code> counts the combinations that occur and returns a data frame.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">count</span>(x,<span class="op">~</span>c)</a></code></pre></div>
 <pre><code> c freq
- A    5
+ A    3
  B    4
- C    1</code></pre>
+ C    3</code></pre>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">count</span>(x,<span class="op">~</span>a<span class="op">+</span>c)</a></code></pre></div>
 <pre><code> a c freq
  a B    1
- b C    1
- c A    1
- d A    1
+ b B    1
+ c C    1
+ d C    1
  e B    1
  f B    1
  g A    1
  h A    1
- i A    1
- j B    1</code></pre>
+ i C    1
+ j A    1</code></pre>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">count</span>(x,<span class="dt">vars=</span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;c&#39;</span>))</a></code></pre></div>
 <pre><code> a c freq
  a B    1
- b C    1
- c A    1
- d A    1
+ b B    1
+ c C    1
+ d C    1
  e B    1
  f B    1
  g A    1
  h A    1
- i A    1
- j B    1</code></pre>
+ i C    1
+ j A    1</code></pre>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">count</span>(energy,<span class="op">~</span>source<span class="op">+</span>region)</a></code></pre></div>
 <pre><code>           source                    region freq
              Coal                    Africa  115
@@ -20586,7 +20586,7 @@ j NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;3&quot;</code></pre>
 <p>Given a data frame, <code>summarise</code> (synonym <code>summarize</code>), produces a new data frame.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">summarize</span>(x,<span class="dt">mean=</span><span class="kw">mean</span>(b),<span class="dt">sd=</span><span class="kw">sd</span>(b),<span class="dt">top=</span>c[<span class="dv">1</span>])</a></code></pre></div>
 <pre><code>      mean        sd top
- 0.4262008 0.2421999   B</code></pre>
+ 0.5831499 0.2729542   B</code></pre>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">summarize</span>(energy,<span class="dt">tot=</span><span class="kw">sum</span>(TJ),<span class="dt">n=</span><span class="kw">length</span>(TJ))</a></code></pre></div>
 <pre><code>         tot    n
  20055245724 3483</code></pre>
@@ -20603,52 +20603,60 @@ j NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;3&quot;</code></pre>
 <p>Given a data frame, <code>mutate</code> modifies, adds, or removes variables.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">x &lt;-<span class="st"> </span><span class="kw">mutate</span>(x,<span class="dt">d=</span><span class="dv">2</span><span class="op">*</span>b,<span class="dt">c=</span><span class="kw">tolower</span>(c),<span class="dt">e=</span>b<span class="op">+</span>d,<span class="dt">a=</span><span class="ot">NULL</span>); x</a></code></pre></div>
 <pre><code>          b c         d         e
- 0.81373913 b 1.6274783 2.4412174
- 0.08738195 c 0.1747639 0.2621459
- 0.15617679 a 0.3123536 0.4685304
- 0.53672133 a 1.0734427 1.6101640
- 0.17019536 b 0.3403907 0.5105861
- 0.37101719 b 0.7420344 1.1130516
- 0.42999118 a 0.8599824 1.2899735
- 0.71583254 a 1.4316651 2.1474976
- 0.58290927 a 1.1658185 1.7487278
- 0.39804364 b 0.7960873 1.1941309</code></pre>
+ 0.25702868 b 0.5140574 0.7710861
+ 0.81111563 b 1.6222313 2.4333469
+ 0.53323867 c 1.0664773 1.5997160
+ 0.68636983 c 1.3727397 2.0591095
+ 0.37760600 b 0.7552120 1.1328180
+ 0.89092368 b 1.7818474 2.6727711
+ 0.84379468 a 1.6875894 2.5313841
+ 0.60612728 a 1.2122546 1.8183818
+ 0.06950871 c 0.1390174 0.2085261
+ 0.75578593 a 1.5115719 2.2673578</code></pre>
 </div>
 <div id="subset" class="section level4">
 <h4><code>subset</code></h4>
 <p><code>subset</code> doesn’t belong to <strong>plyr</strong>, but would if it didn’t already exist in the <strong>base</strong> package. This function allows you to choose a subset of rows and/or columns. The <code>subset</code> argument specifies a logical condition: those rows that satisfy it are chosen. The <code>select</code> argument picks out which columns to keep or throw away.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">subset</span>(x,d<span class="op">&gt;</span><span class="fl">1.2</span>)</a></code></pre></div>
 <pre><code>         b c        d        e
- 0.8137391 b 1.627478 2.441217
- 0.7158325 a 1.431665 2.147498</code></pre>
+ 0.8111156 b 1.622231 2.433347
+ 0.6863698 c 1.372740 2.059110
+ 0.8909237 b 1.781847 2.672771
+ 0.8437947 a 1.687589 2.531384
+ 0.6061273 a 1.212255 1.818382
+ 0.7557859 a 1.511572 2.267358</code></pre>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1"><span class="kw">subset</span>(x,<span class="dt">select=</span><span class="kw">c</span>(b,c))</a></code></pre></div>
 <pre><code>          b c
- 0.81373913 b
- 0.08738195 c
- 0.15617679 a
- 0.53672133 a
- 0.17019536 b
- 0.37101719 b
- 0.42999118 a
- 0.71583254 a
- 0.58290927 a
- 0.39804364 b</code></pre>
+ 0.25702868 b
+ 0.81111563 b
+ 0.53323867 c
+ 0.68636983 c
+ 0.37760600 b
+ 0.89092368 b
+ 0.84379468 a
+ 0.60612728 a
+ 0.06950871 c
+ 0.75578593 a</code></pre>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw">subset</span>(x,<span class="dt">select=</span><span class="op">-</span><span class="kw">c</span>(d))</a></code></pre></div>
 <pre><code>          b c         e
- 0.81373913 b 2.4412174
- 0.08738195 c 0.2621459
- 0.15617679 a 0.4685304
- 0.53672133 a 1.6101640
- 0.17019536 b 0.5105861
- 0.37101719 b 1.1130516
- 0.42999118 a 1.2899735
- 0.71583254 a 2.1474976
- 0.58290927 a 1.7487278
- 0.39804364 b 1.1941309</code></pre>
+ 0.25702868 b 0.7710861
+ 0.81111563 b 2.4333469
+ 0.53323867 c 1.5997160
+ 0.68636983 c 2.0591095
+ 0.37760600 b 1.1328180
+ 0.89092368 b 2.6727711
+ 0.84379468 a 2.5313841
+ 0.60612728 a 1.8183818
+ 0.06950871 c 0.2085261
+ 0.75578593 a 2.2673578</code></pre>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw">subset</span>(x,d<span class="op">&gt;</span><span class="fl">1.2</span>,<span class="dt">select=</span><span class="op">-</span>e)</a></code></pre></div>
 <pre><code>         b c        d
- 0.8137391 b 1.627478
- 0.7158325 a 1.431665</code></pre>
+ 0.8111156 b 1.622231
+ 0.6863698 c 1.372740
+ 0.8909237 b 1.781847
+ 0.8437947 a 1.687589
+ 0.6061273 a 1.212255
+ 0.7557859 a 1.511572</code></pre>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">subset</span>(energy,year<span class="op">&gt;</span><span class="dv">2010</span>,<span class="dt">select=</span><span class="kw">c</span>(source,TJ))</a></code></pre></div>
 <pre><code>           source          TJ
              Coal 105601012.6
