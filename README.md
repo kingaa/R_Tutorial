@@ -6,3 +6,5 @@ Brief tutorials on [data munging with **plyr**, **reshape2**, and **magrittr**](
 
 Suggestions, requests, and corrections are more than welcome!
 Please use the [issues page](https://github.com/kingaa/R_Tutorial/issues) for these.
+
+The [Big Book of **R**](https://www.bigbookofr.com/) is a pretty comprehensive, if indiscriminate, compendium of materials on **R** and **R** programming.

@@ -1,12 +1,23 @@
 ---
-title: "Data visualization"
-author: "Aaron A. King"
+title: Data visualization
+author: Aaron A. King
 output:
   html_document:
     toc: yes
     toc_depth: 4
+    toc_float:
+      collapsed: TRUE
+      smooth_scroll: TRUE
+    highlight: haddock
+    code_folding: show
+    number_sections: FALSE
+    df_print: paged
+    includes:
+      after_body:
+      - _includes/main_bottom.html
+      - _includes/license.html
 bibliography: tutorial.bib
-csl: ecology.csl
+csl: jss.csl
 ---
 
 \newcommand\prob[1]{\mathbb{P}\left[{#1}\right]}
@@ -23,38 +34,18 @@ csl: ecology.csl
 \newcommand{\pd}[3][]{\frac{\partial^{#1}{#2}}{\partial{#3}^{#1}}}
 \newcommand{\deriv}[3][]{\frac{\mathrm{d}^{#1}{#2}}{\mathrm{d}{#3}^{#1}}}
 
-```{r knitr-opts,include=FALSE,purl=FALSE,cache=FALSE}
-library(knitr)
-prefix <- "viz"
-opts_chunk$set(
-  eval=TRUE,
-  progress=TRUE,
-  prompt=FALSE,tidy=FALSE,highlight=TRUE,
-  strip.white=TRUE,
-  warning=FALSE,
-  message=FALSE,
-  error=FALSE,
-  echo=TRUE,
-  cache=TRUE,
-  cache.extra=rand_seed,
-  results='hide',
-  fig.show='hide',
-  size='small',
-  fig.path=paste0("figure/",prefix,"-"),
-  cache.path=paste0("cache/",prefix,"-"),
-  fig.align='center',
-  fig.height=4,fig.width=6.83,
-  dpi=100,
-  dev='png',
-  dev.args=list(bg='transparent')
-  )
-```
-```{r prelims,include=FALSE,cache=FALSE}
-options(
-  keep.source=TRUE,
-  encoding="UTF-8"
-  )
+-----------------------------------
 
+Comments, suggestions, criticism, corrections are most welcome.
+Please submit these via the [issues page](https://github.com/kingaa/R_Tutorial/issues).
+
+-----------------------
+
+```{r knitr-opts,include=FALSE,purl=FALSE}
+prefix <- "viz"
+source("_includes/setup.R",local=knitr::knit_global())
+```
+```{r prelims}
 set.seed(594709947L)
 library(ggplot2)
 theme_set(theme_bw())
@@ -66,7 +57,7 @@ This is an extremely condensed introduction to **R**'s base graphics and---more 
 Run the codes shown and study the outputs to learn about these tools.
 When questions are posed, do your best to answer them.
 
-For your convenience, [the **R** codes for this document are provided in an **R** script](http://raw.githubusercontent.com/kingaa/R_Tutorial/master/viz.R) which you can download, edit, and run.
+For your convenience, [the **R** codes for this document are provided in an **R** script](./viz.R) which you can download, edit, and run.
 
 ## Getting started: **R**'s base graphics
 
@@ -87,6 +78,7 @@ tg <- subset(dat,type=="transgenic",select=-type)
 
 Let's try and visualize the data.
 ```{r}
+dat$type <- factor(dat$type)
 plot(dat)
 op <- par(mfrow=c(1,2))
 hist(tg$lifespan,breaks=seq(0,55,by=5),ylim=c(0,40))
@@ -108,6 +100,7 @@ lines(sort(tg$lifespan),seq(1,nrow(tg))/nrow(tg),type='s',col='red')
 ### Mammal body and brain sizes
 
 The data on mammal body and brain sizes is included in the **MASS** package:
+
 ```{r}
 library(MASS)
 
@@ -164,8 +157,10 @@ This is implemented in the **ggplot2** package.
 ### Energy production
 
 ```{r}
-read.csv("http://kingaa.github.io/R_Tutorial/energy_production.csv",
-         comment.char="#") -> energy
+read.csv(
+  "http://kingaa.github.io/R_Tutorial/energy_production.csv",
+  comment.char="#"
+) -> energy
 
 library(ggplot2)
 
@@ -186,7 +181,8 @@ ggplot(data=energy,mapping=aes(x=year,y=TJ,group=source))+geom_line()
 **Question:** How do you account for the appearance of the two plots immediately above?
 
 ```{r}
-ggplot(data=energy,mapping=aes(x=year,y=TJ,group=source:region))+geom_line()
+ggplot(data=energy,mapping=aes(x=year,y=TJ,group=interaction(source,region)))+
+  geom_line()
 ```
 
 **Question:** What does the `group` aesthetic do?
@@ -255,6 +251,7 @@ ddply(energy,~source1+year,summarize,TJ=sum(TJ)) -> x
 ggplot(data=x,mapping=aes(x=year,y=TJ,fill=source1))+
     geom_area()
 ```
+
 --------------------------
 
 ### Exercise
@@ -263,6 +260,8 @@ Ask a question regarding one of the datasets shown here and devise a visualizati
 
 --------------------------
 
-## [**R** codes for this document](http://raw.githubusercontent.com/kingaa/R_Tutorial/master/viz.R)
+Produced with **R** version `r getRversion()`.
+
+The [**R** codes for this document are provided in an **R** script](./viz.R) which you can download, edit, and run.
 
 --------------------------
