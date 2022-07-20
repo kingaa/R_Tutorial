@@ -66,7 +66,7 @@ For your convenience, [the **R** codes for this document are provided in an **R*
 Let's load the data on transgenic mosquito survival time.
 
 ```{r}
-dat <- read.csv("http://kingaa.github.io/R_Tutorial/mosquitoes.csv")
+dat <- read.csv("http://kingaa.github.io/R_Tutorial/data/mosquitoes.csv")
 ```
 
 Let's compare the average lifespan of transgenic vs wildtype mosquitoes from this experiment.
@@ -114,8 +114,10 @@ plot(brain~body,data=mammals,log='xy')
 ### Oil production
 
 ```{r}
-read.csv("http://kingaa.github.io/R_Tutorial/oil_production.csv",
-         comment.char="#") -> oil
+read.csv(
+  "http://kingaa.github.io/R_Tutorial/data/oil_production.csv",
+  comment.char="#"
+) -> oil
 head(oil)
 summary(oil)
 plot(oil)
@@ -158,7 +160,7 @@ This is implemented in the **ggplot2** package.
 
 ```{r}
 read.csv(
-  "http://kingaa.github.io/R_Tutorial/energy_production.csv",
+  "http://kingaa.github.io/R_Tutorial/data/energy_production.csv",
   comment.char="#"
 ) -> energy
 

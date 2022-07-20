@@ -8,7 +8,7 @@ plot(rmax~light,data=X,xlab="light intensity (uE/m2/s)",ylab="maximum growth rat
 # cex.main sets the character expansion for the main title of the plot 
 
 title(main="Data from Fussmann et al. (2000) system")
-fit <- lm(rmax~Light)
+fit <- lm(rmax~light,data=X)
 summary(fit); abline(fit) 
 
 # Next we get the regression equation to 'display itself' on the graph

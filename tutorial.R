@@ -129,7 +129,7 @@ b <- c(1,1,5,5)
 (a<b) || (a>3)
 
 course.url <- "http://kingaa.github.io/R_Tutorial/"
-X <- read.csv(paste0(course.url,"ChlorellaGrowth.csv"),comment.char='#')
+X <- read.csv(paste0(course.url,"data/ChlorellaGrowth.csv"),comment.char='#')
 Light <- X[,1]
 rmax <- X[,2];
 lowLight <- Light[Light<50]
@@ -202,7 +202,7 @@ L <- list(A=x,B=trochee,C=c("a","b","c"))
 
 L[c("B","C")]
 
-data.url <- "http://kingaa.github.io/R_Tutorial/ChlorellaGrowth.csv"
+data.url <- "http://kingaa.github.io/R_Tutorial/data/ChlorellaGrowth.csv"
 dat <- read.csv(data.url,comment.char='#')
 dat
 
@@ -212,7 +212,7 @@ download.file(paste0(course.url,"Intro1.R"),destfile="Intro1.R",mode="w")
 ## source("Intro1.R")
 
 download.file(paste0(course.url,"Intro2.R"),destfile="Intro2.R",mode="w")
-download.file(paste0(course.url,"ChlorellaGrowth.csv"),destfile="ChlorellaGrowth.csv",mode="w")
+download.file(paste0(course.url,"data/ChlorellaGrowth.csv"),destfile="ChlorellaGrowth.csv",mode="w")
 
 X <- read.csv("ChlorellaGrowth.csv",comment.char='#')
 
@@ -509,7 +509,7 @@ b <- rep(letters[1:10],each=3)
 data.frame(x,b)
 tapply(x,b,sum)
 
-datafile <- "http://kingaa.github.io/R_Tutorial/seedpred.dat"
+datafile <- "http://kingaa.github.io/R_Tutorial/data/seedpred.dat"
 seeds <- read.table(datafile,header=TRUE,
                     colClasses=c(station='factor',dist='factor',date='Date'))
 x <- subset(seeds,available>0)

@@ -1,4 +1,9 @@
-default: tutorial.html tutorial.R Intro1.R Intro2.R hurricanes.csv ChlorellaGrowth.csv seedpred.dat munging.html munging.R viz.html viz.R
-	cp tutorial.html index.html
+default: index.html tutorial.html tutorial.R munging.html munging.R viz.html viz.R
+
+fresh: clean .fresh
+
+clean: .clean	
+	$(RM) ChlorellaGrowth.csv
 
 include rules.mk
+

@@ -867,7 +867,7 @@ Table: Logical operators.
 -----------------------------------
 
 For example, try
-```{r}
+```{r warning=TRUE}
 a <- c(1,2,3,4)
 b <- c(1,1,5,5)
 (a<b) | (a>3)
@@ -889,7 +889,7 @@ This is useful, for example, in subsetting data.
 As a simple example, we might want to focus on just the low-light values of $r_{\text{max}}$ in the *Chlorella* example:
 ```{r fetch-chlorella-data,include=FALSE}
 course.url <- "http://kingaa.github.io/R_Tutorial/"
-X <- read.csv(paste0(course.url,"ChlorellaGrowth.csv"),comment.char='#')
+X <- read.csv(paste0(course.url,"data/ChlorellaGrowth.csv"),comment.char='#')
 Light <- X[,1]
 rmax <- X[,2];
 ```
@@ -983,7 +983,7 @@ creates a $50{\times}50$ matrix, every entry of which is $1$.
 
 ##### Exercise
 Use a command of the form `X <- matrix(v,nrow=2,ncol=4)` where `v` is a data vector, to create the following matrix `X`:
-```{r echo=F,comment=""}
+```{r echo=FALSE,comment=""}
 print(X <- matrix(rep(c(1,2),times=4),nrow=2))
 ```   
 
@@ -1224,7 +1224,7 @@ You can turn a data frame into a matrix (using `as.matrix()`, but only if all va
 
 When data are read into **R** from an external file using one of the `read.xxx` commands (`read.csv`, `read.table`, `read.xls`, etc.), the object that is created is a data frame.
 ```{r }
-data.url <- "http://kingaa.github.io/R_Tutorial/ChlorellaGrowth.csv"
+data.url <- "http://kingaa.github.io/R_Tutorial/data/ChlorellaGrowth.csv"
 dat <- read.csv(data.url,comment.char='#')
 dat
 ``` 
@@ -1383,7 +1383,7 @@ Another important time-saver is loading data from a text file.
 Grab copies of `Intro2.R` and `ChlorellaGrowth.csv` from the dropsite to see how this is done. 
 ```{r}
 download.file(paste0(course.url,"Intro2.R"),destfile="Intro2.R",mode="w")
-download.file(paste0(course.url,"ChlorellaGrowth.csv"),destfile="ChlorellaGrowth.csv",mode="w")
+download.file(paste0(course.url,"data/ChlorellaGrowth.csv"),destfile="ChlorellaGrowth.csv",mode="w")
 ``` 
 In `ChlorellaGrowth.csv` the two variables are entered as columns of a data matrix. 
 Then instead of typing these in by hand, the command
@@ -1741,7 +1741,7 @@ When `f` is evaluated, each of these variables must be *bound* to some value.
 In **R** , the free variable bindings are resolved---each time the function is evaluated---by first looking in the environment where the function was created.
 This is called *lexical scope*.
 Thus if we execute
-```{r echo=F,results='hide'}
+```{r echo=FALSE,results='hide'}
 rm(z)
 ```{r eval=F}
 f(3)
@@ -2072,7 +2072,7 @@ tapply(x,b,sum)
 ``` 
 
 ```{r }
-datafile <- "http://kingaa.github.io/R_Tutorial/seedpred.dat"
+datafile <- "http://kingaa.github.io/R_Tutorial/data/seedpred.dat"
 seeds <- read.table(datafile,header=TRUE,
                     colClasses=c(station='factor',dist='factor',date='Date'))
 x <- subset(seeds,available>0)
@@ -2092,7 +2092,7 @@ alph <- function (x) {
 ``` 
 This function will return a vector of length 1 and class `character`.
 To apply it to a randomly sampled set of integers, we might do
-```{r echo=F,results='hide'}
+```{r echo=FALSE,results='hide'}
 set.seed(1950064303L)
 ```{r }
 x <- sample(1:26,50,replace=TRUE)

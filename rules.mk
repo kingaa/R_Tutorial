@@ -41,13 +41,15 @@ quiz.tex quiz_soln.tex quiz_main.tex
 	pdflatex $*
 	pdflatex $*
 
-clean:
+.clean:
 	$(RM) *.bak
 	$(RM) *.o *.so
 	$(RM) *.log *.aux *.out *.blg *.toc *.nav *.snm *.vrb *.brf *.cut
 	$(RM) Rplots.*
 
-fresh: clean
+.fresh: .clean
 	$(RM) *.bbl
 	$(RM) -r tmp
 
+clean: .clean
+fresh: .fresh

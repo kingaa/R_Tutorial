@@ -1,7 +1,7 @@
 library(reshape2)
 
 x <- data.frame(a=letters[1:10],b=1:10,
-                c=sample(LETTERS[1:3],10,replace=TRUE),d=sample(1:10,10,replace=T))
+                c=sample(LETTERS[1:3],10,replace=TRUE),d=sample(1:10,10,replace=TRUE))
 x
 melt(x,id.vars=c("a","b"))
 melt(x,measure.vars=c("c","d")) -> y; y
@@ -20,7 +20,7 @@ arrange(x,a,b,c)
 arrange(x,b,c,a)
 arrange(x,c,b,a)
 
-read.csv("http://kingaa.github.io/R_Tutorial/energy_production.csv",comment="#") -> energy
+read.csv("http://kingaa.github.io/R_Tutorial/data/energy_production.csv",comment="#") -> energy
 arrange(energy,region,source,year)
 arrange(energy,-TJ,year)
 
