@@ -866,7 +866,7 @@ Table: Logical operators.
 -----------------------------------
 
 For example, try
-```{r warning=TRUE}
+```{r warning=TRUE,error=TRUE}
 a <- c(1,2,3,4)
 b <- c(1,1,5,5)
 (a<b) | (a>3)
