@@ -1,98 +1,163 @@
-## .folder {
+library(tidyr)
 
-## 	color: #3333ff;
-
-##     font-weight: bold;
-
-## }
-
-
-
-library(reshape2)
-
-x <- data.frame(a=letters[1:10],b=1:10,
-                c=sample(LETTERS[1:3],10,replace=TRUE),d=sample(1:10,10,replace=TRUE))
+data.frame(
+  a=letters[1:10],
+  b=1:10,
+  c=sample(LETTERS[1:3],10,replace=TRUE),
+  d=sample(1:10,10,replace=TRUE)
+) -> x
 x
-melt(x,id.vars=c("a","b"))
-melt(x,measure.vars=c("c","d")) -> y; y
 
-dcast(y,a+b~variable) -> d1; d1
-class(d1)
-acast(y,b~variable) -> a1; a1
-class(a1); dim(a1)
-acast(y,a~b~variable) -> a2; a2
-class(a2); dim(a2)
+pivot_longer(x,c(b,d))
+pivot_longer(x,-c(a,c)) -> y; y
+## pivot_longer(x,-a)
 
-library(plyr)
+pivot_wider(y)
 
-x <- data.frame(a=letters[1:10],b=runif(10),c=sample(LETTERS[1:3],10,replace=TRUE))
-arrange(x,a,b,c)
-arrange(x,b,c,a)
+course.url <- "https://kinglab.eeb.lsa.umich.edu/480/data/"
+read.csv(file.path(course.url,"energy_production.csv"),comment="#") -> energy
+
+head(energy)
+
+head(pivot_wider(energy,names_from=source,values_from=TJ))
+
+unite(x,ab,a,b) -> z; z
+separate(z,ab,into=c("a","b"))
+
+unite(energy,src_reg,source,region,sep="/") -> nrg
+head(nrg)
+
+library(dplyr)
+
+arrange(x,a)
+arrange(x,c)
 arrange(x,c,b,a)
+arrange(x,c,-b)
 
-read.csv("https://kingaa.github.io/R_Tutorial/data/energy_production.csv",comment="#") -> energy
-arrange(energy,region,source,year)
-arrange(energy,-TJ,year)
+arrange(energy,year,region,source)
+arrange(energy,-TJ,region)
 
-count(x,~c)
-count(x,~a+c)
-count(x,vars=c('a','c'))
+filter(x,d>4)
+filter(x,d>1.2 & c != "B")
 
-count(energy,~source+region)
-count(energy,~source+TJ)
+filter(energy,year>2010)
+filter(energy,year>2010 & source%in%c("Nuclear","Oil"))
+
+select(x,a,b)
+select(x,-c)
+select(x,z=a,d)
+
+select(energy,src=source,year)
 
 summarize(x,mean=mean(b),sd=sd(b),top=c[1])
 
 summarize(energy,tot=sum(TJ),n=length(TJ))
-summarize(energy,range(year))
+summarize(energy,min(year),max(year))
 summarize(energy,min(year),max(year),interval=diff(range(year)))
 
-x <- mutate(x,d=2*b,c=tolower(c),e=b+d,a=NULL); x
+reframe(x,b=fivenum(b),d=fivenum(d))
 
-subset(x,d>1.2)
-subset(x,select=c(b,c))
-subset(x,select=-c(d))
-subset(x,d>1.2,select=-e)
-subset(energy,year>2010,select=c(source,TJ))
-subset(energy,year>2010&source%in%c("Nuclear","Oil"),select=-source)
+reframe(energy,p=c(0.1,0.5,0.9),q=quantile(TJ,probs=p))
 
-x <- expand.grid(a=1:3,b=1:5)
-y <- expand.grid(a=1:2,b=1:5,c=factor(c("F","G")))
-m1 <- merge(x,y); m1
-m2 <- merge(x,y,by='a'); m2
-m3 <- merge(x,y,all=TRUE); m3
-m4 <- merge(x,y,by='a',all=TRUE); m4
+mutate(x,d=2*b,c=tolower(c),e=b+d) -> z; z
+transmute(x,d=2*b,c=tolower(c),e=b+d)
 
-join(x,y,by=c('a','b'),type='left')
-join(x,y,by=c('a','b'),type='right')
-join(x,y,by=c('a','b'),type='inner')
-join(x,y,by=c('a','b'),type='full')
-join(x,y,by='a',type='full')
-join(x,y,by='a',type='inner')
+mutate(energy,hydrocarbon=(source%in%c("Coal","Gas","Oil"))) -> nrg
+nrg
 
-x <- ddply(energy,~region+source,subset,TJ==max(TJ)); x
-x <- ddply(energy,~region+source,summarize,TJ=mean(TJ)); x
+count(x,c)
+count(x,a,c)
 
-daply(energy,~region,function(df) sum(df$TJ))
-daply(energy,~region+source,function(df) sum(df$TJ))
+count(energy,source,region)
+count(energy,source,TJ)
 
-dlply(energy,~region,summarize,TJ=sum(TJ))
+mutate(
+  energy,
+  region=plyr::revalue(
+                 region,
+                 c(
+                   `Asia and Oceania`="Asia",
+                   `Central and South America`="Latin.America"
+                 )
+               )
+) -> z
+head(z)
 
-mutate(energy,time=year-min(year)) -> dat
-daply(dat,~source+region,function(df) min(df$time)) -> A; A
-aaply(A,1,max)
+mutate(
+  energy,
+  source=plyr::mapvalues(
+                 source,
+                 from=c("Coal","Gas","Oil"),
+                 to=c("Carbon","Carbon","Carbon")
+               )
+) -> z
+head(z)
 
-x <- rename(energy,c(TJ='energy',year="time")); head(x)
+mutate(
+  energy,
+  source=recode(
+    source,
+    Coal="Carbon",
+    Gas="Carbon",
+    Oil="Carbon"
+  )
+) -> z
+head(z)
 
-mutate(energy,region=revalue(region,c(`Asia and Oceania`="Asia",
-                                      `Central and South America`="Latin.America"))); 
+group_by(energy,source) -> z
+summarize(z,TJ=mean(TJ))
 
-mutate(energy,source=mapvalues(source,from=c("Coal","Gas","Oil"),
-                               to=c("Carbon","Carbon","Carbon")))
+group_by(energy,source,region) -> z
+summarize(z,TJ=max(TJ))
 
-library(magrittr)
+x <- expand.grid(a=1:3,b=1:5); head(x)
+y <- expand.grid(a=1:2,b=1:5,c=factor(c("F","G"))); head(y)
 
-energy %>% 
-  subset(year>=1990) %>%
-  ddply(~source+year,summarize,TJ=sum(TJ)) %>%
-  ddply(~source,summarize,TJ=mean(TJ))
+left_join(x,y,by=c('a','b'))
+right_join(x,y,by=c('a','b'))
+inner_join(x,y,by=c('a','b'))
+full_join(x,y,by=c('a','b'))
+full_join(x,y,by='a')
+inner_join(x,y,by='a')
+
+categories <- data.frame(
+  source=c("Coal","Oil","Nuclear","Gas","Hydro","Other Renewables"),
+  cat=c("dirty","dirty","dirty","dirty","clean","clean"))
+left_join(energy,categories) -> nrg
+
+energy |> 
+  filter(year>=1990) |>
+  group_by(source,year) |>
+  summarize(TJ=sum(TJ)) |>
+  ungroup() |>
+  group_by(source) |>
+  summarize(TJ=mean(TJ))
+
+energy |> 
+  filter(year>=1990) |>
+  group_by(region,source) |>
+  summarize(TJ=mean(TJ)) |>
+  ungroup() |>
+  group_by(source) |>
+  reframe(
+    region=region,
+    fraction=TJ/sum(TJ)
+  ) |>
+  ungroup() |>
+  pivot_wider(names_from=source,values_from=fraction)
+
+energy |>
+  left_join(categories,by="source") |>
+  group_by(region,year,cat) |>
+  summarize(TJ=sum(TJ)) |>
+  ungroup() |>
+  group_by(region,cat) |>
+  mutate(change=TJ-lag(TJ,1)) |>
+  filter(year>=1990) |>
+  summarize(increase=mean(change)) |>
+  pivot_wider(names_from=cat,values_from=increase) |>
+  mutate(
+    overall=clean+dirty,
+    factor=dirty/clean
+  ) |>
+  ungroup()

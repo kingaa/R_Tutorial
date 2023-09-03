@@ -1,12 +1,3 @@
-## .folder {
-
-## 	color: #3333ff;
-
-##     font-weight: bold;
-
-## }
-
-
 set.seed(594709947L)
 library(ggplot2)
 theme_set(theme_bw())

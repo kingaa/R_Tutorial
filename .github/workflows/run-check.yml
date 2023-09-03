@@ -39,16 +39,15 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: |
-            any::ggplot2
-            any::dplyr
-            any::tidyr
-
       - name: Run tests
         run: |
           sink("test.out")
+          update.packages(lib.loc=Sys.getenv("R_LIBS_USER"))
+          if (length(find.package("ggplot2",quiet=TRUE)) < 1) install.packages("ggplot2")
+          if (length(find.package("dplyr",quiet=TRUE)) < 1) install.packages("dplyr")
+          if (length(find.package("plyr",quiet=TRUE)) < 1) install.packages("plyr")
+          if (length(find.package("reshape2",quiet=TRUE)) < 1) install.packages("reshape2")
+          if (length(find.package("tidyr",quiet=TRUE)) < 1) install.packages("tidyr")
           cat("running tutorial codes....")
           source("tutorial.R",echo=TRUE)
           cat("running munging codes....")

@@ -14,7 +14,7 @@ The [Big Book of **R**](https://www.bigbookofr.com/) is a pretty comprehensive, 
 ----------------------------
 
 <div id="license" style="width: 42em; padding-bottom: 10px;">
-<img style="float: left; vertical-align: text-bottom; padding: 5px;" src="https://kingaa.github.io/sbied/graphics/cc-by-nc.png" alt="CC-BY_NC">
+<img style="float: left; vertical-align: text-bottom; padding: 5px;" src="https://kingaa.github.io/R_Tutorial/cc-by-nc.png" alt="CC-BY_NC">
 <p>
   Licensed under the <a href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial license</a>.
   Please share and remix noncommercially, mentioning its origin.

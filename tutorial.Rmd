@@ -27,11 +27,6 @@ csl: jss.csl
 \newcommand\lik{\mathscr{L}}
 \newcommand\loglik{\ell}
 
------------------------------------
-
-Comments, suggestions, criticism, corrections are most welcome.
-Please submit these via the [issues page](https://github.com/kingaa/R_Tutorial/issues).
-
 -----------------------
 
 ```{css echo=FALSE}
@@ -52,6 +47,8 @@ These notes contain many sample calculations.
 It is important to do these yourself---**type them in at your keyboard and see what happens on your screen**---to get the feel of working in **R**. 
 
 **Exercises** in the middle of a section should be done immediately when you get to them, and make sure you have them right before moving on. 
+
+For your convenience, the **R** codes for this document are `r xfun::embed_file("tutorial.R",text="provided in a script")` which you can download, edit, and run.
 
 Many other similar introductions are scattered around the web;
 a partial list is in the "contributed documentation" section on the R web site (https://cran.r-project.org/other-docs.html). 
@@ -513,7 +510,7 @@ install.packages("ggplot2")
 This installs the **ggplot2** package.
 You can install more than one package at a time:
 ```{r eval=FALSE}
-install.packages(c("plyr","reshape2"))
+install.packages(c("dplyr","tidyr","lubridate"))
 ```
 If the machine on which you use **R** is not connected to the Internet, you can download the packages to some other medium (such as a flash drive or CD)
 and install them later, using `Install from local zip file` in the menu (&#9420;) or
@@ -798,9 +795,8 @@ For example, try:
 
 ```{r }
 a <- 1; b <- 3; 
-c <- a < b
-d <- (a > b)
-c; d
+c <- a < b; c
+d <- (a > b); d
 ``` 
 
 The parentheses around `a > b` above are optional but do make the code easier to read.
@@ -828,7 +824,8 @@ Table: Some comparison operators in **R**. Use `?Comparison` to learn more.
 When we compare two vectors or matrices, comparisons are done element-by-element (and the recycling rule applies).
 For example,
 ```{r }
-x <- 1:5; b <- (x<=3); b
+x <- 1:5
+b <- (x<=3); b
 ``` 
 So if `x` and `y` are vectors, then `(x==y)` will return a vector of values giving the element-by-element comparisons. 
 If you want to know whether `x` and `y` are identical vectors, use `identical(x,y)` or `all.equal(x,y)`. 
@@ -865,14 +862,15 @@ Table: Logical operators.
 
 -----------------------------------
 
-For example, try
-```{r warning=TRUE,error=TRUE}
+For example, execute the following and make sure you understand what happens.
+```{r warning=TRUE}
 a <- c(1,2,3,4)
 b <- c(1,1,5,5)
 (a<b) | (a>3)
-(a<b) || (a>3)
 ```
-and make sure you understand what happened. 
+```{r eval=FALSE}
+a<b) || (a>3)
+```
 
 The two forms of logical OR (`|`and `||`) are *inclusive*, meaning that `x|y` is true if either `x` or `y` or both are true. 
 Use `xor` when exclusive OR is needed.
@@ -890,7 +888,7 @@ As a simple example, we might want to focus on just the low-light values of $r_{
 course.url <- "https://kingaa.github.io/R_Tutorial/"
 X <- read.csv(paste0(course.url,"data/ChlorellaGrowth.csv"),comment.char='#')
 Light <- X[,1]
-rmax <- X[,2];
+rmax <- X[,2]
 ```
 ```{r }
 lowLight <- Light[Light<50]
@@ -1113,7 +1111,8 @@ y <- 1:5; y
 z <- array(1:5,dim=5); z
 y==z
 identical(y,z)
-dim(y); dim(z)
+dim(y)
+dim(z)
 ``` 
 
 -----------------------------------
@@ -2196,5 +2195,7 @@ Instructors there included Ben Bolker, Ottar Bj&oslash;rnstad, Steve Ellner, and
 Steve Ellner contributed the document that formed the early skeleton of these notes; he based them in turn on course materials by Colleen Webb, Jonathan Rowell, and Daniel Fink at Cornell, Professors Lou Gross (University of Tennessee) and Paul Fackler (NC State University), and on the book *Getting Started with Matlab* by Rudra Pratap (Oxford University Press).
 The document also draws on the documentation supplied with **R**, including the *Introduction to **R*** manual.
 Versions of this document have been used in courses taught by BB and AAK at Florida and Michigan, at workshops run under the auspices of the International Centre for Theoretical Physics in Trieste, and elsewhere.
+
+-----------------------------------
 
 # References

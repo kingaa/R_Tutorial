@@ -4,7 +4,7 @@ library(knitr)
 if (!exists("prefix")) prefix <- NULL
 opts_chunk$set(
   cache=TRUE,
-  cache.path=paste("tmp","cache",as.character(prefix),"",sep="/"),
+  cache.path=paste("tmp",as.character(prefix),"cache",sep="/"),
   comment=NA,
   echo=TRUE,
   eval=TRUE,
@@ -15,7 +15,7 @@ opts_chunk$set(
   fig.align='center',
   fig.dim=c(6.83,4),
   fig.lp="fig:",
-  fig.path=paste("tmp","figure",as.character(prefix),"",sep="/"),
+  fig.path=paste("tmp",as.character(prefix),"figure",sep="/"),
   fig.pos="h!",
   fig.show='asis',
   highlight=TRUE,
@@ -66,7 +66,7 @@ registerS3method(
   }
 )
 
-myround<- function (x, digits = 1) {
+myround <- function (x, digits = 1) {
   # adapted from the broman package
   # solves the bug that round() kills significant trailing zeros
   if (length(digits) > 1) {

@@ -1,4 +1,4 @@
-default: index.html tutorial.html tutorial.R munging.html munging.R viz.html viz.R
+default: index.html tutorial.R tutorial.html munging.R munging.html viz.R viz.html
 
 fresh: clean .fresh
 

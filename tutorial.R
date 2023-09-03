@@ -63,7 +63,7 @@ coef(fit)
 
 ## install.packages("ggplot2")
 
-## install.packages(c("plyr","reshape2"))
+## install.packages(c("dplyr","tidyr","lubridate"))
 
 ## install.packages("ggplot2",repos=NULL)
 
@@ -122,11 +122,11 @@ x <- 1.9999999999999; x; x-2
 x <- 1.99999999999999999; x; x-2
 
 a <- 1; b <- 3; 
-c <- a < b
-d <- (a > b)
-c; d
+c <- a < b; c
+d <- (a > b); d
 
-x <- 1:5; b <- (x<=3); b
+x <- 1:5
+b <- (x<=3); b
 
 a=1:3
 b=2:4
@@ -137,12 +137,12 @@ a==b
 a <- c(1,2,3,4)
 b <- c(1,1,5,5)
 (a<b) | (a>3)
-(a<b) || (a>3)
+## a<b) || (a>3)
 
 course.url <- "https://kingaa.github.io/R_Tutorial/"
 X <- read.csv(paste0(course.url,"data/ChlorellaGrowth.csv"),comment.char='#')
 Light <- X[,1]
-rmax <- X[,2];
+rmax <- X[,2]
 lowLight <- Light[Light<50]
 lowLightrmax <- rmax[Light<50]
 lowLight
@@ -190,7 +190,8 @@ y <- 1:5; y
 z <- array(1:5,dim=5); z
 y==z
 identical(y,z)
-dim(y); dim(z)
+dim(y)
+dim(z)
 
 ## x <- seq(1,27)
 ## dim(x) <- c(3,9)
