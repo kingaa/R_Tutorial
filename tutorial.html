@@ -3106,7 +3106,7 @@ a = 2+2</code></pre>
 <h1>A first interactive session</h1>
 <div id="descriptive-statistics" class="section level2">
 <h2>Descriptive statistics</h2>
-<p>Below are some data on the maximum growth rate <span class="math inline">\(r_{\text{max}}\)</span> of laboratory populations of the green alga <em>Chlorella vulgaris</em> as a function of light intensity (<span class="math inline">\(\mu\mathrm{E}~\mathrm{m}^{-2}~\mathrm{s}^{-1}\)</span>). These experiments were run during the system-design phase of the study reported by Fussman et al. <span class="citation">(Fussman, Ellner, Sherzer, and Nelson G. Hairston 2000)</span>.</p>
+<p>Below are some data on the maximum growth rate <span class="math inline">\(r_{\text{max}}\)</span> of laboratory populations of the green alga <em>Chlorella vulgaris</em> as a function of light intensity (<span class="math inline">\(\mu\mathrm{E}~\mathrm{m}^{-2}~\mathrm{s}^{-1}\)</span>). These experiments were run during the system-design phase of the study reported by <span class="citation">Fussman, Ellner, Sherzer, and Nelson G. Hairston (2000)</span>.</p>
 <table>
 <colgroup>
 <col width="10%"></col>
@@ -4945,18 +4945,18 @@ N_{t+1} = \frac{a\,N_t}{1+b\,N_t}.
 <pre><code>environment of f: &lt;environment: R_GlobalEnv&gt;
 global env: &lt;environment: R_GlobalEnv&gt;
 inside function f:
-environment of g: &lt;environment: 0x5635662c4bd0&gt;
-current env: &lt;environment: 0x5635662c4bd0&gt;
+environment of g: &lt;environment: 0x55cfef96ed08&gt;
+current env: &lt;environment: 0x55cfef96ed08&gt;
 parent env: &lt;environment: R_GlobalEnv&gt;
 inside function g:
-environment of h: &lt;environment: 0x5635605aca58&gt;
-current env: &lt;environment: 0x5635605aca58&gt;
-parent env: &lt;environment: 0x5635662c4bd0&gt;
+environment of h: &lt;environment: 0x55cfe9c56ac8&gt;
+current env: &lt;environment: 0x55cfe9c56ac8&gt;
+parent env: &lt;environment: 0x55cfef96ed08&gt;
 grandparent env: &lt;environment: R_GlobalEnv&gt;
 inside function h:
-current env: &lt;environment: 0x5635604c6fc8&gt;
-parent env: &lt;environment: 0x5635605aca58&gt;
-grandparent env: &lt;environment: 0x5635662c4bd0&gt;
+current env: &lt;environment: 0x55cfe9b71038&gt;
+parent env: &lt;environment: 0x55cfe9c56ac8&gt;
+grandparent env: &lt;environment: 0x55cfef96ed08&gt;
 great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 </details>
 <p>Each variable referenced in the function’s body is bound, first, to a formal argument if possible. If a local variable of that name has previously been created (via one of the assignment operators <code>&lt;-</code>, <code>-&gt;</code>, or <code>=</code>, this is the variable that is affected by any subsequent assignments. If the variable is neither a formal parameter nor a local variable, then the parent environment of the function is searched for that variable. If the variable has not been found in the parent environment, then the grand-parent environment is searched, and so on.</p>
@@ -5318,7 +5318,7 @@ great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 </div>
 <div id="vectorized-functions-vs-loops" class="section level1">
 <h1>Vectorized functions vs loops</h1>
-<p>As Ligges &amp; Fox <span class="citation">(Ligges and Fox 2008)</span> point out, the idea that one should avoid loops wherever possible in <strong>R</strong>, using instead vectorized functions like those in the <code>apply</code> family, is quite widespread in some quarters. The belief, which probably dates back to infelicities in early versions of <strong>S</strong> and <strong>Splus</strong> but is remarkably persistent, is that loops are very slow in <strong>R</strong>. Let’s have a critical look at this.</p>
+<p>As <span class="citation">Ligges and Fox (2008)</span> point out, the idea that one should avoid loops wherever possible in <strong>R</strong>, using instead vectorized functions like those in the <code>apply</code> family, is quite widespread in some quarters. The belief, which probably dates back to infelicities in early versions of <strong>S</strong> and <strong>Splus</strong> but is remarkably persistent, is that loops are very slow in <strong>R</strong>. Let’s have a critical look at this.</p>
 <p>Consider the following loop code that can be vectorized:</p>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="#cb295-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n=</span><span class="fl">1e6</span>,<span class="dt">min=</span><span class="dv">0</span>,<span class="dt">max=</span><span class="dv">2</span><span class="op">*</span>pi)</span>
 <span id="cb295-2"><a href="#cb295-2" aria-hidden="true"></a>y &lt;-<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">length</span>(x))</span>
@@ -5336,14 +5336,14 @@ great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <details>
 <p><summary class="folder">output</summary></p>
 <pre><code>   user  system elapsed 
-  0.096   0.000   0.096 </code></pre>
+  0.090   0.001   0.092 </code></pre>
 </details>
 <p>We can compare this with a simple call to <code>sin</code> (which is vectorized):</p>
 <div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="#cb298-1" aria-hidden="true"></a><span class="kw">system.time</span>(z &lt;-<span class="st"> </span><span class="kw">sin</span>(x))</span></code></pre></div>
 <details>
 <p><summary class="folder">output</summary></p>
 <pre><code>   user  system elapsed 
-  0.022   0.000   0.022 </code></pre>
+  0.013   0.008   0.022 </code></pre>
 </details>
 <p>Clearly, calling <code>sin</code> directly is much faster. What about using <code>sapply</code>?</p>
 <hr />
@@ -5365,13 +5365,13 @@ great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <details>
 <p><summary class="folder">output</summary></p>
 <pre><code>   user  system elapsed 
-  0.069   0.000   0.069 </code></pre>
+  0.066   0.000   0.067 </code></pre>
 </details>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="#cb302-1" aria-hidden="true"></a><span class="kw">system.time</span>(res2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(x,f))</span></code></pre></div>
 <details>
 <p><summary class="folder">output</summary></p>
 <pre><code>   user  system elapsed 
-  0.071   0.000   0.070 </code></pre>
+  0.065   0.000   0.065 </code></pre>
 </details>
 <p>[Actually, in this case, <code>f</code> is vectorized automatically. Why is this?]</p>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="#cb304-1" aria-hidden="true"></a><span class="kw">system.time</span>(<span class="kw">f</span>(x))</span></code></pre></div>
@@ -5394,13 +5394,13 @@ great-grandparent env: &lt;environment: R_GlobalEnv&gt;</code></pre>
 <details>
 <p><summary class="folder">output</summary></p>
 <pre><code>   user  system elapsed 
-  0.067   0.000   0.067 </code></pre>
+  0.065   0.000   0.064 </code></pre>
 </details>
 <div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="#cb308-1" aria-hidden="true"></a><span class="kw">system.time</span>(res2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(x,g))</span></code></pre></div>
 <details>
 <p><summary class="folder">output</summary></p>
 <pre><code>   user  system elapsed 
-  0.074   0.000   0.074 </code></pre>
+  0.067   0.000   0.067 </code></pre>
 </details>
 </div>
 </div>

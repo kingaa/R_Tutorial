@@ -361,7 +361,7 @@ You can get a more complete list of functions from the help system:
 ## Descriptive statistics
 
 Below are some data on the maximum growth rate $r_{\text{max}}$ of laboratory populations of the green alga *Chlorella vulgaris* as a function of light intensity ($\mu\mathrm{E}~\mathrm{m}^{-2}~\mathrm{s}^{-1}$).
-These experiments were run during the system-design phase of the study reported by Fussman et al. [@Fussman2000].
+These experiments were run during the system-design phase of the study reported by @Fussman2000.
 
 | 
 ------|------------------------------------------------------
@@ -2110,7 +2110,7 @@ paste(y,collapse="")
 
 # Vectorized functions vs loops
 
-As Ligges & Fox [@Ligges2008] point out, the idea that one should avoid loops wherever possible in **R**, using instead vectorized functions like those in the `apply` family, is quite widespread in some quarters.
+As @Ligges2008 point out, the idea that one should avoid loops wherever possible in **R**, using instead vectorized functions like those in the `apply` family, is quite widespread in some quarters.
 The belief, which probably dates back to infelicities in early versions of **S** and **Splus** but is remarkably persistent, is that loops are very slow in **R**.
 Let's have a critical look at this.
 
