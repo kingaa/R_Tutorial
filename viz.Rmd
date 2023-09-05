@@ -110,13 +110,13 @@ plot(oil)
 plot(Gbbl~year,data=oil,subset=region=="North.America",type='l')
 lines(Gbbl~year,data=oil,subset=region=="Eurasia",type="l",col='red')
 
-library(reshape2)
+library(tidyr)
+library(dplyr)
 
-dcast(oil,year~region) -> wideOil
-names(wideOil)
-wideOil$total <- wideOil$Africa+wideOil$Asia+wideOil$Central+wideOil$Eurasia+wideOil$Europe+wideOil$Middle+wideOil$North.America
-wideOil$total <- apply(wideOil[,-1],1,sum)
-plot(wideOil$year,wideOil$total,type='l')
+oil |>
+  group_by(year) |>
+  summarize(Gbbl=sum(Gbbl)) -> total
+plot(Gbbl~year,data=total,type='l')
 ```
 
 ## A systematic approach to visualization: the Grammar of Graphics
@@ -145,16 +145,22 @@ This is implemented in the **ggplot2** package.
 ### Energy production
 
 ```{r}
-read.csv(
+library(readr)
+read_csv(
   "https://kingaa.github.io/R_Tutorial/data/energy_production.csv",
-  comment.char="#"
+  comment="#"
 ) -> energy
 
 library(ggplot2)
 
-ggplot(data=energy,mapping=aes(x=year,y=TJ,color=region,linetype=source))+geom_line()
-ggplot(data=energy,mapping=aes(x=year,y=TJ,color=region))+geom_line()+facet_wrap(~source)
-ggplot(data=energy,mapping=aes(x=year,y=TJ,color=source))+geom_line()+facet_wrap(~region,ncol=2)
+ggplot(data=energy,mapping=aes(x=year,y=TJ,color=region,linetype=source))+
+  geom_line()
+ggplot(data=energy,mapping=aes(x=year,y=TJ,color=region))+
+  geom_line()+
+  facet_wrap(~source)
+ggplot(data=energy,mapping=aes(x=year,y=TJ,color=source))+
+  geom_line()+
+  facet_wrap(~region,ncol=2)
 ```
 
 What can you conclude from the above?
@@ -162,8 +168,10 @@ Try plotting these data on the log scale (`scale_y_log10()`).
 How does your interpretation change?
 
 ```{r}
-ggplot(data=energy,mapping=aes(x=year,y=TJ))+geom_line()
-ggplot(data=energy,mapping=aes(x=year,y=TJ,group=source))+geom_line()
+ggplot(data=energy,mapping=aes(x=year,y=TJ))+
+  geom_line()
+ggplot(data=energy,mapping=aes(x=year,y=TJ,group=source))+
+  geom_line()
 ```
 
 **Question:** How do you account for the appearance of the two plots immediately above?
@@ -177,38 +185,45 @@ ggplot(data=energy,mapping=aes(x=year,y=TJ,group=interaction(source,region)))+
 
 Let's aggregate across regions by year and source of energy.
 ```{r}
-library(reshape2)
+energy |>
+  group_by(year,source) |>
+  summarize(TJ=sum(TJ)) |>
+  ungroup() -> tot
 
-tot <- dcast(energy,year+source~'TJ',value.var="TJ",fun.aggregate=sum)
-ggplot(data=tot,mapping=aes(x=year,y=TJ,color=source))+geom_line()
-ggplot(data=tot,mapping=aes(x=year,y=TJ,fill=source))+geom_area()
+tot |>
+  ggplot(aes(x=year,y=TJ,color=source))+
+  geom_line()
 
+tot |>
+  ggplot(aes(x=year,y=TJ,fill=source))+
+  geom_area()
 ```
 
 Now let's aggregate across years by region and source.
 
-```{r}
-reg <- dcast(energy,region+source~'TJ',value.var="TJ",fun.aggregate=mean)
-ggplot(data=reg,mapping=aes(x=region,y=TJ,fill=source))+
-   geom_bar(stat="identity")+coord_flip()
-```
-
-An even better way to manipulate the data is to use the **plyr** package.
-[See the data munging tutorial.](./data_munging.html)
+See the [data munging tutorial](./munging.html) for more information on manipulating and reshaping data frames.
 
 ```{r}
-library(plyr)
+energy |>
+  group_by(region,source) |>
+  summarize(TJ=mean(TJ)) |>
+  ungroup() -> reg
 
-ddply(energy,~region+source,summarize,TJ=mean(TJ)) -> x
+reg |>
+  ggplot(aes(x=region,y=TJ,fill=source))+
+  geom_bar(stat="identity")+
+  coord_flip()
 
-ggplot(data=x,mapping=aes(x=region,y=TJ,fill=source))+
-   geom_bar(stat="identity")+coord_flip()
+reg |>
+  group_by(region) |>
+  mutate(frac = TJ/sum(TJ)) |>
+  ungroup() -> reg
 
-ddply(x,~region,mutate,frac=TJ/sum(TJ)) -> y
-
-ggplot(data=y,mapping=aes(x=region,y=frac,fill=source))+
-   geom_bar(stat="identity")+coord_flip()+labs(x="fraction of production")
-
+reg |>
+  ggplot(aes(x=region,y=frac,fill=source))+
+  geom_bar(stat="identity")+
+  coord_flip()+
+  labs(y="fraction of production",x="region")
 ```
 
 In the above, we first average across years for every region and source.
@@ -218,26 +233,41 @@ The `coord_flip` coordinate specification gives us horizontal bars instead of th
 Fancy!
 
 Let's compare fossil fuel production to renewable.
+We divide the sources into three types: Carbon-based, Nuclear, and Renewable.
+We accomplish this using a "crosswalk" table:
 ```{r}
-library(plyr)
+data.frame(
+  source=c("Coal","Gas","Oil","Nuclear","Hydro","Other Renewables"),
+  source1=c("Carbon","Carbon","Carbon","Nuclear","Renewable","Renewable")
+) |>
+  right_join(energy,by="source") -> energy
 
-mutate(energy,
-       source=as.character(source),
-       source1=mapvalues(source,
-                         from=c("Hydro","Other Renewables","Coal","Oil","Gas"),
-                         to=c("Renewable","Renewable","Carbon","Carbon","Carbon"))
-       ) -> energy
+energy |>
+  group_by(source1,region,year) |>
+  summarize(TJ = sum(TJ)) |>
+  ungroup() -> x
 
-ddply(energy,~source1+region+year,summarize,TJ=sum(TJ)) -> x
+x |>
+  ggplot(aes(x=year,y=TJ,fill=source1))+
+  geom_area()+
+  facet_wrap(~region,ncol=2)+
+  labs(fill="source")
 
-ggplot(data=x,mapping=aes(x=year,y=TJ,fill=source1))+
-    geom_area()+
-    facet_wrap(~region,scales="free_y",ncol=2)
+x |>
+  ggplot(aes(x=year,y=TJ,fill=source1))+
+  geom_area()+
+  facet_wrap(~region,scales="free_y",ncol=2)+
+  labs(fill="source")
 
-ddply(energy,~source1+year,summarize,TJ=sum(TJ)) -> x
+x |>
+  group_by(source1,year) |>
+  summarize(TJ = sum(TJ)) |>
+  ungroup() -> y
 
-ggplot(data=x,mapping=aes(x=year,y=TJ,fill=source1))+
-    geom_area()
+y |>
+  ggplot(aes(x=year,y=TJ,fill=source1))+
+  geom_area()+
+  labs(fill="source")
 ```
 
 --------------------------
@@ -249,7 +279,5 @@ Ask a question regarding one of the datasets shown here and devise a visualizati
 --------------------------
 
 Produced with **R** version `r getRversion()`.
-
-The [**R** codes for this document are provided in an **R** script](./viz.R) which you can download, edit, and run.
 
 --------------------------

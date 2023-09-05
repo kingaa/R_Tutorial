@@ -14,7 +14,7 @@ output:
 | &nbsp;                                                | &nbsp;                                   |
 |:------------------------------------------------------|:-----------------------------------------|
 | Tutorial Introduction to **R**                        | [HTML](tutorial.html)                    |
-| Data visualization                                    | [HTML](viz.html)&nbsp;[R](viz.R)         |
 | Data munging with **dplyr**, **tidyr**, and pipelines | [HTML](munging.html)&nbsp;[R](munging.R) |
+| Data visualization                                    | [HTML](viz.html)&nbsp;[R](viz.R)         |
 
 ----------------------

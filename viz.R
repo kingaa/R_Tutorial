@@ -36,71 +36,102 @@ plot(oil)
 plot(Gbbl~year,data=oil,subset=region=="North.America",type='l')
 lines(Gbbl~year,data=oil,subset=region=="Eurasia",type="l",col='red')
 
-library(reshape2)
+library(tidyr)
+library(dplyr)
 
-dcast(oil,year~region) -> wideOil
-names(wideOil)
-wideOil$total <- wideOil$Africa+wideOil$Asia+wideOil$Central+wideOil$Eurasia+wideOil$Europe+wideOil$Middle+wideOil$North.America
-wideOil$total <- apply(wideOil[,-1],1,sum)
-plot(wideOil$year,wideOil$total,type='l')
+oil |>
+  group_by(year) |>
+  summarize(Gbbl=sum(Gbbl)) -> total
+plot(Gbbl~year,data=total,type='l')
 
-read.csv(
+library(readr)
+read_csv(
   "https://kingaa.github.io/R_Tutorial/data/energy_production.csv",
-  comment.char="#"
+  comment="#"
 ) -> energy
 
 library(ggplot2)
 
-ggplot(data=energy,mapping=aes(x=year,y=TJ,color=region,linetype=source))+geom_line()
-ggplot(data=energy,mapping=aes(x=year,y=TJ,color=region))+geom_line()+facet_wrap(~source)
-ggplot(data=energy,mapping=aes(x=year,y=TJ,color=source))+geom_line()+facet_wrap(~region,ncol=2)
+ggplot(data=energy,mapping=aes(x=year,y=TJ,color=region,linetype=source))+
+  geom_line()
+ggplot(data=energy,mapping=aes(x=year,y=TJ,color=region))+
+  geom_line()+
+  facet_wrap(~source)
+ggplot(data=energy,mapping=aes(x=year,y=TJ,color=source))+
+  geom_line()+
+  facet_wrap(~region,ncol=2)
 
-ggplot(data=energy,mapping=aes(x=year,y=TJ))+geom_line()
-ggplot(data=energy,mapping=aes(x=year,y=TJ,group=source))+geom_line()
+ggplot(data=energy,mapping=aes(x=year,y=TJ))+
+  geom_line()
+ggplot(data=energy,mapping=aes(x=year,y=TJ,group=source))+
+  geom_line()
 
 ggplot(data=energy,mapping=aes(x=year,y=TJ,group=interaction(source,region)))+
   geom_line()
 
-library(reshape2)
+energy |>
+  group_by(year,source) |>
+  summarize(TJ=sum(TJ)) |>
+  ungroup() -> tot
 
-tot <- dcast(energy,year+source~'TJ',value.var="TJ",fun.aggregate=sum)
-ggplot(data=tot,mapping=aes(x=year,y=TJ,color=source))+geom_line()
-ggplot(data=tot,mapping=aes(x=year,y=TJ,fill=source))+geom_area()
+tot |>
+  ggplot(aes(x=year,y=TJ,color=source))+
+  geom_line()
 
+tot |>
+  ggplot(aes(x=year,y=TJ,fill=source))+
+  geom_area()
 
-reg <- dcast(energy,region+source~'TJ',value.var="TJ",fun.aggregate=mean)
-ggplot(data=reg,mapping=aes(x=region,y=TJ,fill=source))+
-   geom_bar(stat="identity")+coord_flip()
+energy |>
+  group_by(region,source) |>
+  summarize(TJ=mean(TJ)) |>
+  ungroup() -> reg
 
-library(plyr)
+reg |>
+  ggplot(aes(x=region,y=TJ,fill=source))+
+  geom_bar(stat="identity")+
+  coord_flip()
 
-ddply(energy,~region+source,summarize,TJ=mean(TJ)) -> x
+reg |>
+  group_by(region) |>
+  mutate(frac = TJ/sum(TJ)) |>
+  ungroup() -> reg
 
-ggplot(data=x,mapping=aes(x=region,y=TJ,fill=source))+
-   geom_bar(stat="identity")+coord_flip()
+reg |>
+  ggplot(aes(x=region,y=frac,fill=source))+
+  geom_bar(stat="identity")+
+  coord_flip()+
+  labs(y="fraction of production",x="region")
 
-ddply(x,~region,mutate,frac=TJ/sum(TJ)) -> y
+data.frame(
+  source=c("Coal","Gas","Oil","Nuclear","Hydro","Other Renewables"),
+  source1=c("Carbon","Carbon","Carbon","Nuclear","Renewable","Renewable")
+) |>
+  right_join(energy,by="source") -> energy
 
-ggplot(data=y,mapping=aes(x=region,y=frac,fill=source))+
-   geom_bar(stat="identity")+coord_flip()+labs(x="fraction of production")
+energy |>
+  group_by(source1,region,year) |>
+  summarize(TJ = sum(TJ)) |>
+  ungroup() -> x
 
+x |>
+  ggplot(aes(x=year,y=TJ,fill=source1))+
+  geom_area()+
+  facet_wrap(~region,ncol=2)+
+  labs(fill="source")
 
-library(plyr)
+x |>
+  ggplot(aes(x=year,y=TJ,fill=source1))+
+  geom_area()+
+  facet_wrap(~region,scales="free_y",ncol=2)+
+  labs(fill="source")
 
-mutate(energy,
-       source=as.character(source),
-       source1=mapvalues(source,
-                         from=c("Hydro","Other Renewables","Coal","Oil","Gas"),
-                         to=c("Renewable","Renewable","Carbon","Carbon","Carbon"))
-       ) -> energy
+x |>
+  group_by(source1,year) |>
+  summarize(TJ = sum(TJ)) |>
+  ungroup() -> y
 
-ddply(energy,~source1+region+year,summarize,TJ=sum(TJ)) -> x
-
-ggplot(data=x,mapping=aes(x=year,y=TJ,fill=source1))+
-    geom_area()+
-    facet_wrap(~region,scales="free_y",ncol=2)
-
-ddply(energy,~source1+year,summarize,TJ=sum(TJ)) -> x
-
-ggplot(data=x,mapping=aes(x=year,y=TJ,fill=source1))+
-    geom_area()
+y |>
+  ggplot(aes(x=year,y=TJ,fill=source1))+
+  geom_area()+
+  labs(fill="source")
