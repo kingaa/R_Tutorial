@@ -31,7 +31,7 @@ csl: jss.csl
 prefix <- "viz"
 source("_includes/setup.R",local=knitr::knit_global())
 ```
-```{r prelims}
+```{r prelims,include=FALSE,purl=FALSE}
 set.seed(594709947L)
 library(ggplot2)
 theme_set(theme_bw())

@@ -1,7 +1,3 @@
-set.seed(594709947L)
-library(ggplot2)
-theme_set(theme_bw())
-
 dat <- read.csv("https://kingaa.github.io/R_Tutorial/data/mosquitoes.csv")
 
 wt <- subset(dat,type=="wildtype",select=lifespan)
